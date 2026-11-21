@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   consumer:
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@4c6bb8b35009ef5008bd99134cf84b59fddc0b8a
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@59e4c4d3f377f906b33bb2d1fee808f96c6fb1b9
     with:
       full_run: true
       environment_json: '{"ACCEPTANCE_MARKER":"reusable-workflow"}'
@@ -19,7 +19,7 @@ jobs:
 
   no_output:
     needs: consumer
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@4c6bb8b35009ef5008bd99134cf84b59fddc0b8a
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@59e4c4d3f377f906b33bb2d1fee808f96c6fb1b9
     with:
       upload_build: true
       build_artifact_name: cad-ci-empty-acceptance
@@ -30,7 +30,7 @@ jobs:
     steps:
       - name: Run exact released same-runner action
         id: cad_ci
-        uses: brainboxemb/tool.cad.ci@4c6bb8b35009ef5008bd99134cf84b59fddc0b8a
+        uses: brainboxemb/tool.cad.ci@59e4c4d3f377f906b33bb2d1fee808f96c6fb1b9
         with:
           source_sha: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           full_run: "true"
@@ -40,7 +40,7 @@ jobs:
       - name: Verify same-runner CLI stack remains available
         env:
           ACTION_LIBRARY_REVISION: ${{ steps.cad_ci.outputs.library_revision }}
-          EXPECTED_LIBRARY_REVISION: 3f688243f4ee65b1fa42f82adde5344fe5101775
+          EXPECTED_LIBRARY_REVISION: 74486c441f1f2b170ff3dc06e0edcaf662fbec6b
         run: |
           python - <<'PY'
           import json
@@ -309,6 +309,8 @@ jobs:
         run: python partial_rerun_case/check.py
       - name: Process selection
         run: python process_case/check.py
+      - name: Selective startup active closure
+        run: python selective_startup_case/check.py
       - name: Directory output and CacheDir
         run: python directory_output_case/check.py
       - name: Timeouts and failures

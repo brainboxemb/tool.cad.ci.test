@@ -126,3 +126,25 @@ Starting from a durable main baseline with two configured items A and B:
   output;
 - no test helper compares manifests to decide deletion or removes durable output
   on behalf of CAD-CI.
+
+
+## Selective-startup released-stack acceptance
+
+The external suite must prove the released selective-run preparation behavior
+without importing library internals or asserting a machine-specific wall time.
+
+A synthetic consumer repository must contain:
+- one selected item and one direct dependency;
+- unrelated processed items;
+- an unrelated processed item whose configured input matches a symlink.
+
+Required public behavior:
+- `cad-ci run --item <selected>` succeeds and materializes normal selected and
+  dependency output/evidence;
+- the unrelated matched symlink does not affect that selective run;
+- explicitly running the symlink-owning item still fails with the normal
+  configured-source symlink safety error;
+- the case invokes only the exact released tool CLI.
+
+This acceptance proves that inactive targets no longer participate in source
+input preparation while preserving active-target source safety.
