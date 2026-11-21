@@ -134,3 +134,29 @@ mixed:
 
 The acceptance code performs only source-fixture setup and assertions. Durable
 membership/deletion is performed entirely by the released stack.
+
+
+## Selective-startup acceptance case
+
+`selective_startup_case/check.py` creates its complete synthetic consumer under
+the ignored disposable output tree at runtime.
+
+It intentionally creates an unrelated source symlink after writing normal
+configuration. The case then invokes only the bootstrapped released CLI:
+
+```text
+run --item selected
+  -> dependency + selected output/evidence must succeed
+
+run --item symlink-owner
+  -> documented source-input symlink error
+```
+
+No test code imports `cad_ci`, reads the private SCons manifest or calculates
+the active closure. The inactive-symlink distinction is observable released
+behavior and therefore proves the optimization boundary without duplicating its
+implementation.
+
+Additional unrelated items may be generated to retain a repository shape where
+whole-graph source preparation would be materially wasteful, but acceptance is
+based on behavior rather than elapsed seconds.
