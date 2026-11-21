@@ -8,53 +8,53 @@ must not contain generic CAD-CI implementation.
 
 ## Current status
 
-Generic named complete build scopes and named Pages subtrees are released in:
+The previous named-scope acceptance (#60) is complete.
 
-- `lib.py.cad.ci 0.9.2` at
-  `3f688243f4ee65b1fa42f82adde5344fe5101775`;
-- `tool.cad.ci 0.16.1` at
-  `4c6bb8b35009ef5008bd99134cf84b59fddc0b8a`.
+Current released stack under acceptance:
 
-The first #60 acceptance run against 0.16.0 correctly exposed a library
-self-compatibility defect: current SCons output used engine schema 2 while the
-durable build store still expected schema 1. That was fixed in
-`lib.py.cad.ci 0.9.2` and repinned by `tool.cad.ci 0.16.1`.
+- `lib.py.cad.ci 0.9.3` @
+  `74486c441f1f2b170ff3dc06e0edcaf662fbec6b`;
+- `tool.cad.ci 0.16.2` @
+  `59e4c4d3f377f906b33bb2d1fee808f96c6fb1b9`.
 
-The named-scope acceptance itself remains unchanged.
+The library release changes only generic selective SCons manifest preparation:
+active target closure is resolved before source inputs and one source inventory
+is shared across active steps.
 
 ## Current goal
 
-Complete #60 against exact released `tool.cad.ci 0.16.1`.
+Complete #62 against exact released tool.cad.ci 0.16.2.
 
-The black-box suite must prove that one released stack safely maintains
-multiple independent complete build scopes and Pages subtrees before Forge
-#572 creates `dev_cad` and `dev_ci`.
+The new black-box case must prove the active-closure behavior through public CLI
+results, without importing CAD-CI internals and without a fragile wall-clock
+threshold.
 
 ## Required proof
 
-- publish complete `main`, `dev_a` and `dev_b` build scopes;
-- update `dev_a` and preserve `main` + `dev_b`;
-- publish stable Pages plus `dev_a` and `dev_b` subtrees;
-- replace `dev_a` while preserving stable root + `dev_b`;
-- replace stable root while preserving both named subtrees;
-- reject unsafe names;
-- use only the exact released public tool/library surface;
-- keep publication tests isolated from this repository's real generated branches;
-- keep the existing same-runner and reusable-workflow acceptance green.
+- direct bootstrap pins exact tool 0.16.2;
+- reusable workflow and same-runner action use that same exact commit;
+- expected library revision is exact lib.py.cad.ci 0.9.3;
+- a selected item plus dependency succeeds even when an unrelated processed
+  item has a configured input matching a symlink;
+- selecting that symlink-owning item still fails with the documented safety
+  error;
+- the complete existing black-box suite remains green.
 
 ## Execution order
 
-1. [#60, now] Pin exact released tool.cad.ci 0.16.1.
-2. [#60] Run the complete black-box suite including named-scope isolation.
-3. Merge only when all released-stack paths are green.
-4. [Forge #572] Adopt the accepted stack and introduce `dev_cad` / `dev_ci`.
+1. [#62, now] Repin all released-stack entry points.
+2. [#62] Add the selective-startup consumer case.
+3. [#62] Run the complete pull-request acceptance suite.
+4. Merge only when every exact released-stack path is green.
+5. [Forge] Adopt tool 0.16.2 / lib 0.9.3 and remeasure the real selective PR
+   startup interval.
 
 ## Open issue assessment — 2026-11-21
 
 | Issue | Status | Assessment |
 | --- | --- | --- |
-| #60 Accept released named build and Pages scopes | now | 0.9.2/0.16.1 fix the schema blocker found by the first run; rerun the unchanged named-scope isolation proof now. |
+| #62 Accept released selective-startup optimization | **now** | Exact released stack exists; prove active-closure behavior and retain complete-suite compatibility. |
 
 Immediate chain:
 
-`acceptance #60 -> Forge #572`.
+`acceptance #62 -> Forge adoption/measurement`.
