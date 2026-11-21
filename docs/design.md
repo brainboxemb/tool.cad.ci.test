@@ -160,3 +160,26 @@ implementation.
 Additional unrelated items may be generated to retain a repository shape where
 whole-graph source preparation would be materially wasteful, but acceptance is
 based on behavior rather than elapsed seconds.
+
+
+## Bounded-jobs black-box proof
+
+Parallel execution is observed only through public consumer evidence.
+
+The synthetic acceptance repository contains two independent SCons targets.
+The exact released CLI runs the repository with `--jobs 2`, then the test reads:
+
+```text
+build/left/.cad-ci/steps/build.json
+build/right/.cad-ci/steps/build.json
+```
+
+Each record must report a successful executed action. The two
+`started_at` / `finished_at` intervals must overlap.
+
+This distinguishes real SCons concurrency from a tool that merely accepts or
+forwards a jobs argument. It avoids copying scheduler logic into the acceptance
+repository and avoids machine-specific wall-clock thresholds.
+
+The reusable workflow and same-runner action are separately invoked with jobs=2
+in the normal acceptance workflow to prove their public input forwarding.

@@ -148,3 +148,21 @@ Required public behavior:
 
 This acceptance proves that inactive targets no longer participate in source
 input preparation while preserving active-target source safety.
+
+
+## Released bounded-jobs acceptance
+
+The external suite must prove the exact released tool's opt-in parallel-jobs
+surface without importing CAD-CI internals.
+
+- direct bootstrap, reusable workflow and same-runner action pin the same exact
+  released tool revision;
+- reusable workflow and composite action must successfully accept `jobs: 2`;
+- a synthetic repository with two independent targets must run through the
+  released CLI with `--jobs 2`;
+- public step evidence for both targets must contain successful BUILT outcomes
+  plus non-null action `started_at` / `finished_at` values;
+- the two action intervals must overlap, proving actual concurrent execution;
+- no fixed elapsed-time threshold is an acceptance requirement;
+- default jobs=1 behavior remains covered by the existing suite and remains the
+  compatibility baseline.
