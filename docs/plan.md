@@ -11,38 +11,36 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
   `64656db8df528a5c0de799e62c0f028fd0133486`;
 - released-stack acceptance run #176 (`45063532187`) passed,
   including `test_roots/011_shared_builder`;
+- v0.25/main + numbered dev-ci histories were reconciled by PR #140;
 - config-driven acceptance architecture passed in PR #94;
 - case ownership/documentation cleanup passed in PR #97;
-- numbered standalone test roots proven on the integration lane:
-  - `001_simple`;
-  - `002_selection`;
-  - `003_fresh_runner`;
-  - `004_nested_items`;
-  - `005_nested_publish`;
-  - `006_dependencies`;
-  - `007_dependency_copy`;
-  - `008_active_dependents`;
-  - `009_partial_rerun`;
-  - `010_process`;
-  - `011_shared_builder`;
-  - `012_parallel_jobs`.
+- numbered standalone test roots `001` through `012` are present on
+  `dev-ci`.
 
 ## Current work
 
-### #139 — resolve v0.25 main -> dev-ci lane conflict
+### #142 — migrate numbered roots to declarative builders
 
-Combine the accepted v0.25/011 state from `main` with the numbered-root
-migrations already on `dev-ci`, preserving both histories. Supersede
-conflicted PR #137 after the resolution merge is complete.
+Use `test_roots/011_shared_builder` as the canonical builder-model reference.
+
+Normal executable item `ci.yml` files should contain item identity,
+`builder:`, selection/watch/dependency/process configuration, but not
+executable `steps:` / `run:`.
+
+Migrate the already-numbered roots before adding more normal test roots.
+`001_simple` is the first migration and keeps its existing cold/current/rebuild
+behavior unchanged.
+
+`007_dependency_copy` and `009_partial_rerun` require explicit design checks
+because their public contracts involve copy/step-selection semantics.
 
 ### #114 — normalize remaining external cases into numbered test roots
 
-Audit each remaining historical top-level case before migration. Retain only
-distinct public consumer contracts, remove owner-level/obsolete duplicates, and
-place retained standalone repositories below `test_roots/NNN_name/`.
+Keep this separate from #142. #114 owns only the remaining historical top-level
+fixture audit/migration after the existing numbered roots prove the builder
+architecture.
 
-The next normal candidate after synchronization is directory-output/cache
-behavior; do not mechanically migrate special harness/governance cases.
+Do not mechanically migrate special workflow/governance harness cases.
 
 ### #98 — permanent lane integration
 
@@ -60,8 +58,8 @@ duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #139 Resolve v0.25 main -> dev-ci conflict | **now** | Land the combined history-preserving lane state, then supersede #137. |
-| #114 Numbered standalone test roots | **active umbrella** | Continue with the next distinct consumer use case after synchronization. |
+| #142 Declarative builder migration | **now** | Prove `001_simple`, then migrate existing numbered roots in order. |
+| #114 Numbered standalone test roots | **blocked by #142 for normal roots** | Resume remaining top-level fixture migration after builder migration. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
 | #88 Align historical changelog | **later / docs-only** | No runtime impact. |
@@ -69,6 +67,8 @@ duplicate generic merge/classification logic.
 ## Boundary
 
 This repository owns external acceptance/integration evidence only. Generic
-lane classification, merge policy and CAD-CI behavior remain in the released
-tool/library stack. Every retained acceptance case stays locally documented and
-must prove a distinct public contract.
+lane classification, merge policy, builder resolution and CAD-CI behavior
+remain in the released tool/library stack.
+
+Do not migrate Forge/CAD consumers to the builder model until this repository
+proves the model across its existing numbered use cases.
