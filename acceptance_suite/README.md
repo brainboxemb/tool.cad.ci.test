@@ -34,7 +34,7 @@ a distinct public behavior not already covered elsewhere.
 | `test_roots/001_simple` | current | Smallest standalone hello/timestamp consumer repository. |
 | `test_roots/002_selection` | current | Changed-item selection across two items and one shared input. |
 | `test_roots/003_fresh_runner` | current | Exact base/head selection from a clean clone. |
-| `nested_item_case` | current | Nested item configuration and selection. |
+| `test_roots/004_nested_items` | current | Nested discovery, templates, path normalization and selection. |
 | `nested_publish_case` | current | Nested durable output ownership. |
 | `dependency_case` | current | Dependency fan-out and selected dependency execution. |
 | `dependency_copy_case` | current | Engine-owned dependency-output copy. |

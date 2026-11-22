@@ -17,7 +17,7 @@ CASES = (
     "test_roots/001_simple/check.py",
     "test_roots/002_selection/check.py",
     "test_roots/003_fresh_runner/check.py",
-    "nested_item_case/check.py",
+    "test_roots/004_nested_items/check.py",
     "nested_publish_case/check.py",
     "dependency_case/check.py",
     "dependency_copy_case/check.py",

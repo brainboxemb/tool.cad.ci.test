@@ -12,8 +12,11 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 - v0.24.0 external acceptance passed in #102 / PR #104;
 - config-driven acceptance architecture passed in PR #94;
 - case ownership/documentation cleanup passed in PR #97;
-- #111 / PR #113 establishes the numbered standalone test-root model with
-  `test_roots/001_simple`.
+- numbered standalone test roots established:
+  - `001_simple`;
+  - `002_selection`;
+  - `003_fresh_runner`;
+  - `004_nested_items` in #119.
 
 ## Current work
 
@@ -21,17 +24,10 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 Audit each historical top-level case before migration. Retain only distinct
 public consumer contracts, remove owner-level/obsolete duplicates, and place
-retained standalone repositories below:
+retained standalone repositories below `test_roots/NNN_name/`.
 
-```text
-test_roots/
-  001_simple/
-  002_.../
-  003_.../
-```
-
-Every retained test root owns its own `cad-ci.yml`, README and black-box
-check. Do not mechanically preserve historical case names.
+After `004_nested_items`, nested durable publication remains a separate next
+candidate; it must not be merged into nested discovery/selection.
 
 ### #98 — permanent lane integration
 
@@ -49,7 +45,8 @@ route or duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #114 Numbered standalone test roots | **now** | Audit/migrate the next real consumer use case after `001_simple`. |
+| #119 `004_nested_items` | **now** | Land/prove the fourth standalone test root. |
+| #114 Numbered standalone test roots | **active umbrella** | Audit/migrate the next distinct consumer use case. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record resulting lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
 | #88 Align historical changelog | **later / docs-only** | No runtime impact. |
