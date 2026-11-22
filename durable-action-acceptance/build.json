@@ -16,5 +16,5 @@
   "name": "durable-action-acceptance",
   "schema": 1,
   "scope": "named",
-  "source_commit": "121ccbe1e8e070deee41f1ddc8682f6e0139f479"
+  "source_commit": "dac05d7b53af9d93fdf9a1b3fddea9ad32187def"
 }
