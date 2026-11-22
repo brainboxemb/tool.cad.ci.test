@@ -27,10 +27,30 @@ Accepted public behavior includes:
 
 ## Current work
 
-No acceptance implementation is active.
+### #77 accept tool 0.18.1 / library 0.11.0
 
-A new acceptance issue starts only after a new exact released tool/library pair
-or public action contract exists.
+Status: **now**.
+
+Exact released pair:
+
+- `tool.cad.ci 0.18.1` @ `e29d3127d5d3f9310f3cab4e27430a64a61c21cc`;
+- `lib.py.cad.ci 0.11.0` @ `e621daf6e309bdd0e3f643a12007f1b66490696d`.
+
+Acceptance scope:
+
+- repin direct CLI bootstrap, reusable workflow and same-runner action to the exact tool release;
+- update exact expected library revision and public step-evidence schema to the released library contract;
+- add one synthetic shared-producer/two-consumer case for `selection_context: direct_dependents`;
+- prove consumer-a only, repeat/current, consumer-b only signature invalidation, both consumers with jobs=2, full run and public `active_dependents` evidence;
+- add no generic implementation or domain-specific Forge/CAD behavior.
+
+Forge/CAD adoption remains blocked until the complete PR acceptance suite is green.
+
+## Open issue assessment — 2026-11-22
+
+| Issue | Status | Next action |
+| --- | --- | --- |
+| #77 accept tool 0.18.1 / lib 0.11.0 | **now** | Repin exact released stack and prove active direct-dependent context end-to-end. |
 
 ## Boundary
 
