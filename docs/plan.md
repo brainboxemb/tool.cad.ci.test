@@ -1,35 +1,44 @@
 # Repository plan
 
 Current source of truth for unfinished work in `tool.cad.ci.test`
-(2026-11-22). This repository is the permanent external black-box acceptance
-repository and owns no CAD-CI algorithms.
+(2026-11-22).
 
-## Accepted baseline
+## Baseline
 
-- currently accepted: `tool.cad.ci 0.21.0`;
-- candidate under issue #90: `tool.cad.ci 0.22.0` @
-  `76b5ba24084a09a69e6f25b34c16e869f7240a58`;
-- `lib.py.cad.ci 0.11.1` remains @
-  `fa6bf244381dde609a0b04de673d774911c52fea`.
+- accepted baseline: `tool.cad.ci v0.22.0`;
+- candidate: `tool.cad.ci v0.23.0`;
+- the candidate pins `lib.py.cad.ci 0.11.1`.
 
 ## Current work
 
-### #90 — accept tool.cad.ci 0.22.0
+### #93 — simplify external acceptance architecture
 
-1. repin every existing public workflow/action acceptance case to 0.22.0;
-2. keep the complete existing behavioral suite green;
-3. verify released template manifest, ids/versions and public surface mapping;
-4. verify released templates retain one immutable release marker and contain
-   no copied generic implementation or existing consumer names;
-5. merge only after green acceptance;
-6. then Forge/CAD may migrate their wrappers from released templates.
+Make this repository a normal config-driven consumer:
 
-A failure belongs in the owning tool/library repository; do not patch around
-generic behavior here.
+1. one `reusable-ci.yml@v0.23.0` GitHub workflow call;
+2. one root `cad-ci.yml`;
+3. one configured acceptance-suite item;
+4. use the tool/library stack already loaded by the reusable workflow;
+5. remove bootstrap/install duplication and root-action acceptance;
+6. retain distinct black-box cases only for observable public behavior;
+7. keep merge governance explicitly separate;
+8. merge only after the complete simplified suite is green.
+
+### #92 — accept v0.23.0 canonical lane consumers
+
+The release-acceptance goal is folded into #93. Its previous requirement to
+retain root-action acceptance is obsolete because `tool.cad.ci` #126 removes
+that second public route. Close #92 when #93 proves v0.23.0.
 
 ## Open issue assessment
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #90 Accept tool.cad.ci 0.22.0 consumer-template release | **now** | Full released-stack + template acceptance. |
-| #88 Align historical changelog with shared meta template and guidance | **later / docs-only** | No behavior impact. |
+| #93 Simplify acceptance repository | **now** | Finish config-driven suite and prove v0.23.0. |
+| #92 Accept v0.23.0 canonical lane consumers | **superseded by #93** | Close after #93 green/merged. |
+| #88 Align historical changelog | **later / docs-only** | No runtime impact. |
+
+## Boundary
+
+This repository owns acceptance evidence only. Generic CI behavior belongs in
+the released library/tool stack.

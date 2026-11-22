@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
-"""Black-box released merge-command contract: execute the CLI with a fake GitHub API.
+"""Black-box released merge-command contract using a fake GitHub API."""
 
-The fake 'gh' command writes only into a temporary directory. No live API
-mutation is performed; real GitHub mutation acceptance is a separate gate.
-"""
 from __future__ import annotations
 
 import json
@@ -14,10 +11,14 @@ import sys
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
-TOOL = ROOT / "ext" / "cad-ci"
+sys.path.insert(0, str(ROOT))
+
+from tests.support import TOOL_ROOT
+
 HEAD = "b" * 40
 BASE = "a" * 40
 MERGE = "c" * 40
+
 GITHUB_STUB = r'''#!/usr/bin/env python3
 import json
 import os
@@ -96,7 +97,8 @@ def run_scenario(scenario: str):
         }
         result = subprocess.run(
             [
-                sys.executable, str(TOOL / "scripts" / "merge_command.py"),
+                sys.executable,
+                str(TOOL_ROOT / "scripts" / "merge_command.py"),
                 "--command", "/merge",
                 "--repository", "fixture/repo",
                 "--pull-request-number", "7",
@@ -108,7 +110,10 @@ def run_scenario(scenario: str):
                 "--temporary-prefixes-json", '["feature/"]',
                 "--integration-workflow", "ci.yml",
             ],
-            cwd=ROOT, env=environment, text=True, capture_output=True,
+            cwd=ROOT,
+            env=environment,
+            text=True,
+            capture_output=True,
         )
         calls = [json.loads(line) for line in log.read_text().splitlines()]
     return result, calls
@@ -119,9 +124,11 @@ def require(test: bool, description: str):
         raise RuntimeError(description)
 
 
-def main():
-    require((TOOL / "scripts" / "merge_command.py").exists(),
-            "released merge command is absent")
+def main() -> int:
+    require(
+        (TOOL_ROOT / "scripts" / "merge_command.py").exists(),
+        "released merge command is absent",
+    )
     for name in ("refused", "unknown", "post_fail", "success"):
         result, calls = run_scenario(name)
         merged = [v for v in calls if v["endpoint"].endswith("/merge")]
@@ -129,24 +136,20 @@ def main():
         require(len(comments) == 1, f"{name}: expected one outcome comment")
         body = comments[0]["fields"]["body"]
         if name == "refused":
-            require(result.returncode != 0 and not merged,
-                    "refused: must not call merge")
+            require(result.returncode != 0 and not merged, "refused: must not call merge")
             require("Merge refused before merge" in body, "refusal not reported")
         elif name == "unknown":
-            require(result.returncode != 0 and len(merged) == 1,
-                    "unknown: must not claim unattempted merge")
-            require("MERGE OUTCOME UNKNOWN" in body,
-                    "unknown merge outcome was not distinguished")
+            require(result.returncode != 0 and len(merged) == 1, "unknown: merge attempt required")
+            require("MERGE OUTCOME UNKNOWN" in body, "unknown outcome not distinguished")
         elif name == "post_fail":
-            require(result.returncode != 0 and len(merged) == 1,
-                    "post_fail: merge and failed lifecycle required")
+            require(result.returncode != 0 and len(merged) == 1, "post_fail: merge required")
             require(MERGE in body and "post-merge processing FAILED" in body,
                     "post_fail: accepted SHA/failure not reported")
             require(any("/dispatches" in v["endpoint"] for v in calls),
-                    "post_fail: independent stable-base dispatch skipped")
+                    "post_fail: stable-base dispatch skipped")
         else:
             require(result.returncode == 0 and len(merged) == 1,
-                    f"success: unexpected return code {result.returncode}, {result.stderr}")
+                    f"success: unexpected return code {result.returncode}")
             require(MERGE in body and "post-merge" not in body,
                     "success: accepted merge not reported")
         print(f"released merge command: {name} contract passed")

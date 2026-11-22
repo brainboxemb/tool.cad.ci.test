@@ -1,7 +1,8 @@
-"""Shared process helpers for independent released-stack acceptance cases.
+"""Shared helpers for external black-box acceptance cases.
 
-This module only invokes the exact pinned tool checkout and creates disposable
-case copies. Acceptance semantics stay in each case's own check.py.
+The reusable workflow already loaded the exact released tool and library stack.
+Cases invoke that stack through the public CLI; they do not clone, install or
+reimplement it.
 """
 
 from __future__ import annotations
@@ -11,9 +12,11 @@ import shutil
 import subprocess
 import sys
 
+import cad_ci_tool
+
 
 ROOT = Path(__file__).resolve().parents[1]
-CAD_CI = ROOT / "ext" / "cad-ci" / "cad-ci.py"
+TOOL_ROOT = Path(cad_ci_tool.__file__).resolve().parents[1]
 WORK_ROOT = ROOT / "output" / "cases"
 
 
@@ -41,10 +44,10 @@ def run_tool(
     cwd: Path | None = None,
     expect: int = 0,
 ) -> str:
-    """Run the exact bootstrapped tool and return combined output."""
+    """Run the exact released tool already loaded by the reusable workflow."""
 
     completed = subprocess.run(
-        [sys.executable, str(CAD_CI), *args],
+        [sys.executable, "-m", "cad_ci_tool", *args],
         cwd=cwd or ROOT,
         text=True,
         stdout=subprocess.PIPE,
