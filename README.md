@@ -7,7 +7,7 @@ The repository is intentionally a normal consumer:
 
 ```text
 .github/workflows/ci.yml
-  -> tool.cad.ci reusable-ci.yml@v0.24.0
+  -> tool.cad.ci reusable-ci.yml@v0.25.0
        -> root cad-ci.yml
             -> acceptance-suite
                  -> public cad_ci_tool CLI
@@ -30,6 +30,7 @@ The cases cover distinct public behavior such as:
 - nested configuration and output ownership;
 - dependency fan-out and dependency-output copy;
 - partial reruns and process participation;
+- declarative shared-builder configuration;
 - bounded SCons jobs;
 - directory outputs, cache restore, timeouts and failures;
 - durable build/Page publication against an isolated local Git remote;
@@ -56,6 +57,7 @@ The local README in each case is the maintenance contract for that case.
 | [active_dependents_case](active_dependents_case/README.md) | current |
 | [partial_rerun_case](partial_rerun_case/README.md) | current |
 | [process_case](process_case/README.md) | current |
+| [011_shared_builder](test_roots/011_shared_builder/README.md) | current; numbered test root |
 | [parallel_jobs_case](parallel_jobs_case/README.md) | current |
 | [directory_output_case](directory_output_case/README.md) | current |
 | [timeout_case](timeout_case/README.md) | current |
@@ -82,7 +84,7 @@ the released lane policy; manual/post-merge dispatches request a complete run:
 ```yaml
 jobs:
   acceptance:
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.24.0
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.25.0
     with:
       pr_policy_json: '{"stable_ref":"main","lane_refs":["dev-cad","dev-ci"],"docs_only_prefixes":["docs/"]}'
       full_run: ${{ github.event_name == 'workflow_dispatch' }}

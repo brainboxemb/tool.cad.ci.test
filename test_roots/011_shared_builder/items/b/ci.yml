@@ -1,0 +1,7 @@
+id: b
+kind: synthetic
+builder: shared
+
+watch:
+  item:
+    - input.txt
