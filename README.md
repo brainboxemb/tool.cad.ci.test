@@ -62,7 +62,7 @@ contract for that root.
 | [008_active_dependents](test_roots/008_active_dependents/README.md) | current |
 | [009_partial_rerun](test_roots/009_partial_rerun/README.md) | current |
 | [010_process](test_roots/010_process/README.md) | current |
-| [parallel_jobs_case](parallel_jobs_case/README.md) | current |
+| [012_parallel_jobs](test_roots/012_parallel_jobs/README.md) | current |
 | [directory_output_case](directory_output_case/README.md) | current |
 | [timeout_case](timeout_case/README.md) | current |
 | [publish_case](publish_case/README.md) | current |

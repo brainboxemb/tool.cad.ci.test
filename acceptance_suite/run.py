@@ -24,7 +24,7 @@ CASES = (
     "test_roots/008_active_dependents/check.py",
     "test_roots/009_partial_rerun/check.py",
     "test_roots/010_process/check.py",
-    "parallel_jobs_case/check.py",
+    "test_roots/012_parallel_jobs/check.py",
     "directory_output_case/check.py",
     "timeout_case/check.py",
     "publish_case/check.py",

@@ -1,59 +1,21 @@
 #!/usr/bin/env python3
-"""Black-box acceptance for released bounded parallel SCons jobs."""
+"""Black-box acceptance for released bounded parallel jobs."""
 
 from __future__ import annotations
 
 from datetime import datetime
 import json
 from pathlib import Path
-import shutil
 import sys
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from tests.support import run_tool
+from tests.support import fresh_case, run_tool
 
 
-def write(path: Path, text: str) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(text, encoding="utf-8")
-
-
-def make_repository(repo: Path) -> None:
-    shutil.rmtree(repo, ignore_errors=True)
-    repo.mkdir(parents=True)
-
-    write(repo / "cad-ci.yml", "schema: 1\nitems: [left, right]\n")
-
-    for name in ("left", "right"):
-        write(repo / name / "input.txt", f"{name}\n")
-        write(
-            repo / name / "run.py",
-            """import os
-from pathlib import Path
-import time
-
-time.sleep(1.5)
-out = Path(os.environ["CAD_CI_OUTPUT"])
-out.mkdir(parents=True, exist_ok=True)
-(out / "result.txt").write_text(
-    Path(__file__).with_name("input.txt").read_text(encoding="utf-8"),
-    encoding="utf-8",
-)
-""",
-        )
-        write(
-            repo / name / "ci.yml",
-            f"""id: {name}
-steps:
-  - id: build
-    inputs: [{name}/input.txt, {name}/run.py]
-    run: [python, run.py]
-    outputs: [result.txt]
-""",
-        )
+SOURCE = Path(__file__).resolve().parent
 
 
 def parse_timestamp(value: object) -> datetime:
@@ -70,8 +32,7 @@ def step_evidence(repo: Path, item: str) -> dict:
 
 
 def main() -> int:
-    repo = ROOT / "output" / "cases" / "parallel_jobs_case"
-    make_repository(repo)
+    repo = fresh_case(SOURCE, "012_parallel_jobs")
 
     output = run_tool(
         "run",
@@ -98,9 +59,6 @@ def main() -> int:
 
     assert left_start < left_finish
     assert right_start < right_finish
-
-    # Overlap is the public behavioral proof that the exact released jobs=2
-    # stack executed two independent SCons actions concurrently.
     assert left_start < right_finish and right_start < left_finish, (
         left["started_at"],
         left["finished_at"],
@@ -110,7 +68,7 @@ def main() -> int:
     )
 
     print(
-        "parallel_jobs_case passed; overlapping action intervals: "
+        "test_roots/012_parallel_jobs passed; overlapping action intervals: "
         f"left={left['started_at']}..{left['finished_at']} "
         f"right={right['started_at']}..{right['finished_at']}"
     )

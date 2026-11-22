@@ -22,7 +22,9 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
   - `007_dependency_copy`;
   - `008_active_dependents`;
   - `009_partial_rerun`;
-  - `010_process`.
+  - `010_process`;
+  - `011_shared_builder` — reserved/in qualification under #133;
+  - `012_parallel_jobs`.
 
 ## Current work
 
@@ -51,7 +53,7 @@ route or duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #114 Numbered standalone test roots | **now** | Audit/migrate the next distinct consumer use case after `010_process`. |
+| #114 Numbered standalone test roots | **now** | Audit/migrate the next distinct consumer use case after `012_parallel_jobs`; `011_shared_builder` remains owned by #133. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record resulting lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
 | #88 Align historical changelog | **later / docs-only** | No runtime impact. |

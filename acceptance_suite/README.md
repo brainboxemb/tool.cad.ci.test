@@ -41,7 +41,7 @@ a distinct public behavior not already covered elsewhere.
 | `test_roots/008_active_dependents` | current | Public direct-dependent selection context and target identity. |
 | `test_roots/009_partial_rerun` | current | Public --step/--until/--from selector semantics. |
 | `test_roots/010_process` | current | Public item-level process participation and exclusion. |
-| `parallel_jobs_case` | current | Public bounded `--jobs` behavior. |
+| `test_roots/012_parallel_jobs` | current | Public bounded --jobs concurrency using observable action intervals. |
 | `directory_output_case` | current | Directory outputs and CacheDir restore/repair. |
 | `timeout_case` | current | Timeout, override and command failure behavior. |
 | `publish_case` | current | Durable build and Pages publication contract. |
