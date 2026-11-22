@@ -6,7 +6,7 @@ from __future__ import annotations
 from pathlib import Path
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from tests.support import fresh_case, read_json, run_tool
@@ -21,14 +21,14 @@ def item_state(root: Path, relative: str) -> bytes:
 
 
 def main() -> int:
-    repo = fresh_case(SOURCE, "nested_publish_case")
+    repo = fresh_case(SOURCE, "005_nested_publish")
 
     cold = run_tool("run", "--repo", str(repo))
     assert "built: parent:build" in cold, cold
     assert "built: child:build" in cold, cold
 
     candidate = repo / "build"
-    out = ROOT / "output" / "nested_publish_case"
+    out = ROOT / "output" / "005_nested_publish"
     out.mkdir(parents=True, exist_ok=True)
 
     main_scope = out / "main"
@@ -184,7 +184,7 @@ def main() -> int:
         child_updated / "items/model/reference/child.txt"
     ).read_text() == "child-v2\n"
 
-    print("nested_publish_case passed")
+    print("test_roots/005_nested_publish passed")
     return 0
 
 
