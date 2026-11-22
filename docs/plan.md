@@ -9,7 +9,8 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
   `716d22ce79551155b68413bd50fe3bf9d15d2254`;
 - v0.27.1 pins `lib.py.cad.ci 0.12.0` @
   `64656db8df528a5c0de799e62c0f028fd0133486`;
-- released-stack acceptance passed on v0.27.1 adoption PR #192;\n- stable-to-dev-ci synchronization PR #190 then succeeded through the fixed shared `/merge` path;
+- released-stack acceptance passed on v0.27.1 adoption PR #192;
+- stable-to-dev-ci synchronization PR #190 then succeeded through the fixed shared `/merge` path;
 - branch-governance live acceptance is complete:
   - #180 / run `45070007017` proved conservative `/cleanup-branches`
     deletion and preservation of unique/unmerged history;
@@ -18,7 +19,7 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 - after #186 the stale historical set from the branch audit is gone; only
   permanent refs plus independently active concurrent work remain;
 - v0.25/main + numbered dev-ci histories were reconciled by PR #140;
-- numbered standalone test roots `001` through `012` are present on
+- numbered standalone test roots `001` through `015` are present on
   `dev-ci`;
 - declarative builder migrations accepted on `dev-ci`:
   - `001_simple` — PR #143;
@@ -33,26 +34,13 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
   - `010_process` — PR #179;
   - `011_shared_builder` — original canonical reference;
   - `012_parallel_jobs` — PR #183;
+  - `013_directory_output` — PR #194;
+  - `014_timeout` — PR #196;
+  - `015_publish` — PR #198;
 - acceptance timing observability landed in PR #159;
 - non-failing timing budgets landed in PR #175.
 
 ## Current work
-
-### #114 — normalize remaining external cases into numbered test roots
-
-All existing numbered roots `001` through `012` satisfy the enforced
-declarative builder architecture. #142/#184 are complete.
-
-The remaining historical top-level cases have now been classified:
-
-- `013_directory_output` — migrated and accepted from the former top-level `directory_output_case`;
-- `014_timeout` — migrated and accepted from the former top-level `timeout_case`;
-- `publish_case` — current final normal CAD-CI consumer migration as `015_publish` under #197;
-- `workflow_case` — keep top-level as the outer reusable-workflow harness;
-- `merge_policy_case` — keep top-level as a separately identified governance
-  API harness.
-
-Do not mechanically migrate the two special API harnesses.
 
 ### #98 — permanent lane integration
 
@@ -70,11 +58,18 @@ duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #142 Declarative builder migration | **now** | `001`–`012` migrated; qualify durable architecture enforcement under #184, then close. |
-| #114 Numbered standalone test roots | **blocked by #142 for normal roots** | Resume remaining top-level fixture migration after builder migration. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
 | #88 Align historical changelog | **later / docs-only** | No runtime impact. |
+
+## Completed normalization
+
+Numbered-root normalization is complete under #114. All normal synthetic CAD-CI
+consumer fixtures live below `test_roots/001` through `test_roots/015` and
+are guarded by the declarative architecture validator. `workflow_case`
+remains top-level because it accepts the outer reusable-workflow boundary;
+`merge_policy_case` remains top-level as the separately identified
+merge-governance API harness.
 
 ## Boundary
 
