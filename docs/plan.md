@@ -3,42 +3,41 @@
 Current source of truth for unfinished work in `tool.cad.ci.test`
 (2026-11-22).
 
-## Baseline
+## Accepted baseline
 
-- accepted baseline: `tool.cad.ci v0.23.0`;
-- `v0.23.0` pins `lib.py.cad.ci 0.11.1`;
-- config-driven external acceptance passed in PR #94;
+- `tool.cad.ci v0.24.0` @
+  `18d374fad83e61b9a9b057931352ce4a2c8e2252`;
+- `lib.py.cad.ci 0.11.1` @
+  `fa6bf244381dde609a0b04de673d774911c52fea`;
+- v0.24.0 external acceptance passed in #102 / PR #104;
+- config-driven acceptance architecture passed in PR #94;
 - case ownership/documentation cleanup passed in PR #97.
 
 ## Current work
 
-### #98 — establish permanent lane integration
+### #98 — permanent lane integration
 
-Make this repository the real external consumer of the standard permanent-lane
-contract:
+Continue exercising the real external permanent-lane contract on
+`main`, `dev-cad` and `dev-ci` using
+`reusable-ci.yml@v0.24.0` and the released lane/merge policy.
 
-1. maintain permanent `main`, `dev-cad` and `dev-ci` branches;
-2. use released `reusable-ci.yml@v0.23.0` with canonical lane PR policy;
-3. keep one normal workflow route only;
-4. use released merge-policy for history-preserving lane promotion and
-   synchronization;
-5. dispatch the same `ci.yml` for complete post-merge integration validation;
-6. prove issue/feature -> lane, docs-only lane PR, lane -> main promotion and
-   main -> lane synchronization with real GitHub PRs;
-7. keep `delete_branch_on_merge=false` and merge commits enabled.
+### #106 — prove dev-cad to main promotion
 
-Repository settings were verified before integration work:
-`delete_branch_on_merge=false`, `allow_merge_commit=true`.
+Complete the current real promotion proof after the docs-only lane change.
+Keep this as integration evidence; do not add another acceptance execution
+route or duplicate generic merge/classification logic.
 
 ## Open issue assessment
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #98 Permanent lane integration | **now** | Land consumer wrappers on dev-ci, then exercise real lane PR paths. |
+| #106 dev-cad -> main promotion proof | **now** | Finish the real promotion scenario and record resulting lane evidence. |
+| #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
 | #88 Align historical changelog | **later / docs-only** | No runtime impact. |
 
 ## Boundary
 
 This repository owns external acceptance/integration evidence only. Generic
 lane classification, merge policy and CAD-CI behavior remain in the released
-tool/library stack.
+tool/library stack. Every retained acceptance case stays locally documented and
+must prove a distinct public contract.

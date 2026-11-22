@@ -7,7 +7,7 @@ The repository is intentionally a normal consumer:
 
 ```text
 .github/workflows/ci.yml
-  -> tool.cad.ci reusable-ci.yml@v0.23.0
+  -> tool.cad.ci reusable-ci.yml@v0.24.0
        -> root cad-ci.yml
             -> acceptance-suite
                  -> public cad_ci_tool CLI
@@ -82,7 +82,7 @@ the released lane policy; manual/post-merge dispatches request a complete run:
 ```yaml
 jobs:
   acceptance:
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.23.0
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.24.0
     with:
       pr_policy_json: '{"stable_ref":"main","lane_refs":["dev-cad","dev-ci"],"docs_only_prefixes":["docs/"]}'
       full_run: ${{ github.event_name == 'workflow_dispatch' }}
