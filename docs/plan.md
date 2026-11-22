@@ -18,7 +18,8 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
   - `003_fresh_runner`;
   - `004_nested_items`;
   - `005_nested_publish`;
-  - `006_dependencies`.
+  - `006_dependencies`;
+  - `007_dependency_copy`.
 
 ## Current work
 
@@ -47,7 +48,7 @@ route or duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #114 Numbered standalone test roots | **now** | Audit/migrate the next distinct consumer use case after `006_dependencies`. |
+| #114 Numbered standalone test roots | **now** | Audit/migrate the next distinct consumer use case after `007_dependency_copy`. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record resulting lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
 | #88 Align historical changelog | **later / docs-only** | No runtime impact. |
