@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   consumer:
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@df164f8c217429a3e6316938510dbd944e1ecf21
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@fea554c4c30d89847367e236b2311fcee03beff6
     with:
       full_run: true
       jobs: 2
@@ -20,7 +20,7 @@ jobs:
 
   no_output:
     needs: consumer
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@df164f8c217429a3e6316938510dbd944e1ecf21
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@fea554c4c30d89847367e236b2311fcee03beff6
     with:
       upload_build: true
       build_artifact_name: cad-ci-empty-acceptance
@@ -160,7 +160,7 @@ jobs:
     # Advanced plan workflow deserves a real API test, not YAML text matching.
     permissions:
       contents: read
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-plan.yml@df164f8c217429a3e6316938510dbd944e1ecf21
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-plan.yml@fea554c4c30d89847367e236b2311fcee03beff6
     with:
       full_run: true
 
@@ -174,7 +174,7 @@ jobs:
     steps:
       - name: Run exact candidate action in run-only mode
         id: cad
-        uses: brainboxemb/tool.cad.ci@df164f8c217429a3e6316938510dbd944e1ecf21
+        uses: brainboxemb/tool.cad.ci@fea554c4c30d89847367e236b2311fcee03beff6
         with:
           source_sha: ${{ github.event.pull_request.head.sha }}
           full_run: "true"
@@ -183,7 +183,7 @@ jobs:
 
       - name: Check candidate CLI remains available in the same runner
         env:
-          ACCEPTED_LIBRARY: e2ba78d6024e6d3d4829fb0eeccc18516183280a
+          ACCEPTED_LIBRARY: fa6bf244381dde609a0b04de673d774911c52fea
           ACTION_LIBRARY: ${{ steps.cad.outputs.library_revision }}
         run: |
           if [ "$ACCEPTED_LIBRARY" != "$ACTION_LIBRARY" ]; then
@@ -199,7 +199,7 @@ jobs:
     permissions:
       contents: write
       packages: read
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-pr.yml@df164f8c217429a3e6316938510dbd944e1ecf21
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-pr.yml@fea554c4c30d89847367e236b2311fcee03beff6
     with:
       full_run: true
       jobs: 2
@@ -423,7 +423,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: brainboxemb/tool.cad.ci
-          ref: df164f8c217429a3e6316938510dbd944e1ecf21
+          ref: fea554c4c30d89847367e236b2311fcee03beff6
           path: candidate/cad-ci
           fetch-depth: 1
           persist-credentials: false
