@@ -29,9 +29,10 @@ executable `steps:` / `run:`.
 
 Migrate the already-numbered roots before adding more normal test roots.
 `001_simple` is migrated and accepted on `dev-ci` by PR #143.
-`002_selection` is the current migration under #144; it replaces two inline
+`002_selection` is migrated and accepted on `dev-ci` by PR #145.
+`003_fresh_runner` is the current migration under #146; it replaces duplicated
 item runners with one shared repository-owned builder while preserving the
-changed-path selection contract.
+explicit base/head fresh-clone contract.
 
 `007_dependency_copy` and `009_partial_rerun` require explicit design checks
 because their public contracts involve copy/step-selection semantics.
@@ -60,7 +61,7 @@ duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #142 Declarative builder migration | **now** | `001_simple` complete; qualify `002_selection`, then continue existing roots in order. |
+| #142 Declarative builder migration | **now** | `001_simple` and `002_selection` complete; qualify `003_fresh_runner`, then continue in order. |
 | #114 Numbered standalone test roots | **blocked by #142 for normal roots** | Resume remaining top-level fixture migration after builder migration. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
