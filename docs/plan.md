@@ -24,6 +24,11 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ## Current work
 
+### #180 — qualify released branch-cleanup governance
+
+Adopt `tool.cad.ci v0.26.0` on the default-branch CI/merge wrappers and add the canonical owner-only `/cleanup-branches` wrapper. After the change reaches `main`, create a disposable integrated temporary ref and prove the released workflow deletes it through a real `issue_comment` run. Then audit the same conservative command against the existing stale branch set; unique/unmerged refs must remain.
+
+
 ### #142 — migrate numbered roots to declarative builders
 
 Use `test_roots/011_shared_builder` as the canonical builder-model reference.
@@ -84,6 +89,7 @@ duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
+| #180 Branch-cleanup governance acceptance | **now / live integration** | Land the v0.26.0 wrappers on default `main`, run `/cleanup-branches`, and record real ref-deletion evidence. |
 | #142 Declarative builder migration | **now** | Qualify `008_active_dependents`, then continue existing roots in order. |
 | #156 Acceptance duration | **active measurement** | Collect timings from subsequent real acceptance runs; derive soft budgets later. |
 | #154 Live GitHub workflow scenarios | **active** | Maintain real PR/lane/merge workflow acceptance separately from test roots. |
