@@ -9,7 +9,7 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
   `716d22ce79551155b68413bd50fe3bf9d15d2254`;
 - v0.27.1 pins `lib.py.cad.ci 0.12.0` @
   `64656db8df528a5c0de799e62c0f028fd0133486`;
-- released-stack acceptance passed with all 18 cases on PR #187;
+- released-stack acceptance passed on v0.27.1 adoption PR #192;\n- stable-to-dev-ci synchronization PR #190 then succeeded through the fixed shared `/merge` path;
 - branch-governance live acceptance is complete:
   - #180 / run `45070007017` proved conservative `/cleanup-branches`
     deletion and preservation of unique/unmerged history;
@@ -38,32 +38,22 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ## Current work
 
-### #191 — adopt v0.27.1 and re-qualify stable-to-lane merge
-
-Adopt the released `tool.cad.ci v0.27.1` stack on default `main`. This patch fixes the `/merge` self-check indexing race reproduced by PR #190. After this PR lands, PR #190 must re-run against the new `main` head and succeed through the normal shared `/merge` synchronization path before #114 continues.
-
-
-### #142 — migrate numbered roots to declarative builders
-
-All existing numbered roots `001` through `012` now use the declarative
-builder boundary; `011_shared_builder` remains the canonical shared-builder
-reference.
-
-Final qualification is #184: enforce the architecture on every acceptance run
-so item/repository configuration cannot drift back to executable
-`steps:` / `run:` or item-local `run.py` files.
-
-After #184 passes, close #142 and resume #114 for the remaining historical
-top-level normal consumer cases.
-
-Acceptance timing is part of the accepted baseline: PR #159 added per-case
-evidence and PR #175 added conservative non-failing soft budgets.
 ### #114 — normalize remaining external cases into numbered test roots
 
-#114 owns only the remaining historical top-level fixture audit/migration after
-the existing numbered roots prove the builder architecture.
+All existing numbered roots `001` through `012` satisfy the enforced
+declarative builder architecture. #142/#184 are complete.
 
-Do not mechanically migrate special workflow/governance harness cases.
+The remaining historical top-level cases have now been classified:
+
+- `directory_output_case` — normal CAD-CI consumer; migrate as
+  `013_directory_output` under #193;
+- `timeout_case` — normal CAD-CI consumer; migrate after 013;
+- `publish_case` — normal durable publication consumer; migrate after timeout;
+- `workflow_case` — keep top-level as the outer reusable-workflow harness;
+- `merge_policy_case` — keep top-level as a separately identified governance
+  API harness.
+
+Do not mechanically migrate the two special API harnesses.
 
 ### #98 — permanent lane integration
 
