@@ -1,0 +1,7 @@
+id: batch
+kind: synthetic
+builder: batch-context
+
+watch:
+  item:
+    - input.txt

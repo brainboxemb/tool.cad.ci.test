@@ -7,18 +7,7 @@ watch:
   - acceptance_suite/**
   - tests/**
   - workflow_case/**
-  - simple_case1/**
-  - more_complex_case2/**
-  - fresh_runner_case/**
-  - nested_item_case/**
-  - nested_publish_case/**
-  - dependency_case/**
-  - dependency_copy_case/**
-  - active_dependents_case/**
-  - partial_rerun_case/**
-  - process_case/**
   - test_roots/**
-  - parallel_jobs_case/**
   - directory_output_case/**
   - timeout_case/**
   - publish_case/**
@@ -30,18 +19,7 @@ steps:
       - acceptance_suite/run.py
       - tests/**
       - workflow_case/**
-      - simple_case1/**
-      - more_complex_case2/**
-      - fresh_runner_case/**
-      - nested_item_case/**
-      - nested_publish_case/**
-      - dependency_case/**
-      - dependency_copy_case/**
-      - active_dependents_case/**
-      - partial_rerun_case/**
-      - process_case/**
       - test_roots/**
-      - parallel_jobs_case/**
       - directory_output_case/**
       - timeout_case/**
       - publish_case/**
@@ -49,4 +27,5 @@ steps:
     run: [python, run.py]
     outputs:
       - accepted.txt
+      - case-durations.json
       - result.txt

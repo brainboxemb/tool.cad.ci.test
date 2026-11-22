@@ -40,6 +40,21 @@ tool itself pins the exact library revision.
 Repository settings must keep merge commits enabled and
 `delete_branch_on_merge=false`.
 
+## Live GitHub integration
+
+`test_roots/*` do not prove GitHub trigger behavior. Real branch/PR/merge
+contracts live under `integration_scenarios/*` and require actual GitHub state.
+
+For live scenarios:
+
+- use real short-lived branches and PRs in this test repository;
+- use the released reusable CI and merge-policy workflows;
+- never replace the scenario with mocked event payloads or local CLI calls;
+- keep `ci.yml` and `merge-policy.yml` on the same accepted tool release;
+- record mutable evidence in GitHub PRs/issues/Actions, not in stable specs.
+
+Do not create a second workflow implementation just to test the first one.
+
 ## Black-box boundary
 
 Acceptance cases may invoke the public `cad_ci_tool` CLI through subprocesses.
@@ -54,11 +69,24 @@ Do not add a local workaround.
 
 ## Case organization
 
+Standalone synthetic consumer repositories live under:
+
+```text
+test_roots/
+  001_name/
+  002_name/
+  ...
+```
+
+Use three-digit numeric prefixes. Every test root owns its own root
+`cad-ci.yml`; do not make the acceptance-repository root configuration stand
+in for a test root's configuration.
+
 Distinct synthetic repositories may remain only when they prove genuinely
 different public behavior. GitHub Actions must not enumerate them individually;
 the configured `acceptance_suite` owns that sequence.
 
-Every registered top-level case must have a local `README.md` with:
+Every registered case root must have a local `README.md` with:
 
 - `Status:`;
 - purpose;

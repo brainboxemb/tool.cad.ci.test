@@ -1,8 +1,0 @@
-id: consumer-b
-needs: [batch]
-watch: [consumer-b/**]
-steps:
-  - id: verify
-    inputs: [consumer-b/run.py]
-    run: [python, run.py]
-    outputs: [result.txt]

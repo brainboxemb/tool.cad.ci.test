@@ -1,0 +1,18 @@
+schema: 1
+
+builders:
+  reference: ci/builders/reference
+
+templates:
+  reference:
+    kind: reference
+    builder: reference
+    watch:
+      item:
+        - "**"
+        - ../verification/reference_geometry.json
+      repo:
+        - shared.txt
+
+items:
+  - examples/*/*

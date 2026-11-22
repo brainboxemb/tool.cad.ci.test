@@ -1,0 +1,7 @@
+id: unrelated
+kind: synthetic
+builder: verify-item
+
+watch:
+  item:
+    - "**"

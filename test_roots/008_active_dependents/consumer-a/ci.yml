@@ -1,0 +1,9 @@
+id: consumer-a
+kind: synthetic
+builder: verify-item
+needs:
+  - batch
+
+watch:
+  item:
+    - "**"

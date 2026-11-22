@@ -1,0 +1,5 @@
+id: consumer-a
+kind: synthetic
+builder: materialize
+needs:
+  - batch

@@ -1,7 +1,0 @@
-id: beta
-watch: [beta/**, shared.txt]
-steps:
-  - id: build
-    inputs: [beta/input.txt, beta/run.py, shared.txt]
-    run: [python, run.py]
-    outputs: [result.txt]

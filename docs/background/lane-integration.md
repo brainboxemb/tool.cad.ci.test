@@ -72,6 +72,11 @@ A docs-only probe is valid only when the changed paths are all beneath
 `docs/`; changes to workflows, root configuration or acceptance fixtures must
 run normal CAD-CI.
 
+The probe must exercise the currently accepted released workflow. Historical
+success on an older tool release is background evidence only; it does not
+qualify the current release. The current live acceptance target is
+`tool.cad.ci v0.25.0`.
+
 ## What this repository proves
 
 The repository provides real GitHub evidence for:

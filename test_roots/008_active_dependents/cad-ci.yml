@@ -1,0 +1,11 @@
+schema: 1
+
+items:
+  - batch
+  - consumer-a
+  - consumer-b
+  - unrelated
+
+builders:
+  batch-context: ci/builders/batch-context
+  verify-item: ci/builders/verify-item

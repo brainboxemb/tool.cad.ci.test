@@ -1,0 +1,11 @@
+schema: 1
+description: Minimal hello/timestamp builder
+
+steps:
+  - id: build
+    inputs:
+      item:
+        - hello.md
+    run: 'python "$CAD_CI_BUILDER_PATH/build.py"'
+    outputs:
+      - hello.md

@@ -1,0 +1,10 @@
+id: right
+
+steps:
+  - id: build
+    inputs:
+      - right/input.txt
+      - right/run.py
+    run: [python, run.py]
+    outputs:
+      - result.txt

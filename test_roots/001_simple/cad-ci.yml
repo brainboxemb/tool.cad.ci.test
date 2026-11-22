@@ -1,0 +1,7 @@
+schema: 1
+
+items:
+  - .
+
+builders:
+  simple: ci/builders/simple
