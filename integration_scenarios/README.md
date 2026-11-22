@@ -41,7 +41,7 @@ this repository.
 `.github/workflows/ci.yml` and `.github/workflows/merge-policy.yml` must use
 the same accepted released `tool.cad.ci` version.
 
-Current accepted version: `v0.25.0`.
+Current accepted version: `v0.27.1`.
 
 ## Evidence
 
