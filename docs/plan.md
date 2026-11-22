@@ -1,45 +1,33 @@
 # Repository plan
 
 Current source of truth for unfinished work in `tool.cad.ci.test`
-(2026-11-22). This repository accepts the exact immutable CAD-CI tool/library
-stack with independent generic consumer cases. It owns no CAD-CI algorithms.
+(2026-11-22). This repository is the permanent external black-box acceptance
+repository and owns no CAD-CI algorithms.
 
-## Released stack under acceptance
+## Accepted baseline
 
 - `tool.cad.ci 0.21.0` @
   `b1474f6be66dc0236f2a5c2555af07a100447255`.
 - `lib.py.cad.ci 0.11.1` @
   `fa6bf244381dde609a0b04de673d774911c52fea`.
-- `dependencies.repos`, reusable workflows, advanced plan API, root action
-  and merge-policy checks all use the exact released tool commit.
-- The durable same-runner case now also executes the released 0.21.0 stack.
+- Acceptance PR #87 was squashed to main @
+  `8218effedfc25c70b76d4237c15d1ff7aa47b709`.
+- Full released-stack run `45045346481` succeeded.
 
-## Current work: #86 released-stack acceptance
+`dependencies.repos`, public reusable workflows, the advanced plan API, root
+composite action, durable same-runner case and merge-policy checks all exercise
+the exact released tool stack.
 
-Run the complete existing black-box suite against 0.21.0 / 0.11.1:
+## Current work
 
-1. public `reusable-ci.yml` normal and no-output cases;
-2. public advanced `reusable-plan.yml`;
-3. root composite action run-only and durable same-runner paths;
-4. one-job/one-runner `reusable-pr.yml` verification path;
-5. merge-policy classification plus released `merge_command.py` behavior
-   through an isolated fake GitHub API;
-6. all CLI/SCons/build-store/Pages/publication consumer cases.
+No acceptance migration is active. Future tool/library releases must be pinned
+here by exact immutable commit and pass the full suite before Forge/CAD adoption.
 
-A failure is fixed in the owning tool/library repository, never patched around
-here.
+A failure belongs in the owning library/tool repository; do not patch around
+generic behavior in this test repository.
 
-## Promotion gate
-
-After this PR is green:
-- merge it to `main` so the permanent acceptance baseline is 0.21.0 / 0.11.1;
-- record the exact acceptance run in tool.cad.ci #110 and meta.cad.solidcraft #2;
-- only then repin Forge/CAD consumers.
-
-## Issue assessment
+## Open issue assessment
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #86 Released-stack qualification | **now** | Complete exact 0.21.0 / 0.11.1 acceptance and merge the new baseline. |
-
-Release-stability rules in `AGENTS.md` remain authoritative.
+| #88 Align historical changelog with shared meta template and guidance | **later / docs-only** | Apply shared changelog presentation without changing acceptance behavior. |
