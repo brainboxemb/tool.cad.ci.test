@@ -61,7 +61,7 @@ contract for that root.
 | [007_dependency_copy](test_roots/007_dependency_copy/README.md) | current |
 | [008_active_dependents](test_roots/008_active_dependents/README.md) | current |
 | [009_partial_rerun](test_roots/009_partial_rerun/README.md) | current |
-| [process_case](process_case/README.md) | current |
+| [010_process](test_roots/010_process/README.md) | current |
 | [parallel_jobs_case](parallel_jobs_case/README.md) | current |
 | [directory_output_case](directory_output_case/README.md) | current |
 | [timeout_case](timeout_case/README.md) | current |

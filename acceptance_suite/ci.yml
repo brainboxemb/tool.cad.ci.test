@@ -8,7 +8,6 @@ watch:
   - tests/**
   - workflow_case/**
   - test_roots/**
-  - process_case/**
   - parallel_jobs_case/**
   - directory_output_case/**
   - timeout_case/**
@@ -22,7 +21,6 @@ steps:
       - tests/**
       - workflow_case/**
       - test_roots/**
-      - process_case/**
       - parallel_jobs_case/**
       - directory_output_case/**
       - timeout_case/**

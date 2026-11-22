@@ -5,7 +5,7 @@ from pathlib import Path
 import json
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from tests.support import fresh_case, run_tool
@@ -14,7 +14,7 @@ SOURCE = Path(__file__).resolve().parent
 
 
 def main() -> int:
-    repo = fresh_case(SOURCE, "process_case")
+    repo = fresh_case(SOURCE, "010_process")
 
     plan = json.loads(run_tool("plan", "--repo", str(repo), "--json"))
     ids = [row["id"] for row in plan]
@@ -64,7 +64,7 @@ def main() -> int:
     )
     assert "item is not processed: disabled" in explicit
 
-    print("process_case passed")
+    print("test_roots/010_process passed")
     return 0
 
 
