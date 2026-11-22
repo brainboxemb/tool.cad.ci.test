@@ -1,8 +1,7 @@
 id: batch
-steps:
-  - id: build
-    inputs:
-      - batch/input.txt
-      - batch/build.py
-    run: [python, build.py]
-    outputs: [items]
+kind: synthetic
+builder: batch
+
+watch:
+  item:
+    - input.txt
