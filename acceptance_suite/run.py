@@ -95,7 +95,7 @@ def main() -> int:
     output = Path(os.environ["CAD_CI_OUTPUT"])
     output.mkdir(parents=True, exist_ok=True)
     (output / "accepted.txt").write_text(
-        "tool.cad.ci v0.23.0 released-stack acceptance passed\n",
+        "tool.cad.ci v0.24.0 released-stack acceptance passed\n",
         encoding="utf-8",
     )
     return 0
