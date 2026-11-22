@@ -5,7 +5,7 @@ Status: current
 ## Purpose
 
 Standalone consumer repository for public
-`selection_context: direct_dependents` behavior.
+`selection_context: direct_dependents` behavior using declarative builders.
 
 ## Public contract
 
@@ -20,6 +20,20 @@ The case proves:
 5. a full run exposes both active consumers while unrelated work remains
    independent.
 
+## Declarative builder contract
+
+`cad-ci.yml` defines two builder aliases:
+
+- `batch-context` owns the producer step and
+  `selection_context: direct_dependents`;
+- `verify-item` is shared by consumer-a, consumer-b and unrelated.
+
+Item `ci.yml` files contain only identity/kind, builder selection, dependency
+and watch configuration. They contain no executable `steps:` or `run:`.
+
+The shared verify builder uses `CAD_CI_ITEM` to produce item-specific output,
+so the three former item-local `run.py` files are unnecessary.
+
 ## Fixture
 
 `batch` is a shared producer. `consumer-a` and `consumer-b` depend on it.
@@ -28,6 +42,7 @@ context.
 
 ## Failure ownership
 
-Selection context and target-signature semantics belong in `lib.py.cad.ci`.
+Selection context, builder resolution and target-signature semantics belong in
+`lib.py.cad.ci`.
 
 Ordinary dependency traversal is covered by `test_roots/006_dependencies`.

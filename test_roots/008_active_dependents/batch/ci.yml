@@ -1,11 +1,7 @@
 id: batch
+kind: synthetic
+builder: batch-context
+
 watch:
-  - batch/**
-steps:
-  - id: build
-    inputs:
-      - batch/input.txt
-      - batch/build.py
-    selection_context: direct_dependents
-    run: [python, build.py]
-    outputs: [active.json]
+  item:
+    - input.txt

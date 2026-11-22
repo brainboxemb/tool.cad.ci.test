@@ -19,6 +19,7 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
   - `004_nested_items` — PR #149;
   - `005_nested_publish` — PR #151;
   - `006_dependencies` — PR #153;
+  - `007_dependency_copy` — PR #161;
 - acceptance timing observability landed in PR #159.
 
 ## Current work
@@ -31,11 +32,11 @@ Normal executable item `ci.yml` files should contain item identity,
 `builder:`, selection/watch/dependency/process configuration, but not
 executable `steps:` / `run:`.
 
-`007_dependency_copy` is the current migration under #155. Its engine-native
-`copy:` action moves into a shared repository-owned builder; consumer item
-configs retain only identity, builder selection and dependency declaration.
+`008_active_dependents` is the current migration under #164. The producer's
+`selection_context: direct_dependents` moves into a repository-owned builder,
+while consumer/unrelated verification shares one generic builder.
 
-After `007`, continue existing numbered roots in order. `009_partial_rerun`
+After `008`, continue existing numbered roots in order. `009_partial_rerun`
 still requires an explicit design check because its public contract selects
 builder steps.
 
@@ -43,18 +44,16 @@ builder steps.
 
 Per-case timing and machine-readable evidence landed in PR #159.
 
-First measured baseline from run `45067237488`:
+Measured baselines:
 
-- total measured case time: 24.294 s across 18 cases;
-- `publish_case`: 5.867 s;
-- `timeout_case`: 2.946 s;
-- `006_dependencies`: 1.823 s;
-- `012_parallel_jobs`: 1.752 s;
-- `009_partial_rerun`: 1.576 s;
-- `008_active_dependents`: 1.416 s.
+- run `45067237488`: 24.294 s across 18 cases;
+- run `45067522266`: 24.842 s across 18 cases (+2.3%).
+
+The second run moved individual cases in both directions, so the current
+difference is normal shared-runner variation rather than a regression signal.
 
 Keep #156 open while subsequent accepted runs establish enough evidence for
-soft performance budgets. Do not introduce hard thresholds from a single run.
+soft performance budgets. Do not introduce hard thresholds yet.
 
 ### #154 — formalize live GitHub workflow scenarios
 
@@ -85,7 +84,7 @@ duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #142 Declarative builder migration | **now** | Qualify `007_dependency_copy`, then continue existing roots in order. |
+| #142 Declarative builder migration | **now** | Qualify `008_active_dependents`, then continue existing roots in order. |
 | #156 Acceptance duration | **active measurement** | Collect timings from subsequent real acceptance runs; derive soft budgets later. |
 | #154 Live GitHub workflow scenarios | **active** | Maintain real PR/lane/merge workflow acceptance separately from test roots. |
 | #114 Numbered standalone test roots | **blocked by #142 for normal roots** | Resume remaining top-level fixture migration after builder migration. |

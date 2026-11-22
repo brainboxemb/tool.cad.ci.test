@@ -1,8 +1,9 @@
 id: consumer-b
-needs: [batch]
-watch: [consumer-b/**]
-steps:
-  - id: verify
-    inputs: [consumer-b/run.py]
-    run: [python, run.py]
-    outputs: [result.txt]
+kind: synthetic
+builder: verify-item
+needs:
+  - batch
+
+watch:
+  item:
+    - "**"
