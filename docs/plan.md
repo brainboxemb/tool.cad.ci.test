@@ -45,9 +45,8 @@ declarative builder architecture. #142/#184 are complete.
 
 The remaining historical top-level cases have now been classified:
 
-- `directory_output_case` — normal CAD-CI consumer; migrate as
-  `013_directory_output` under #193;
-- `timeout_case` — normal CAD-CI consumer; migrate after 013;
+- `013_directory_output` — migrated and accepted from the former top-level `directory_output_case`;
+- `timeout_case` — current normal CAD-CI consumer migration as `014_timeout` under #195;
 - `publish_case` — normal durable publication consumer; migrate after timeout;
 - `workflow_case` — keep top-level as the outer reusable-workflow harness;
 - `merge_policy_case` — keep top-level as a separately identified governance
