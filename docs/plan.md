@@ -5,15 +5,23 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ## Accepted baseline
 
-- `tool.cad.ci v0.24.0` @
-  `18d374fad83e61b9a9b057931352ce4a2c8e2252`;
-- `lib.py.cad.ci 0.11.1` @
-  `fa6bf244381dde609a0b04de673d774911c52fea`;
+- previously accepted: `tool.cad.ci v0.24.0` /
+  `lib.py.cad.ci 0.11.1`;
+- candidate under #133: `tool.cad.ci v0.25.0` @
+  `92b9cbb59bf24f6b47ba1fae267f67f2becc503f` with
+  `lib.py.cad.ci 0.12.0` @
+  `64656db8df528a5c0de799e62c0f028fd0133486`;
 - v0.24.0 external acceptance passed in #102 / PR #104;
 - config-driven acceptance architecture passed in PR #94;
 - case ownership/documentation cleanup passed in PR #97.
 
 ## Current work
+
+### #133 — declarative shared-builder acceptance
+
+Qualify released v0.25.0 with `test_roots/011_shared_builder`. Prove two
+items can share one repository-owned builder while their item `ci.yml` files
+remain declarative.
 
 ### #98 — permanent lane integration
 
@@ -31,7 +39,9 @@ route or duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #106 dev-cad -> main promotion proof | **now** | Finish the real promotion scenario and record resulting lane evidence. |
+| #133 v0.25.0 shared-builder acceptance | **now** | Run the full suite on v0.25.0 and prove test_roots/011_shared_builder. |
+| #114 Migrate acceptance cases to numbered test roots | **active umbrella** | Continue incremental documented migrations; new normal cases go directly under test_roots/. |
+| #106 dev-cad -> main promotion proof | **now / separate integration** | Finish the real promotion scenario and record resulting lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
 | #88 Align historical changelog | **later / docs-only** | No runtime impact. |
 
