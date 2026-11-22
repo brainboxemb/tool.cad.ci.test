@@ -1,0 +1,3 @@
+id: publish-b
+kind: synthetic
+builder: publish-item
