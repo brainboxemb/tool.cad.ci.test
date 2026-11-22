@@ -10,7 +10,7 @@ import shutil
 import subprocess
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from tests.support import read_json, run_tool
@@ -291,7 +291,7 @@ def removed_item_build_store_checks(
         "--source-commit",
         source_sha,
         "--changed",
-        "items/a/run.py",
+        "items/a/ci.yml",
     )
     assert (mixed / "items/a/result.txt").read_text() == "a\n"
     assert not (mixed / "items/b").exists()
@@ -451,7 +451,7 @@ def main() -> int:
     shutil.rmtree(CASE / ".cache", ignore_errors=True)
     run_tool("run", "--repo", str(CASE))
 
-    out = ROOT / "output" / "publish_case"
+    out = ROOT / "output" / "015_publish"
     shutil.rmtree(out, ignore_errors=True)
     out.mkdir(parents=True)
     local_build_store_checks(out, source_sha)
@@ -699,7 +699,7 @@ def main() -> int:
         assert stable["source_commit"] == source_sha
         assert stable["build_commit"] == build_commit
 
-    print("publish_case passed")
+    print("test_roots/015_publish passed")
     return 0
 
 
