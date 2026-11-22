@@ -5,12 +5,12 @@ import os
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parent
+ITEM = Path(os.environ["CAD_CI_ITEM_PATH"])
 OUTPUT = Path(os.environ["CAD_CI_OUTPUT"])
 
 
 def main() -> int:
-    source = (ROOT / "hello.md").read_text(encoding="utf-8").rstrip()
+    source = (ITEM / "hello.md").read_text(encoding="utf-8").rstrip()
     timestamp = (
         datetime.now(timezone.utc)
         .isoformat(timespec="microseconds")
