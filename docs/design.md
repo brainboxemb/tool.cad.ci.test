@@ -2,6 +2,22 @@
 
 `tool.cad.ci.test` deliberately contains no second CI architecture.
 
+## Permanent branch topology
+
+```text
+main
+├── dev-cad
+└── dev-ci
+```
+
+`dev-cad` and `dev-ci` are permanent integration lanes, not disposable
+feature branches. Short-lived work may target a lane with squash merge.
+Lane-to-`main` promotion and `main`-to-lane synchronization use the released
+merge-governance contract and preserve history.
+
+The repository consumes the released lane PR classifier through
+`pr_policy_json`; it does not reproduce lane logic in local YAML.
+
 ## Runtime topology
 
 ```text

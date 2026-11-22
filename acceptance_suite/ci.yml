@@ -2,6 +2,8 @@ id: acceptance-suite
 kind: acceptance
 
 watch:
+  - .github/workflows/**
+  - cad-ci.yml
   - acceptance_suite/**
   - tests/**
   - workflow_case/**
