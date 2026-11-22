@@ -70,8 +70,8 @@ Initial warning thresholds:
 | --- | ---: |
 | Complete measured case suite | 30 s |
 | Default individual case | 3 s |
-| `timeout_case/check.py` | 4 s |
-| `publish_case/check.py` | 7 s |
+| `test_roots/014_timeout/check.py` | 4 s |
+| `test_roots/015_publish/check.py` | 7 s |
 
 These thresholds are **warnings only**. Exceeding them is recorded in
 `case-durations.json` and printed in the log, but does not fail acceptance.
@@ -99,9 +99,9 @@ Existing CAD-CI command timeouts remain a separate execution/failure contract.
 | `test_roots/010_process` | current | Public item-level process participation and exclusion. |
 | `test_roots/011_shared_builder` | current | Declarative repository-owned shared builder used by multiple items. |
 | `test_roots/012_parallel_jobs` | current | Public bounded --jobs concurrency using observable action intervals. |
-| `directory_output_case` | current | Directory outputs and CacheDir restore/repair. |
-| `timeout_case` | current | Timeout, override and command failure behavior. |
-| `publish_case` | current | Durable build and Pages publication contract. |
+| `test_roots/013_directory_output` | current | Directory outputs and CacheDir restore/repair. |
+| `test_roots/014_timeout` | current | Timeout, override and command failure behavior. |
+| `test_roots/015_publish` | current | Durable build and Pages publication contract. |
 | `merge_policy_case` | separate API | Merge governance, not CAD-CI execution; keep only while that API remains in `tool.cad.ci`. |
 
 ## Failure ownership
