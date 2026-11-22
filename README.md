@@ -65,18 +65,32 @@ The local README in each case is the maintenance contract for that case.
 [acceptance_suite](acceptance_suite/README.md) documents how cases are
 registered and which status is allowed.
 
-## Workflow boundary
+## Workflow and lane boundary
 
-The GitHub workflow contains one normal consumer call:
+The repository is also the external integration consumer for the standard
+permanent branch layout:
+
+```text
+main
+dev-cad
+dev-ci
+```
+
+The GitHub workflow still contains one normal consumer call. Pull requests use
+the released lane policy; manual/post-merge dispatches request a complete run:
 
 ```yaml
 jobs:
   acceptance:
     uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.23.0
     with:
-      full_run: true
+      pr_policy_json: '{"stable_ref":"main","lane_refs":["dev-cad","dev-ci"],"docs_only_prefixes":["docs/"]}'
+      full_run: ${{ github.event_name == 'workflow_dispatch' }}
       jobs: 2
 ```
+
+See [permanent lane integration](docs/background/lane-integration.md) for the
+real PR/merge scenarios exercised by this repository.
 
 Repository variables in root `cad-ci.yml` are also used to prove that
 repository configuration reaches consumer commands and overrides inherited

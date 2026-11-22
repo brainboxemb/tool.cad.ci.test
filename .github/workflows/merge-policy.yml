@@ -1,0 +1,29 @@
+name: Merge policy
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+
+jobs:
+  merge:
+    if: >-
+      github.event.issue.pull_request &&
+      github.event.comment.body == '/merge'
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
+      issues: write
+      checks: read
+      statuses: read
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-merge-policy.yml@v0.23.0
+    with:
+      command: ${{ github.event.comment.body }}
+      pull_request_number: ${{ github.event.issue.number }}
+      stable_ref: main
+      lane_refs_json: '["dev-cad","dev-ci"]'
+      permanent_refs_json: '["build","gh-pages"]'
+      integration_workflow: ci.yml
