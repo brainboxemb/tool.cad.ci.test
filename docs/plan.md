@@ -15,6 +15,25 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ## Current work
 
+### #111 — establish test_roots/001_simple
+
+Replace the historical `simple_case1` fixture with the first numbered,
+self-contained consumer repository:
+
+```text
+test_roots/001_simple/
+  README.md
+  cad-ci.yml
+  ci.yml
+  hello.md
+  build.py
+  check.py
+```
+
+It proves only cold build, current rerun and rebuild after changing
+`hello.md`. Future standalone acceptance repositories follow the same
+three-digit `test_roots/NNN_name` convention.
+
 ### #98 — permanent lane integration
 
 Continue exercising the real external permanent-lane contract on
@@ -31,7 +50,8 @@ route or duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #106 dev-cad -> main promotion proof | **now** | Finish the real promotion scenario and record resulting lane evidence. |
+| #111 Numbered standalone test roots | **now** | Land and prove `test_roots/001_simple`. |
+| #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record resulting lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
 | #88 Align historical changelog | **later / docs-only** | No runtime impact. |
 

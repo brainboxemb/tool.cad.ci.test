@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 CASES = (
     "workflow_case/check.py",
-    "simple_case1/check.py",
+    "test_roots/001_simple/check.py",
     "more_complex_case2/check.py",
     "fresh_runner_case/check.py",
     "nested_item_case/check.py",
@@ -36,7 +36,7 @@ CASES = (
 def require_case_documentation(relative: str) -> None:
     """Require one local status-bearing README for every registered case."""
 
-    case_root = ROOT / relative.split("/", 1)[0]
+    case_root = (ROOT / relative).parent
     readme = case_root / "README.md"
     if not readme.is_file():
         raise RuntimeError(f"registered acceptance case has no README: {case_root.name}")

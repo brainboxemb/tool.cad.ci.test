@@ -1,0 +1,14 @@
+id: test-case-1-simple
+
+watch:
+  - hello.md
+  - build.py
+
+steps:
+  - id: build
+    inputs:
+      - hello.md
+      - build.py
+    run: [python, build.py]
+    outputs:
+      - hello.md
