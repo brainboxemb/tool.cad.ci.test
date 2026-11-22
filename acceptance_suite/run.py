@@ -24,6 +24,7 @@ CASES = (
     "active_dependents_case/check.py",
     "partial_rerun_case/check.py",
     "process_case/check.py",
+    "test_roots/011_shared_builder/check.py",
     "parallel_jobs_case/check.py",
     "directory_output_case/check.py",
     "timeout_case/check.py",
@@ -36,7 +37,7 @@ CASES = (
 def require_case_documentation(relative: str) -> None:
     """Require one local status-bearing README for every registered case."""
 
-    case_root = ROOT / relative.split("/", 1)[0]
+    case_root = (ROOT / relative).parent
     readme = case_root / "README.md"
     if not readme.is_file():
         raise RuntimeError(f"registered acceptance case has no README: {case_root.name}")
@@ -95,7 +96,7 @@ def main() -> int:
     output = Path(os.environ["CAD_CI_OUTPUT"])
     output.mkdir(parents=True, exist_ok=True)
     (output / "accepted.txt").write_text(
-        "tool.cad.ci v0.24.0 released-stack acceptance passed\n",
+        "tool.cad.ci v0.25.0 released-stack acceptance passed\n",
         encoding="utf-8",
     )
     return 0
