@@ -4,49 +4,42 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 (2026-11-22). This repository accepts the exact immutable CAD-CI tool/library
 stack with independent generic consumer cases. It owns no CAD-CI algorithms.
 
-## Accepted main baseline
+## Released stack under acceptance
 
-- Released `tool.cad.ci 0.20.1` @
-  `eb64a46b243db00e8dbb4b78b6643a2a7efa3fb9`.
-- Exact `lib.py.cad.ci 0.11.0` @
-  `e621daf6e309bdd0e3f643a12007f1b66490696d`.
-- Full accepted main run `45033890474` is green.
-- `dependencies.repos` and the durable same-runner action remain unchanged.
+- `tool.cad.ci 0.21.0` @
+  `b1474f6be66dc0236f2a5c2555af07a100447255`.
+- `lib.py.cad.ci 0.11.1` @
+  `fa6bf244381dde609a0b04de673d774911c52fea`.
+- `dependencies.repos`, reusable workflows, advanced plan API, root action
+  and merge-policy checks all use the exact released tool commit.
+- The durable same-runner case now also executes the released 0.21.0 stack.
 
-## Current work: issue #86, candidate-only proof
+## Current work: #86 released-stack acceptance
 
-The experimental [`tool.cad.ci` PR #111](https://github.com/brainboxemb/tool.cad.ci/pull/111)
-is not yet a release. This isolated test PR invokes an **exact immutable
-candidate commit**, not moving main.
+Run the complete existing black-box suite against 0.21.0 / 0.11.1:
 
-- `consumer` / `no_output` call the candidate `reusable-ci.yml`. These
-  are read-only tests of source bootstrap, one run, artifact and no-output
-  contracts.
-- The existing `same_runner` job remains on accepted 0.20.1 to avoid
-  changing durable generated-branch behavior during draft qualification.
-- `test` checks the accepted release as before, then checks the candidate
-  `merge_command.py` using a fake GitHub CLI. It verifies refusals,
-  uncertain merge results, accepted merges followed by lifecycle failure,
-  independent dispatch and success. No real GitHub mutation is performed.
-- The main dependency manifest and released checks are **not** repinned to
-  the candidate; do not merge this candidate-only PR into main.
+1. public `reusable-ci.yml` normal and no-output cases;
+2. public advanced `reusable-plan.yml`;
+3. root composite action run-only and durable same-runner paths;
+4. one-job/one-runner `reusable-pr.yml` verification path;
+5. merge-policy classification plus released `merge_command.py` behavior
+   through an isolated fake GitHub API;
+6. all CLI/SCons/build-store/Pages/publication consumer cases.
 
-## Required gates
+A failure is fixed in the owning tool/library repository, never patched around
+here.
 
-1. Get candidate-only PR CI green; report exact SHA and results to
-   tool.cad.ci #110.
-2. Fix any exposed defect in the tool repository, update candidate exact
-   SHA and rerun.
-3. Complete tool API/security/compatibility review before release.
-4. After an immutable tool release, create a **separate released-stack
-   acceptance PR**, update every pin, run all cases and only then approve
-   Forge/CAD consumer adoption.
+## Promotion gate
+
+After this PR is green:
+- merge it to `main` so the permanent acceptance baseline is 0.21.0 / 0.11.1;
+- record the exact acceptance run in tool.cad.ci #110 and meta.cad.solidcraft #2;
+- only then repin Forge/CAD consumers.
 
 ## Issue assessment
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #86 Candidate contract qualification | **now** | Isolated candidate workflows and black-box fake API; no real mutation. |
+| #86 Released-stack qualification | **now** | Complete exact 0.21.0 / 0.11.1 acceptance and merge the new baseline. |
 
-Release-stability rules in `AGENTS.md` remain authoritative. This is an
-isolated candidate qualification experiment, not a released-stack acceptance.
+Release-stability rules in `AGENTS.md` remain authoritative.
