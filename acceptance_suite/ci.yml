@@ -7,7 +7,6 @@ watch:
   - workflow_case/**
   - simple_case1/**
   - more_complex_case2/**
-  - logging_case/**
   - fresh_runner_case/**
   - nested_item_case/**
   - nested_publish_case/**
@@ -16,7 +15,6 @@ watch:
   - active_dependents_case/**
   - partial_rerun_case/**
   - process_case/**
-  - selective_startup_case/**
   - parallel_jobs_case/**
   - directory_output_case/**
   - timeout_case/**
@@ -31,7 +29,6 @@ steps:
       - workflow_case/**
       - simple_case1/**
       - more_complex_case2/**
-      - logging_case/**
       - fresh_runner_case/**
       - nested_item_case/**
       - nested_publish_case/**
@@ -40,7 +37,6 @@ steps:
       - active_dependents_case/**
       - partial_rerun_case/**
       - process_case/**
-      - selective_startup_case/**
       - parallel_jobs_case/**
       - directory_output_case/**
       - timeout_case/**

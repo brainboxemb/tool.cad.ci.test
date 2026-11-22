@@ -30,7 +30,7 @@ The cases cover distinct public behavior such as:
 - nested configuration and output ownership;
 - dependency fan-out and dependency-output copy;
 - partial reruns and process participation;
-- selective startup and bounded SCons jobs;
+- bounded SCons jobs;
 - directory outputs, cache restore, timeouts and failures;
 - durable build/Page publication against an isolated local Git remote;
 - the separately identified merge-governance API.
@@ -60,8 +60,6 @@ The local README in each case is the maintenance contract for that case.
 | [directory_output_case](directory_output_case/README.md) | current |
 | [timeout_case](timeout_case/README.md) | current |
 | [publish_case](publish_case/README.md) | current |
-| [logging_case](logging_case/README.md) | transitional; candidate to move to tool owner tests |
-| [selective_startup_case](selective_startup_case/README.md) | transitional; candidate to move to library owner tests |
 | [merge_policy_case](merge_policy_case/README.md) | separate API; temporary here |
 
 [acceptance_suite](acceptance_suite/README.md) documents how cases are

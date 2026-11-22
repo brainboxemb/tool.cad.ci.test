@@ -18,14 +18,17 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 3. classify each case as current, transitional or separate API;
 4. make `acceptance_suite/run.py` reject undocumented/obsolete registered cases;
 5. keep current external black-box cases;
-6. move/remove transitional owner-level cases only after equivalent owner
-   coverage is confirmed.
+6. remove owner-level duplicate cases when equivalent owner coverage exists.
 
-Current classification:
+Owner-level duplicates removed in this issue:
 
-- `logging_case`: transitional; likely belongs in `tool.cad.ci` CLI tests;
-- `selective_startup_case`: transitional; likely belongs in
-  `lib.py.cad.ci` tests;
+- `logging_case`: live streaming is already covered in
+  `lib.py.cad.ci/tests/test_scons_engine.py`;
+- `selective_startup_case`: active-closure/symlink behavior is already covered
+  in `lib.py.cad.ci/tests/test_scons_engine.py`.
+
+Remaining special case:
+
 - `merge_policy_case`: separate API; keep only while merge governance remains
   in `tool.cad.ci`.
 

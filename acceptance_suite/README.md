@@ -43,15 +43,13 @@ a distinct public behavior not already covered elsewhere.
 | `directory_output_case` | current | Directory outputs and CacheDir restore/repair. |
 | `timeout_case` | current | Timeout, override and command failure behavior. |
 | `publish_case` | current | Durable build and Pages publication contract. |
-| `logging_case` | transitional | Owner-level CLI streaming behavior; candidate to move to `tool.cad.ci` tests. |
-| `selective_startup_case` | transitional | Library optimization/safety boundary; candidate to move to `lib.py.cad.ci` tests. |
 | `merge_policy_case` | separate API | Merge governance, not CAD-CI execution; keep only while that API remains in `tool.cad.ci`. |
 
 ## Failure ownership
 
 A current CAD-CI behavioral failure belongs in `tool.cad.ci` or
-`lib.py.cad.ci`. Transitional cases should be moved to their owner before
-being deleted here. Merge-governance failures belong to the owner of that
+`lib.py.cad.ci`. Owner-level implementation/performance tests do not belong in
+this external repository. Merge-governance failures belong to the owner of that
 separate API.
 
 Do not add another GitHub Actions job, tool bootstrap or parallel acceptance
