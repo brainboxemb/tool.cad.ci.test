@@ -164,6 +164,34 @@ jobs:
     with:
       full_run: true
 
+  candidate_action_run_only:
+    # Exercise the candidate root action with a read-only token, without
+    # durable publication or generated-branch mutations.
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Run exact candidate action in run-only mode
+        id: cad
+        uses: brainboxemb/tool.cad.ci@1d3dd4222a5e2000c8d65c7d96d2066ffabe9ceb
+        with:
+          source_sha: ${{ github.event.pull_request.head.sha }}
+          full_run: "true"
+          jobs: "2"
+          github_token: ${{ github.token }}
+
+      - name: Check candidate CLI remains available in the same runner
+        env:
+          ACCEPTED_LIBRARY: e621daf6e309bdd0e3f643a12007f1b66490696d
+          ACTION_LIBRARY: ${{ steps.cad.outputs.library_revision }}
+        run: |
+          if [ "$ACCEPTED_LIBRARY" != "$ACTION_LIBRARY" ]; then
+            echo "candidate action exposed unexpected library pin" >&2
+            exit 1
+          fi
+          python -m cad_ci_tool plan --repo . --item workflow-case --json
+
   candidate_pr_verify_only:
     # GitHub validates the maximum job permissions even for a skipped publish
     # job. The caller grants write, but the candidate verify job is read-only
@@ -179,7 +207,7 @@ jobs:
       environment_json: '{"ACCEPTANCE_MARKER":"candidate-pr-verify"}'
 
   test:
-    needs: [consumer, no_output, candidate_plan, candidate_pr_verify_only]
+    needs: [consumer, no_output, candidate_plan, candidate_pr_verify_only, candidate_action_run_only]
     runs-on: ubuntu-latest
     steps:
       - name: Verify candidate planning workflow outputs
