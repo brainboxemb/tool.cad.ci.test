@@ -38,7 +38,7 @@ a distinct public behavior not already covered elsewhere.
 | `test_roots/005_nested_publish` | current | Durable parent/nested-child output ownership and sparse updates. |
 | `test_roots/006_dependencies` | current | Dependency traversal, fan-out and explicit downstream execution. |
 | `test_roots/007_dependency_copy` | current | Engine-owned dependency-output copy and invalidation. |
-| `active_dependents_case` | current | Public direct-dependent command context. |
+| `test_roots/008_active_dependents` | current | Public direct-dependent selection context and target identity. |
 | `partial_rerun_case` | current | Public partial-run selectors. |
 | `process_case` | current | Public item `process` participation semantics. |
 | `parallel_jobs_case` | current | Public bounded `--jobs` behavior. |
