@@ -39,7 +39,7 @@ a distinct public behavior not already covered elsewhere.
 | `test_roots/006_dependencies` | current | Dependency traversal, fan-out and explicit downstream execution. |
 | `test_roots/007_dependency_copy` | current | Engine-owned dependency-output copy and invalidation. |
 | `test_roots/008_active_dependents` | current | Public direct-dependent selection context and target identity. |
-| `partial_rerun_case` | current | Public partial-run selectors. |
+| `test_roots/009_partial_rerun` | current | Public --step/--until/--from selector semantics. |
 | `process_case` | current | Public item `process` participation semantics. |
 | `parallel_jobs_case` | current | Public bounded `--jobs` behavior. |
 | `directory_output_case` | current | Directory outputs and CacheDir restore/repair. |

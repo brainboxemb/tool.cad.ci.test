@@ -22,7 +22,7 @@ CASES = (
     "test_roots/006_dependencies/check.py",
     "test_roots/007_dependency_copy/check.py",
     "test_roots/008_active_dependents/check.py",
-    "partial_rerun_case/check.py",
+    "test_roots/009_partial_rerun/check.py",
     "process_case/check.py",
     "parallel_jobs_case/check.py",
     "directory_output_case/check.py",

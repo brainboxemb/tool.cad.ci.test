@@ -4,7 +4,7 @@
 from pathlib import Path
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from tests.support import fresh_case, run_tool
@@ -17,7 +17,7 @@ def item_evidence(repo: Path) -> Path:
 
 
 def main() -> int:
-    repo = fresh_case(SOURCE, "partial_rerun_case")
+    repo = fresh_case(SOURCE, "009_partial_rerun")
 
     cold = run_tool("run", "--repo", str(repo))
     assert "built: partial-case:prepare" in cold
@@ -71,7 +71,7 @@ def main() -> int:
     assert "built: partial-case:verify" in from_build
     assert item_evidence(repo).is_file()
 
-    print("partial_rerun_case passed")
+    print("test_roots/009_partial_rerun passed")
     return 0
 
 
