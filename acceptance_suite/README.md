@@ -57,3 +57,20 @@ separate API.
 
 Do not add another GitHub Actions job, tool bootstrap or parallel acceptance
 architecture to accommodate a case.
+
+
+## Duration evidence
+
+The suite measures wall-clock duration for every registered case in the same
+Python process that already runs acceptance. It does not create per-case GitHub
+jobs or a second runner.
+
+Every run:
+
+- prints one `TIMING <seconds> <status> <case>` line per case;
+- prints total case time plus the five slowest cases;
+- writes machine-readable `timings.json` as declared acceptance output.
+
+Timing is initially observational. Shared GitHub runners vary, so the first
+measured runs establish the baseline before soft budgets are documented.
+Existing command timeouts continue to protect against actual hangs.

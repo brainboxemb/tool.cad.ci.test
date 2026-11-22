@@ -51,9 +51,10 @@ v0.25.0`.
 
 ### #156 — track acceptance duration
 
-Measure per-case wall-clock runtime and total suite runtime, emit
-machine-readable timing evidence and establish soft budgets before any hard
-performance gate.
+Add per-case and total wall-clock timing to the existing acceptance runner,
+emit `timings.json`, and print the slowest cases. Use the first real runs as the
+baseline before defining soft budgets; do not introduce per-case GitHub jobs or
+flaky hard gates.
 
 ### #114 — normalize remaining external cases into numbered test roots
 
@@ -81,7 +82,7 @@ duplicate generic merge/classification logic.
 | --- | --- | --- |
 | #142 Declarative builder migration | **now** | Continue numbered-root builder migration independently of live workflow scenarios. |
 | #154 Live GitHub workflow scenarios | **now** | Prove this feature PR, then docs-only, promotion, sync and real `/merge`. |
-| #156 Acceptance duration | **queued** | Add per-case/total timing evidence after live workflow contract lands. |
+| #156 Acceptance duration | **now** | Land timing evidence, inspect the first baseline, then define soft budgets. |
 | #114 Numbered standalone test roots | **blocked by #142 for normal roots** | Resume remaining top-level fixture migration after builder migration. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |

@@ -58,6 +58,17 @@ The suite may spawn the public CLI because this repository tests the released
 stack from outside. It must not import planner/SCons/build-store internals or
 reimplement their decisions.
 
+## Test duration
+
+Acceptance duration is a maintained quality signal. The suite records
+per-case wall-clock time and total case time in `timings.json`, and prints the
+slowest cases in every run. Timing uses the existing acceptance process; it
+does not split cases into separate GitHub jobs.
+
+Initial timing is observational so a real baseline can be established before
+soft budgets are chosen. Hard performance gates must not be based on normal
+shared-runner variance.
+
 ## Test roots
 
 Standalone synthetic consumer repositories live under `test_roots/` and use a

@@ -28,3 +28,4 @@ steps:
     outputs:
       - accepted.txt
       - result.txt
+      - timings.json
