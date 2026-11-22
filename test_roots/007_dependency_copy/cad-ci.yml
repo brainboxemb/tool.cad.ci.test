@@ -1,5 +1,10 @@
 schema: 1
+
 items:
   - batch
   - consumer-a
   - consumer-b
+
+builders:
+  batch: ci/builders/batch
+  materialize: ci/builders/materialize
