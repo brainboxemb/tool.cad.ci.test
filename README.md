@@ -59,7 +59,7 @@ contract for that root.
 | [005_nested_publish](test_roots/005_nested_publish/README.md) | current |
 | [006_dependencies](test_roots/006_dependencies/README.md) | current |
 | [007_dependency_copy](test_roots/007_dependency_copy/README.md) | current |
-| [active_dependents_case](active_dependents_case/README.md) | current |
+| [008_active_dependents](test_roots/008_active_dependents/README.md) | current |
 | [partial_rerun_case](partial_rerun_case/README.md) | current |
 | [process_case](process_case/README.md) | current |
 | [parallel_jobs_case](parallel_jobs_case/README.md) | current |

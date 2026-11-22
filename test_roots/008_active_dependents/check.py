@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from tests.support import fresh_case, run_tool
@@ -27,7 +27,7 @@ def evidence(repo: Path) -> dict:
 
 
 def main() -> int:
-    repo = fresh_case(SOURCE, "active_dependents_case")
+    repo = fresh_case(SOURCE, "008_active_dependents")
 
     only_a = run_tool(
         "run", "--repo", str(repo), "--item", "consumer-a",
@@ -81,7 +81,7 @@ def main() -> int:
     assert "unrelated:verify" in full
     assert evidence(repo)["active_dependents"] == ["consumer-a", "consumer-b"]
 
-    print("active_dependents_case passed")
+    print("test_roots/008_active_dependents passed")
     return 0
 
 

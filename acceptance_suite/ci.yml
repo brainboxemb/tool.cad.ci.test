@@ -8,7 +8,6 @@ watch:
   - tests/**
   - workflow_case/**
   - test_roots/**
-  - active_dependents_case/**
   - partial_rerun_case/**
   - process_case/**
   - parallel_jobs_case/**
@@ -24,7 +23,6 @@ steps:
       - tests/**
       - workflow_case/**
       - test_roots/**
-      - active_dependents_case/**
       - partial_rerun_case/**
       - process_case/**
       - parallel_jobs_case/**
