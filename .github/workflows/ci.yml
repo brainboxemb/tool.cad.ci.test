@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   consumer:
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@d88d6e189c12edb5a30158c068145c099c17a019
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@1012e6a539a2fddd8194124844fe208bf16cf4e4
     with:
       full_run: true
       jobs: 2
@@ -20,7 +20,7 @@ jobs:
 
   no_output:
     needs: consumer
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@d88d6e189c12edb5a30158c068145c099c17a019
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@1012e6a539a2fddd8194124844fe208bf16cf4e4
     with:
       upload_build: true
       build_artifact_name: cad-ci-empty-acceptance
@@ -31,7 +31,7 @@ jobs:
     steps:
       - name: Run exact released same-runner action
         id: cad_ci
-        uses: brainboxemb/tool.cad.ci@d88d6e189c12edb5a30158c068145c099c17a019
+        uses: brainboxemb/tool.cad.ci@1012e6a539a2fddd8194124844fe208bf16cf4e4
         with:
           source_sha: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           full_run: "true"
@@ -42,7 +42,7 @@ jobs:
       - name: Verify same-runner CLI stack remains available
         env:
           ACTION_LIBRARY_REVISION: ${{ steps.cad_ci.outputs.library_revision }}
-          EXPECTED_LIBRARY_REVISION: 74486c441f1f2b170ff3dc06e0edcaf662fbec6b
+          EXPECTED_LIBRARY_REVISION: 397fb04005b46de8d433cb18c091b1e73714b877
         run: |
           python - <<'PY'
           import json
@@ -158,7 +158,7 @@ jobs:
           if not step_evidence.is_file():
               raise SystemExit(f"missing step evidence: {step_evidence}")
           step = json.loads(step_evidence.read_text())
-          if step.get("schema") != 3:
+          if step.get("schema") != 4:
               raise SystemExit(f"unexpected step evidence schema: {step}")
           for key in ("run_started_at", "run_finished_at", "started_at", "finished_at"):
               if not step.get(key):
@@ -307,6 +307,8 @@ jobs:
         run: python nested_publish_case/check.py
       - name: Dependencies and fan-out
         run: python dependency_case/check.py
+      - name: Dependency output copy
+        run: python dependency_copy_case/check.py
       - name: Partial reruns
         run: python partial_rerun_case/check.py
       - name: Process selection
