@@ -19,6 +19,13 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ## Current work
 
+### #156 — acceptance case duration and suite performance
+
+Measure every registered case centrally, print a slowest-first summary and
+retain machine-readable timing evidence. Use real accepted runs to establish a
+baseline before introducing any hard performance budget.
+
+
 ### #142 — migrate numbered roots to declarative builders
 
 Use `test_roots/011_shared_builder` as the canonical builder-model reference.

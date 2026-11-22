@@ -4,9 +4,11 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import os
 from pathlib import Path
 import sys
+import time
 import traceback
 
 
@@ -78,23 +80,75 @@ def run_case(relative: str, index: int) -> None:
 
 
 def main() -> int:
-    """Run every black-box case against the already loaded released tool stack."""
+    """Run every black-box case and record centrally managed timing evidence."""
 
     failures: list[str] = []
+    timings: list[dict[str, object]] = []
+
     for index, relative in enumerate(CASES):
+        started = time.perf_counter()
+        outcome = "pass"
         try:
             run_case(relative, index)
         except BaseException as exc:
+            outcome = "fail"
             failures.append(f"{relative}: {exc}")
             traceback.print_exc()
+        finally:
+            elapsed = time.perf_counter() - started
+            timings.append(
+                {
+                    "case": relative,
+                    "outcome": outcome,
+                    "seconds": round(elapsed, 6),
+                }
+            )
+            print(
+                f"duration: {elapsed:.3f}s [{outcome}] {relative}",
+                flush=True,
+            )
+
+    total_seconds = sum(float(row["seconds"]) for row in timings)
+    slowest = sorted(
+        timings,
+        key=lambda row: float(row["seconds"]),
+        reverse=True,
+    )
+
+    print("\n=== acceptance timing: slowest first ===", flush=True)
+    for row in slowest:
+        print(
+            f"{float(row['seconds']):8.3f}s "
+            f"[{row['outcome']}] {row['case']}",
+            flush=True,
+        )
+    print(
+        f"TOTAL {total_seconds:.3f}s across {len(timings)} cases",
+        flush=True,
+    )
+
+    output = Path(os.environ["CAD_CI_OUTPUT"])
+    output.mkdir(parents=True, exist_ok=True)
+    (output / "case-durations.json").write_text(
+        json.dumps(
+            {
+                "schema": 1,
+                "total_case_seconds": round(total_seconds, 6),
+                "cases": timings,
+                "slowest_first": [str(row["case"]) for row in slowest],
+            },
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
 
     if failures:
         raise RuntimeError(
             "released-stack acceptance failed:\n- " + "\n- ".join(failures)
         )
 
-    output = Path(os.environ["CAD_CI_OUTPUT"])
-    output.mkdir(parents=True, exist_ok=True)
     (output / "accepted.txt").write_text(
         "tool.cad.ci v0.25.0 released-stack acceptance passed\n",
         encoding="utf-8",
