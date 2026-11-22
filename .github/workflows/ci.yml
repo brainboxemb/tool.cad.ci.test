@@ -348,6 +348,8 @@ jobs:
               if value in same_runner_action:
                   raise SystemExit(f"consumer/publication behavior leaked into action: {value}")
           PY
+      - name: Released merge-policy workflow
+        run: python merge_policy_case/check.py
       - name: Install exact released tool stack
         run: python -m pip install -e ext/cad-ci
       - name: Simple item
