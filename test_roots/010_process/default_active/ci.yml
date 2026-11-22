@@ -1,7 +1,4 @@
 id: default-active
+kind: synthetic
+builder: process
 watch: [default_active/**]
-steps:
-  - id: build
-    inputs: [default_active/run.py]
-    run: [python, run.py]
-    outputs: [result.txt]

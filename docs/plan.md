@@ -34,9 +34,11 @@ executable `steps:` / `run:`.
 
 `008_active_dependents` is migrated and accepted on `dev-ci` by PR #165.
 
-`009_partial_rerun` is the current migration under #176. Its named public
-steps `prepare`, `build` and `verify` remain in the repository-owned
-builder so `--step` / `--until` / `--from` keep the same contract.
+`009_partial_rerun` is migrated and accepted on `dev-ci` by PR #177.
+
+`010_process` is the current migration under #178. The public `process`
+field remains item configuration while all three items share one
+repository-owned builder.
 
 Acceptance timing is now part of the accepted baseline: PR #159 added
 per-case evidence and PR #175 added conservative non-failing soft budgets.
@@ -63,7 +65,7 @@ duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #142 Declarative builder migration | **now** | `001`–`008` accepted; qualify `009_partial_rerun` under #176. |
+| #142 Declarative builder migration | **now** | `001`–`009` accepted; qualify `010_process` under #178. |
 | #114 Numbered standalone test roots | **blocked by #142 for normal roots** | Resume remaining top-level fixture migration after builder migration. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
