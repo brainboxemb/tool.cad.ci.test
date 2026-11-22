@@ -8,12 +8,12 @@ The repository externally tests exact released `tool.cad.ci` /
 
 ## Current accepted stack
 
-- `tool.cad.ci 0.18.0` @
-  `b62f9d0b169aa201a3c66c3166f364396b2d71bc`;
-- `lib.py.cad.ci 0.10.0` @
-  `397fb04005b46de8d433cb18c091b1e73714b877`.
+- `tool.cad.ci 0.18.1` @
+  `e29d3127d5d3f9310f3cab4e27430a64a61c21cc`;
+- `lib.py.cad.ci 0.11.0` @
+  `e621daf6e309bdd0e3f643a12007f1b66490696d`.
 
-Acceptance #73 / PR #74 / run `45010776155` is complete.
+Acceptance #77 / PR #78 / run `45019713862` is complete.
 
 Accepted public behavior includes:
 
@@ -27,30 +27,22 @@ Accepted public behavior includes:
 
 ## Current work
 
-### #77 accept tool 0.18.1 / library 0.11.0
+No acceptance implementation is active.
 
-Status: **now**.
+The exact released 0.18.1 / 0.11.0 pair is externally accepted. Forge and CAD
+may now adopt this pair through their own consumer plans.
 
-Exact released pair:
+Accepted additional behavior includes:
 
-- `tool.cad.ci 0.18.1` @ `e29d3127d5d3f9310f3cab4e27430a64a61c21cc`;
-- `lib.py.cad.ci 0.11.0` @ `e621daf6e309bdd0e3f643a12007f1b66490696d`.
-
-Acceptance scope:
-
-- repin direct CLI bootstrap, reusable workflow and same-runner action to the exact tool release;
-- update exact expected library revision and public step-evidence schema to the released library contract;
-- add one synthetic shared-producer/two-consumer case for `selection_context: direct_dependents`;
-- prove consumer-a only, repeat/current, consumer-b only signature invalidation, both consumers with jobs=2, full run and public `active_dependents` evidence;
-- add no generic implementation or domain-specific Forge/CAD behavior.
-
-Forge/CAD adoption remains blocked until the complete PR acceptance suite is green.
+- opt-in `selection_context: direct_dependents` on command steps;
+- signature-safe/current/cache-safe active-dependent context;
+- public step evidence schema 5 with `active_dependents`;
+- unchanged direct CLI, reusable workflow, same-runner action and durable
+  publication behavior.
 
 ## Open issue assessment — 2026-11-22
 
-| Issue | Status | Next action |
-| --- | --- | --- |
-| #77 accept tool 0.18.1 / lib 0.11.0 | **now** | Repin exact released stack and prove active direct-dependent context end-to-end. |
+No open acceptance issues remain after #77 is closed.
 
 ## Boundary
 
