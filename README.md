@@ -4,8 +4,8 @@ Permanent black-box acceptance repository for the released generic CAD CI stack.
 
 This repository currently pins:
 
-- `tool.cad.ci` **0.21.0** at
-  `b1474f6be66dc0236f2a5c2555af07a100447255`;
+- `tool.cad.ci` **0.22.0** at
+  `76b5ba24084a09a69e6f25b34c16e869f7240a58`;
 - that tool pins `lib.py.cad.ci` **0.11.1** at
   `fa6bf244381dde609a0b04de673d774911c52fea`.
 
@@ -120,7 +120,7 @@ green here.
 ## Same-runner action acceptance
 
 The `same_runner` job consumes
-`brainboxemb/tool.cad.ci@b1474f6be66dc0236f2a5c2555af07a100447255` directly as a composite action.
+`brainboxemb/tool.cad.ci@76b5ba24084a09a69e6f25b34c16e869f7240a58` directly as a composite action.
 
 The action runs the real root `workflow_case`. The immediately following step
 does not bootstrap CAD-CI again. It verifies that:

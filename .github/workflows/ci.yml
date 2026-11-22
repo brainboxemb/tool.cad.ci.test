@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   consumer:
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@b1474f6be66dc0236f2a5c2555af07a100447255
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@76b5ba24084a09a69e6f25b34c16e869f7240a58
     with:
       full_run: true
       jobs: 2
@@ -20,7 +20,7 @@ jobs:
 
   no_output:
     needs: consumer
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@b1474f6be66dc0236f2a5c2555af07a100447255
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@76b5ba24084a09a69e6f25b34c16e869f7240a58
     with:
       upload_build: true
       build_artifact_name: cad-ci-empty-acceptance
@@ -34,7 +34,7 @@ jobs:
     steps:
       - name: Run exact released durable same-runner action
         id: cad_ci
-        uses: brainboxemb/tool.cad.ci@b1474f6be66dc0236f2a5c2555af07a100447255
+        uses: brainboxemb/tool.cad.ci@76b5ba24084a09a69e6f25b34c16e869f7240a58
         with:
           source_sha: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           durable_scope: durable-action-acceptance
@@ -160,7 +160,7 @@ jobs:
     # Advanced plan workflow deserves a real API test, not YAML text matching.
     permissions:
       contents: read
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-plan.yml@b1474f6be66dc0236f2a5c2555af07a100447255
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-plan.yml@76b5ba24084a09a69e6f25b34c16e869f7240a58
     with:
       full_run: true
 
@@ -174,7 +174,7 @@ jobs:
     steps:
       - name: Run exact released action in run-only mode
         id: cad
-        uses: brainboxemb/tool.cad.ci@b1474f6be66dc0236f2a5c2555af07a100447255
+        uses: brainboxemb/tool.cad.ci@76b5ba24084a09a69e6f25b34c16e869f7240a58
         with:
           source_sha: ${{ github.event.pull_request.head.sha }}
           full_run: "true"
@@ -199,7 +199,7 @@ jobs:
     permissions:
       contents: write
       packages: read
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-pr.yml@b1474f6be66dc0236f2a5c2555af07a100447255
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-pr.yml@76b5ba24084a09a69e6f25b34c16e869f7240a58
     with:
       full_run: true
       jobs: 2
@@ -415,6 +415,8 @@ jobs:
               if value in same_runner_action:
                   raise SystemExit(f"consumer/publication behavior leaked into action: {value}")
           PY
+      - name: Released consumer templates
+        run: python template_case/check.py
       - name: Released merge-policy workflow
         run: python merge_policy_case/check.py
       - name: Check released merge operations with fake GitHub API
