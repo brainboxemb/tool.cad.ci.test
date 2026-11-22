@@ -1,6 +1,0 @@
-id: publish-b
-steps:
-  - id: build
-    inputs: [items/b/run.py]
-    run: [python, run.py]
-    outputs: [result.txt]
