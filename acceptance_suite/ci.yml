@@ -1,0 +1,52 @@
+id: acceptance-suite
+kind: acceptance
+
+watch:
+  - acceptance_suite/**
+  - tests/**
+  - workflow_case/**
+  - simple_case1/**
+  - more_complex_case2/**
+  - logging_case/**
+  - fresh_runner_case/**
+  - nested_item_case/**
+  - nested_publish_case/**
+  - dependency_case/**
+  - dependency_copy_case/**
+  - active_dependents_case/**
+  - partial_rerun_case/**
+  - process_case/**
+  - selective_startup_case/**
+  - parallel_jobs_case/**
+  - directory_output_case/**
+  - timeout_case/**
+  - publish_case/**
+  - merge_policy_case/**
+
+steps:
+  - id: acceptance
+    inputs:
+      - acceptance_suite/run.py
+      - tests/**
+      - workflow_case/**
+      - simple_case1/**
+      - more_complex_case2/**
+      - logging_case/**
+      - fresh_runner_case/**
+      - nested_item_case/**
+      - nested_publish_case/**
+      - dependency_case/**
+      - dependency_copy_case/**
+      - active_dependents_case/**
+      - partial_rerun_case/**
+      - process_case/**
+      - selective_startup_case/**
+      - parallel_jobs_case/**
+      - directory_output_case/**
+      - timeout_case/**
+      - publish_case/**
+      - merge_policy_case/**
+    run: [python, run.py]
+    outputs:
+      - accepted.txt
+      - result.txt

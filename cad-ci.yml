@@ -1,10 +1,10 @@
 schema: 1
 
 defaults:
-  timeout_seconds: 60
+  timeout_seconds: 300
 
 variables:
   ACCEPTANCE_MARKER: repository-config
 
 items:
-  - workflow_case
+  - acceptance_suite

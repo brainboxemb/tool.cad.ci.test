@@ -8,7 +8,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from tests.support import CAD_CI, fresh_case
+from tests.support import fresh_case
 
 SOURCE = Path(__file__).resolve().parent
 
@@ -16,7 +16,7 @@ SOURCE = Path(__file__).resolve().parent
 def main() -> int:
     repo = fresh_case(SOURCE, "logging_case")
     process = subprocess.Popen(
-        [sys.executable, str(CAD_CI), "run", "--repo", str(repo)],
+        [sys.executable, "-m", "cad_ci_tool", "run", "--repo", str(repo)],
         cwd=ROOT,
         text=True,
         stdout=subprocess.PIPE,
