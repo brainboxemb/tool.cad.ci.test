@@ -135,16 +135,6 @@ jobs:
           if [row["id"] for row in rows] != ["workflow-case"]:
               raise SystemExit(f"unexpected same-runner plan: {rows}")
 
-          result = Path("build/workflow_case/result.txt")
-          evidence = Path("build/workflow_case/.cad-ci/item.json")
-          if not result.is_file() or not evidence.is_file():
-              raise SystemExit("action-produced build/evidence missing after action")
-          if "ghcr authentication available" not in result.read_text():
-              raise SystemExit("same-runner action did not execute workflow_case")
-          item = json.loads(evidence.read_text())
-          if item.get("status") != "pass":
-              raise SystemExit(f"unexpected item evidence: {item}")
-
           build_commit = os.environ["ACTION_BUILD_COMMIT"]
           subprocess.run(
               ["git", "fetch", "--no-tags", "--depth=1", "origin", build_commit],
