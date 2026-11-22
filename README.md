@@ -39,6 +39,34 @@ The suite may spawn the public CLI because this repository tests the released
 stack from outside. It must not import planner/SCons/build-store internals or
 reimplement their decisions.
 
+## Case index
+
+The local README in each case is the maintenance contract for that case.
+
+| Case | Status |
+| --- | --- |
+| [workflow_case](workflow_case/README.md) | current |
+| [simple_case1](simple_case1/README.md) | current |
+| [more_complex_case2](more_complex_case2/README.md) | current; historical directory name |
+| [fresh_runner_case](fresh_runner_case/README.md) | current |
+| [nested_item_case](nested_item_case/README.md) | current |
+| [nested_publish_case](nested_publish_case/README.md) | current |
+| [dependency_case](dependency_case/README.md) | current |
+| [dependency_copy_case](dependency_copy_case/README.md) | current |
+| [active_dependents_case](active_dependents_case/README.md) | current |
+| [partial_rerun_case](partial_rerun_case/README.md) | current |
+| [process_case](process_case/README.md) | current |
+| [parallel_jobs_case](parallel_jobs_case/README.md) | current |
+| [directory_output_case](directory_output_case/README.md) | current |
+| [timeout_case](timeout_case/README.md) | current |
+| [publish_case](publish_case/README.md) | current |
+| [logging_case](logging_case/README.md) | transitional; candidate to move to tool owner tests |
+| [selective_startup_case](selective_startup_case/README.md) | transitional; candidate to move to library owner tests |
+| [merge_policy_case](merge_policy_case/README.md) | separate API; temporary here |
+
+[acceptance_suite](acceptance_suite/README.md) documents how cases are
+registered and which status is allowed.
+
 ## Workflow boundary
 
 The GitHub workflow contains one normal consumer call:

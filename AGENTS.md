@@ -39,9 +39,22 @@ Do not add a local workaround.
 
 ## Case organization
 
-Distinct synthetic repositories may remain when they prove genuinely different
-public behavior. GitHub Actions must not enumerate them individually; the
-configured `acceptance_suite` owns that sequence.
+Distinct synthetic repositories may remain only when they prove genuinely
+different public behavior. GitHub Actions must not enumerate them individually;
+the configured `acceptance_suite` owns that sequence.
+
+Every registered top-level case must have a local `README.md` with:
+
+- `Status:`;
+- purpose;
+- public contract;
+- fixture/method;
+- failure ownership.
+
+Use `Status: current` for normal external acceptance. Mark owner-level or
+temporary cases explicitly as transitional/separate API. An obsolete case must
+not remain registered in `acceptance_suite/run.py`; remove it from execution
+and then remove its fixture when no historical migration dependency remains.
 
 Source-text assertions that merely freeze private workflow implementation are
 not acceptance. Prefer observable public behavior.

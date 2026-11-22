@@ -35,9 +35,30 @@ CASES = (
 )
 
 
-def run_case(relative: str, index: int) -> None:
-    """Load one acceptance script and call its public main function."""
+def require_case_documentation(relative: str) -> None:
+    """Require one local status-bearing README for every registered case."""
 
+    case_root = ROOT / relative.split("/", 1)[0]
+    readme = case_root / "README.md"
+    if not readme.is_file():
+        raise RuntimeError(f"registered acceptance case has no README: {case_root.name}")
+    text = readme.read_text(encoding="utf-8")
+    status = next(
+        (line for line in text.splitlines() if line.startswith("Status:")),
+        "",
+    )
+    if not status:
+        raise RuntimeError(f"acceptance case README has no Status: {readme}")
+    if "obsolete" in status.lower():
+        raise RuntimeError(
+            f"obsolete acceptance case is still registered: {case_root.name}"
+        )
+
+
+def run_case(relative: str, index: int) -> None:
+    """Load one documented acceptance script and call its public main function."""
+
+    require_case_documentation(relative)
     path = ROOT / relative
     module_name = f"_acceptance_case_{index}"
     spec = importlib.util.spec_from_file_location(module_name, path)
