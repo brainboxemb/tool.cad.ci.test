@@ -11,8 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 TOOL = ROOT / "ext" / "cad-ci"
 POLICY = TOOL / "scripts" / "merge_policy.py"
 WORKFLOW = TOOL / ".github" / "workflows" / "reusable-merge-policy.yml"
-EXPECTED_TOOL = "eb64a46b243db00e8dbb4b78b6643a2a7efa3fb9"
-EXPECTED_LIBRARY = "e621daf6e309bdd0e3f643a12007f1b66490696d"
+EXPECTED_TOOL = "b1474f6be66dc0236f2a5c2555af07a100447255"
+EXPECTED_LIBRARY = "fa6bf244381dde609a0b04de673d774911c52fea"
 
 
 def load_policy():
@@ -31,15 +31,15 @@ def load_policy():
 
 
 def main() -> int:
-    """Fail unless released 0.20.1 exposes the intended generic contract."""
+    """Fail unless released 0.21.0 exposes the intended generic contract."""
 
     version = (TOOL / "VERSION").read_text(encoding="utf-8").strip()
-    if version != "0.20.1":
+    if version != "0.21.0":
         raise RuntimeError(f"unexpected tool release: {version}")
 
     dependency = (TOOL / "pyproject.toml").read_text(encoding="utf-8")
     if EXPECTED_LIBRARY not in dependency:
-        raise RuntimeError("tool 0.20.1 does not pin accepted library 0.11.0")
+        raise RuntimeError("tool 0.21.0 does not pin accepted library 0.11.1")
 
     policy = load_policy()
     lanes = ("cad-work", "ci-work")
@@ -129,27 +129,21 @@ def main() -> int:
         "workflow_call:",
         "inputs.command == '/merge'",
         "github.actor == github.repository_owner",
-        "check-runs?per_page=100",
-        "event=issue_comment",
-        "COMMAND_RUN_IDS",
-        ".details_url",
-        "/actions/runs/",
-        "group_by(.name)",
-        'sha="$HEAD_SHA"',
-        'merge_method="$METHOD"',
         "job.workflow_repository",
         "job.workflow_sha",
-        "scripts/merge_policy.py",
-        "long-lived lane recreated at merge commit",
-        "long-lived lane synchronized by merge",
-        "DIRECT_SYNC",
-        "long-lived permanent merge must originate from this repository",
-        "temporary head deleted",
-        "INTEGRATION_WORKFLOW",
+        "scripts/merge_command.py",
+        "timeout-minutes: 10",
+        "persist-credentials: false",
+        "integration_workflow:",
+        "lane_refs_json:",
+        "temporary_prefixes_json:",
     )
     for value in required:
         if value not in text:
             raise RuntimeError(f"released merge workflow missing contract: {value}")
+
+    if "gh api" in text:
+        raise RuntimeError("GitHub API mutation logic leaked back into workflow YAML")
 
     forbidden = (
         "dev-cad",
@@ -170,7 +164,7 @@ def main() -> int:
     # GitHub PR or ref. Forge #721 performs the real same-head command and
     # stable-to-lane mutation proof after this release is adopted.
     print(
-        "released tool 0.20.1 merge-policy contract accepted; "
+        "released tool 0.21.0 merge-policy contract accepted; "
         f"tool={EXPECTED_TOOL} library={EXPECTED_LIBRARY}"
     )
     return 0

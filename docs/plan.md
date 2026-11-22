@@ -1,73 +1,45 @@
 # Repository plan
 
-This file is the current source of truth for unfinished work in
-`tool.cad.ci.test`.
+Current source of truth for unfinished work in `tool.cad.ci.test`
+(2026-11-22). This repository accepts the exact immutable CAD-CI tool/library
+stack with independent generic consumer cases. It owns no CAD-CI algorithms.
 
-The repository externally tests exact released `tool.cad.ci` /
-`lib.py.cad.ci` pairs. It must not contain generic CAD-CI implementation.
+## Released stack under acceptance
 
-## Current accepted stack
+- `tool.cad.ci 0.21.0` @
+  `b1474f6be66dc0236f2a5c2555af07a100447255`.
+- `lib.py.cad.ci 0.11.1` @
+  `fa6bf244381dde609a0b04de673d774911c52fea`.
+- `dependencies.repos`, reusable workflows, advanced plan API, root action
+  and merge-policy checks all use the exact released tool commit.
+- The durable same-runner case now also executes the released 0.21.0 stack.
 
-- `tool.cad.ci 0.20.0` @
-  `d45cdcef33cf1035311bab9a88c3f99208ef3b29`;
-- `lib.py.cad.ci 0.11.0` @
-  `e621daf6e309bdd0e3f643a12007f1b66490696d`.
+## Current work: #86 released-stack acceptance
 
-Acceptance #82 / PR #83 / run `45031453651` is complete.
+Run the complete existing black-box suite against 0.21.0 / 0.11.1:
 
-Accepted public behavior includes:
+1. public `reusable-ci.yml` normal and no-output cases;
+2. public advanced `reusable-plan.yml`;
+3. root composite action run-only and durable same-runner paths;
+4. one-job/one-runner `reusable-pr.yml` verification path;
+5. merge-policy classification plus released `merge_command.py` behavior
+   through an isolated fake GitHub API;
+6. all CLI/SCons/build-store/Pages/publication consumer cases.
 
-- direct CLI and reusable workflow consumption;
-- root same-runner action in run-only and durable long-lived-scope modes;
-- jobs=2 bounded execution;
-- dependency-output `copy:`;
-- exact durable build publication and prepared-scope handoff;
-- immediate same-runner post-action inspection without artifact transport;
-- shared merge policy with short-lived squash merges;
-- configured lane-to-stable normal-merge promotion;
-- configured stable-to-lane history-preserving normal-merge synchronization.
+A failure is fixed in the owning tool/library repository, never patched around
+here.
 
-## Current work
+## Promotion gate
 
-Issue #84 — **now**: externally accept released `tool.cad.ci 0.20.1` at exact
-commit `eb64a46b243db00e8dbb4b78b6643a2a7efa3fb9`.
+After this PR is green:
+- merge it to `main` so the permanent acceptance baseline is 0.21.0 / 0.11.1;
+- record the exact acceptance run in tool.cad.ci #110 and meta.cad.solidcraft #2;
+- only then repin Forge/CAD consumers.
 
-The release retains exact `lib.py.cad.ci 0.11.0` and fixes the merge-command
-self-check deadlock exposed by Forge #721. Same-head Actions runs triggered by
-`issue_comment` are command workflows, not PR validation checks.
+## Issue assessment
 
-Acceptance order:
-
-1. repin every released tool/workflow/action consumer to exact 0.20.1;
-2. rerun the complete existing black-box suite;
-3. retain every 0.20.0 merge-classification/lifecycle check;
-4. validate the released workflow queries same-head
-   `event=issue_comment` Actions runs and filters matching check-runs by run
-   identity before latest-check grouping;
-5. validate the non-command validation set remains mandatory and normal
-   failed/pending checks remain blocking;
-6. leave the real same-head command execution proof to Forge #721 after this
-   repository is green and Forge adopts the exact release.
-
-Do not add local merge-policy implementation here.
-
-## Open issue assessment — 2026-11-22
-
-| Issue | Status | Current interpretation |
+| Issue | Status | Next |
 | --- | --- | --- |
-| #84 accept tool.cad.ci 0.20.1 command-check isolation | **now** | Repin exact released tool, run full suite, verify command-check filtering contract; Forge performs the real stable-head merge command afterward. |
+| #86 Released-stack qualification | **now** | Complete exact 0.21.0 / 0.11.1 acceptance and merge the new baseline. |
 
-## Boundary
-
-Do not implement or patch generic CAD-CI or merge-policy behavior here.
-
-If acceptance exposes a generic defect, return to the owning library/tool,
-release the corrected stack, then repin the exact release here and rerun the
-complete black-box suite.
-
-## Recently completed
-
-- #82 accepted tool.cad.ci 0.20.0 stable-to-lane merge policy at exact
-  `d45cdcef...`; full acceptance run `45031453651` succeeded.
-- #80 accepted tool.cad.ci 0.19.0 merge-policy workflow at exact
-  `5677c41a...`; full acceptance run `45022699789` succeeded.
+Release-stability rules in `AGENTS.md` remain authoritative.
