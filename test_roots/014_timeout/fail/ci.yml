@@ -1,0 +1,3 @@
+id: command-failure
+kind: synthetic
+builder: command-failure

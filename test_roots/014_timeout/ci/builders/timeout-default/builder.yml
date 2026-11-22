@@ -1,0 +1,8 @@
+schema: 1
+description: Repository-default timeout builder
+
+steps:
+  - id: run
+    run: 'python "$CAD_CI_BUILDER_PATH/run.py"'
+    outputs:
+      - done.txt

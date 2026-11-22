@@ -1,0 +1,9 @@
+schema: 1
+description: Step-level timeout override builder
+
+steps:
+  - id: run
+    run: 'python "$CAD_CI_BUILDER_PATH/run.py"'
+    outputs:
+      - done.txt
+    timeout_seconds: 3

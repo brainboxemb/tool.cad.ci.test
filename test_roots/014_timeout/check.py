@@ -4,10 +4,12 @@
 from pathlib import Path
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from tests.support import fresh_case, read_json, run_tool
+
 
 SOURCE = Path(__file__).resolve().parent
 
@@ -17,7 +19,7 @@ def step_evidence(repo: Path, folder: str) -> dict:
 
 
 def main() -> int:
-    repo = fresh_case(SOURCE, "timeout_case")
+    repo = fresh_case(SOURCE, "014_timeout")
 
     timed_out = run_tool(
         "run",
@@ -80,7 +82,7 @@ def main() -> int:
     assert failure_state["finished_at"]
     assert not (repo / "build/fail/.cad-ci/item.json").exists()
 
-    print("timeout_case passed")
+    print("test_roots/014_timeout passed")
     return 0
 
 

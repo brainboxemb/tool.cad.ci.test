@@ -1,0 +1,14 @@
+schema: 1
+
+defaults:
+  timeout_seconds: 1
+
+items:
+  - wait
+  - override
+  - fail
+
+builders:
+  timeout-default: ci/builders/timeout-default
+  timeout-override: ci/builders/timeout-override
+  command-failure: ci/builders/command-failure
