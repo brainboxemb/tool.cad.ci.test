@@ -1,6 +1,0 @@
-id: directory-case
-steps:
-  - id: build
-    inputs: [item/input.txt, item/run.py]
-    run: [python, run.py]
-    outputs: [generated]
