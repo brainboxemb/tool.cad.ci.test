@@ -1,0 +1,12 @@
+{
+  "engine": "scons",
+  "engine_schema": 3,
+  "final_bundle_sha256": "45e584bf7d13122ab5222b6c0782b9bc5b49cf6cfb8f37e647c1d153a14ebad6",
+  "final_step": "verify_environment",
+  "final_target_spec_digest": "87909b248514d60a2a856294a3c8e62ec5fab68fc5bb93307df7826cbfdd2924",
+  "item": "workflow-case",
+  "run_finished_at": "2026-11-22T10:06:33.742Z",
+  "run_started_at": "2026-11-22T10:06:33.320Z",
+  "schema": 2,
+  "status": "pass"
+}

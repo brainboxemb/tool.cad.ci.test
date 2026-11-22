@@ -1,0 +1,29 @@
+{
+  "action_executed": true,
+  "action_type": "command",
+  "bundle_sha256": "45e584bf7d13122ab5222b6c0782b9bc5b49cf6cfb8f37e647c1d153a14ebad6",
+  "duration_seconds": 0.032,
+  "engine": "scons",
+  "engine_schema": 3,
+  "error": null,
+  "exit_code": 0,
+  "finished_at": "2026-11-22T10:06:33.717Z",
+  "item": "workflow-case",
+  "outcome": "BUILT",
+  "output_state": "UNCHANGED",
+  "outputs": {
+    "result.txt": {
+      "kind": "file",
+      "mode": 420,
+      "sha256": "a326cb9e334c26a1b339d4de47d5f25d41fa44c0b47e3ca46a92896e8973864b"
+    }
+  },
+  "run_finished_at": "2026-11-22T10:06:33.742Z",
+  "run_started_at": "2026-11-22T10:06:33.320Z",
+  "schema": 4,
+  "started_at": "2026-11-22T10:06:33.685Z",
+  "status": "pass",
+  "step": "verify_environment",
+  "target_spec_digest": "87909b248514d60a2a856294a3c8e62ec5fab68fc5bb93307df7826cbfdd2924",
+  "timeout_seconds": 60
+}
