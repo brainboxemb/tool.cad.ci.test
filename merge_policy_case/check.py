@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TOOL = ROOT / "ext" / "cad-ci"
 POLICY = TOOL / "scripts" / "merge_policy.py"
 WORKFLOW = TOOL / ".github" / "workflows" / "reusable-merge-policy.yml"
-EXPECTED_TOOL = "d45cdcef33cf1035311bab9a88c3f99208ef3b29"
+EXPECTED_TOOL = "eb64a46b243db00e8dbb4b78b6643a2a7efa3fb9"
 EXPECTED_LIBRARY = "e621daf6e309bdd0e3f643a12007f1b66490696d"
 
 
@@ -31,15 +31,15 @@ def load_policy():
 
 
 def main() -> int:
-    """Fail unless released 0.20.0 exposes the intended generic contract."""
+    """Fail unless released 0.20.1 exposes the intended generic contract."""
 
     version = (TOOL / "VERSION").read_text(encoding="utf-8").strip()
-    if version != "0.20.0":
+    if version != "0.20.1":
         raise RuntimeError(f"unexpected tool release: {version}")
 
     dependency = (TOOL / "pyproject.toml").read_text(encoding="utf-8")
     if EXPECTED_LIBRARY not in dependency:
-        raise RuntimeError("tool 0.20.0 does not pin accepted library 0.11.0")
+        raise RuntimeError("tool 0.20.1 does not pin accepted library 0.11.0")
 
     policy = load_policy()
     lanes = ("cad-work", "ci-work")
@@ -130,6 +130,10 @@ def main() -> int:
         "inputs.command == '/merge'",
         "github.actor == github.repository_owner",
         "check-runs?per_page=100",
+        "event=issue_comment",
+        "COMMAND_RUN_IDS",
+        ".details_url",
+        "/actions/runs/",
         "group_by(.name)",
         'sha="$HEAD_SHA"',
         'merge_method="$METHOD"',
@@ -163,9 +167,10 @@ def main() -> int:
 
     # The released workflow is intentionally mutation-capable. This acceptance
     # case proves its exact decision/safety surface without creating a synthetic
-    # GitHub PR or ref. Forge #674 performs the real success-path mutation proof.
+    # GitHub PR or ref. Forge #721 performs the real same-head command and
+    # stable-to-lane mutation proof after this release is adopted.
     print(
-        "released tool 0.20.0 merge-policy contract accepted; "
+        "released tool 0.20.1 merge-policy contract accepted; "
         f"tool={EXPECTED_TOOL} library={EXPECTED_LIBRARY}"
     )
     return 0
