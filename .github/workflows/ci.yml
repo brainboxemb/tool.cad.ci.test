@@ -415,6 +415,8 @@ jobs:
               if value in same_runner_action:
                   raise SystemExit(f"consumer/publication behavior leaked into action: {value}")
           PY
+      - name: Released consumer templates
+        run: python template_case/check.py
       - name: Released merge-policy workflow
         run: python merge_policy_case/check.py
       - name: Check released merge operations with fake GitHub API
