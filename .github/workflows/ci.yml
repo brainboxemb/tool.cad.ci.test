@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   consumer:
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@1012e6a539a2fddd8194124844fe208bf16cf4e4
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@b62f9d0b169aa201a3c66c3166f364396b2d71bc
     with:
       full_run: true
       jobs: 2
@@ -20,7 +20,7 @@ jobs:
 
   no_output:
     needs: consumer
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@1012e6a539a2fddd8194124844fe208bf16cf4e4
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@b62f9d0b169aa201a3c66c3166f364396b2d71bc
     with:
       upload_build: true
       build_artifact_name: cad-ci-empty-acceptance
@@ -28,32 +28,45 @@ jobs:
 
   same_runner:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: read
     steps:
-      - name: Run exact released same-runner action
+      - name: Run exact released durable same-runner action
         id: cad_ci
-        uses: brainboxemb/tool.cad.ci@1012e6a539a2fddd8194124844fe208bf16cf4e4
+        uses: brainboxemb/tool.cad.ci@b62f9d0b169aa201a3c66c3166f364396b2d71bc
         with:
           source_sha: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
-          full_run: "true"
+          durable_scope: durable-action-acceptance
+          source_ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
           jobs: "2"
           environment_json: '{"ACCEPTANCE_MARKER":"same-runner-action"}'
           github_token: ${{ github.token }}
 
-      - name: Verify same-runner CLI stack remains available
+      - name: Verify durable same-runner state and exact published scope
         env:
           ACTION_LIBRARY_REVISION: ${{ steps.cad_ci.outputs.library_revision }}
           EXPECTED_LIBRARY_REVISION: 397fb04005b46de8d433cb18c091b1e73714b877
+          ACTION_SCOPE: ${{ steps.cad_ci.outputs.scope }}
+          ACTION_BASE_SHA: ${{ steps.cad_ci.outputs.base_sha }}
+          ACTION_FULL_RUN: ${{ steps.cad_ci.outputs.full_run }}
+          ACTION_SCOPE_EXISTS: ${{ steps.cad_ci.outputs.scope_exists }}
+          ACTION_BUILD_COMMIT: ${{ steps.cad_ci.outputs.build_commit }}
+          ACTION_PREPARED_SCOPE: ${{ steps.cad_ci.outputs.prepared_scope }}
+          SOURCE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
         run: |
           python - <<'PY'
           import json
           import os
           from pathlib import Path
+          import re
           import subprocess
           import sys
 
           import cad_ci
           import cad_ci_tool
 
+          sha = re.compile(r"^[0-9a-f]{40}$")
           tool_root = Path(os.environ["CAD_CI_TOOL_ROOT"]).resolve()
           lib_root = Path(os.environ["CAD_CI_LIB_ROOT"]).resolve()
 
@@ -67,11 +80,40 @@ jobs:
               raise SystemExit(
                   f"cad_ci is not from pinned library root: {lib_file} vs {lib_root}"
               )
-
           if os.environ["ACTION_LIBRARY_REVISION"] != os.environ["EXPECTED_LIBRARY_REVISION"]:
               raise SystemExit(
                   "action library output does not match exact released pin"
               )
+
+          if os.environ["ACTION_SCOPE"] != "durable-action-acceptance":
+              raise SystemExit(f"unexpected durable scope: {os.environ['ACTION_SCOPE']}")
+          for name in ("ACTION_BASE_SHA", "ACTION_BUILD_COMMIT", "SOURCE_SHA"):
+              if sha.fullmatch(os.environ[name]) is None:
+                  raise SystemExit(f"invalid exact sha output {name}: {os.environ[name]}")
+          if os.environ["ACTION_FULL_RUN"] not in {"true", "false"}:
+              raise SystemExit("invalid full_run output")
+          if os.environ["ACTION_SCOPE_EXISTS"] not in {"true", "false"}:
+              raise SystemExit("invalid scope_exists output")
+          if (
+              os.environ["ACTION_SCOPE_EXISTS"] == "false"
+              and os.environ["ACTION_FULL_RUN"] != "true"
+          ):
+              raise SystemExit("initial named scope did not use full-run selection")
+          if (
+              os.environ["ACTION_SCOPE_EXISTS"] == "true"
+              and os.environ["ACTION_FULL_RUN"] != "false"
+          ):
+              raise SystemExit("existing named scope did not use incremental selection")
+
+          prepared = Path(os.environ["ACTION_PREPARED_SCOPE"]).resolve()
+          if not prepared.is_dir():
+              raise SystemExit(f"prepared scope is not available on same runner: {prepared}")
+          manifest_path = prepared / "build.json"
+          if not manifest_path.is_file():
+              raise SystemExit(f"prepared scope manifest missing: {manifest_path}")
+          manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+          if manifest.get("source_commit") != os.environ["SOURCE_SHA"]:
+              raise SystemExit(f"prepared scope source mismatch: {manifest}")
 
           completed = subprocess.run(
               [
@@ -102,6 +144,25 @@ jobs:
           item = json.loads(evidence.read_text())
           if item.get("status") != "pass":
               raise SystemExit(f"unexpected item evidence: {item}")
+
+          build_commit = os.environ["ACTION_BUILD_COMMIT"]
+          subprocess.run(
+              ["git", "fetch", "--no-tags", "--depth=1", "origin", build_commit],
+              check=True,
+          )
+          generated = subprocess.check_output(
+              [
+                  "git",
+                  "show",
+                  f"{build_commit}:durable-action-acceptance/build.json",
+              ],
+              text=True,
+          )
+          generated_manifest = json.loads(generated)
+          if generated_manifest.get("source_commit") != os.environ["SOURCE_SHA"]:
+              raise SystemExit(
+                  f"published named scope source mismatch: {generated_manifest}"
+              )
           PY
 
 
@@ -275,6 +336,12 @@ jobs:
               "--no-deps --no-compile",
               "docker login ghcr.io",
               "Run selected CAD CI graph",
+              "durable_scope:",
+              "source_ref:",
+              "durable-resolve",
+              "durable-publish",
+              "prepared_scope:",
+              "build_commit:",
           )
           for value in required_action:
               if value not in same_runner_action:
