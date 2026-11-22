@@ -1,0 +1,10 @@
+id: consumer-a
+needs: [batch]
+steps:
+  - id: materialize
+    copy:
+      dependency: batch
+      source: items/{item_path}
+    outputs:
+      - result.txt
+      - generated
