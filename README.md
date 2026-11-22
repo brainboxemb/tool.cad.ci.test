@@ -57,7 +57,7 @@ contract for that root.
 | [003_fresh_runner](test_roots/003_fresh_runner/README.md) | current |
 | [004_nested_items](test_roots/004_nested_items/README.md) | current |
 | [005_nested_publish](test_roots/005_nested_publish/README.md) | current |
-| [dependency_case](dependency_case/README.md) | current |
+| [006_dependencies](test_roots/006_dependencies/README.md) | current |
 | [dependency_copy_case](dependency_copy_case/README.md) | current |
 | [active_dependents_case](active_dependents_case/README.md) | current |
 | [partial_rerun_case](partial_rerun_case/README.md) | current |

@@ -4,7 +4,7 @@
 from pathlib import Path
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from tests.support import fresh_case, run_tool
@@ -13,7 +13,7 @@ SOURCE = Path(__file__).resolve().parent
 
 
 def main() -> int:
-    repo = fresh_case(SOURCE, "dependency_case")
+    repo = fresh_case(SOURCE, "006_dependencies")
 
     cold = run_tool("run", "--repo", str(repo))
     for key in (
@@ -65,7 +65,7 @@ def main() -> int:
     assert "current: consumer-a:build" in explicit_summary
     assert "current: consumer-b:build" in explicit_summary
 
-    print("dependency_case passed")
+    print("test_roots/006_dependencies passed")
     return 0
 
 
