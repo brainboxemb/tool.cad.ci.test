@@ -41,9 +41,25 @@ Every run:
 Timing remains centralized in `acceptance_suite/run.py`; individual cases must
 not implement their own timing harness.
 
-The first phase is observability. Do not add flaky hard per-case budgets until
-multiple accepted GitHub runs provide a stable baseline. Existing CAD-CI command
-timeouts remain a separate execution/failure contract.
+Accepted runs now provide enough baseline data for conservative soft budgets.
+
+Initial warning thresholds:
+
+| Scope | Soft budget |
+| --- | ---: |
+| Complete measured case suite | 30 s |
+| Default individual case | 3 s |
+| `timeout_case/check.py` | 4 s |
+| `publish_case/check.py` | 7 s |
+
+These thresholds are **warnings only**. Exceeding them is recorded in
+`case-durations.json` and printed in the log, but does not fail acceptance.
+
+The thresholds intentionally include headroom above observed accepted runs.
+Shared GitHub runners vary materially, so hard performance gates require a
+separate later decision based on sustained evidence.
+
+Existing CAD-CI command timeouts remain a separate execution/failure contract.
 
 ## Case status
 

@@ -32,34 +32,33 @@ Normal executable item `ci.yml` files should contain item identity,
 `builder:`, selection/watch/dependency/process configuration, but not
 executable `steps:` / `run:`.
 
-`008_active_dependents` is the current migration under #164. The producer's
-`selection_context: direct_dependents` moves into a repository-owned builder,
-while consumer/unrelated verification shares one generic builder.
+`008_active_dependents` is migrated and accepted on `dev-ci` by PR #165.
 
-After `008`, continue existing numbered roots in order. `009_partial_rerun`
-still requires an explicit design check because its public contract selects
-builder steps.
+`009_partial_rerun` is the next migration and requires an explicit design
+check because its public contract selects named builder steps with
+`--step` / `--until` / `--from`.
 
 ### #156 — acceptance case duration and suite performance
 
 Per-case timing and machine-readable evidence landed in PR #159.
 
-Measured baselines:
+Accepted total case-time baselines now include:
 
-- run `45067237488`: 24.294 s across 18 cases;
-- run `45067522266`: 24.842 s across 18 cases (+2.3%).
+- 17.341 s — post-merge dev-ci run `45068161840`;
+- 21.135 s — post-promotion main run `45068580019`;
+- 23.996 s — simultaneous post-promotion dev-ci run `45068582403`;
+- 24.294 s — PR #159 run `45067237488`;
+- 24.842 s — accepted follow-up run `45067522266`;
+- 25.444 s — lane-promotion PR run `45068453493`.
 
-The second run moved individual cases in both directions, so the current
-difference is normal shared-runner variation rather than a regression signal.
+Initial non-failing soft budgets are therefore:
 
-Keep #156 open while subsequent accepted runs establish enough evidence for
-soft performance budgets. Do not introduce hard thresholds yet.
+- total suite: 30 s;
+- default case: 3 s;
+- timeout case: 4 s;
+- publish case: 7 s.
 
-### #154 — formalize live GitHub workflow scenarios
-
-Keep synthetic consumer-root acceptance separate from live GitHub lifecycle
-acceptance. Maintain explicit real scenarios for feature PRs, docs-only PRs,
-lane promotion, stable-to-lane synchronization and owner `/merge` comments.
+Warnings are observability only; no timing threshold fails acceptance.
 
 ### #114 — normalize remaining external cases into numbered test roots
 
@@ -84,9 +83,8 @@ duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #142 Declarative builder migration | **now** | Qualify `008_active_dependents`, then continue existing roots in order. |
-| #156 Acceptance duration | **active measurement** | Collect timings from subsequent real acceptance runs; derive soft budgets later. |
-| #154 Live GitHub workflow scenarios | **active** | Maintain real PR/lane/merge workflow acceptance separately from test roots. |
+| #142 Declarative builder migration | **now** | `001`–`008` accepted; design/migrate `009_partial_rerun` next. |
+| #156 Acceptance duration | **now** | Land conservative non-failing soft warnings from the accepted timing baseline. |
 | #114 Numbered standalone test roots | **blocked by #142 for normal roots** | Resume remaining top-level fixture migration after builder migration. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
