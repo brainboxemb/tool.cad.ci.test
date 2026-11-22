@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CASES = (
     "workflow_case/check.py",
     "test_roots/001_simple/check.py",
-    "more_complex_case2/check.py",
+    "test_roots/002_selection/check.py",
     "fresh_runner_case/check.py",
     "nested_item_case/check.py",
     "nested_publish_case/check.py",

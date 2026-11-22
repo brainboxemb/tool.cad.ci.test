@@ -53,7 +53,7 @@ contract for that root.
 | --- | --- |
 | [workflow_case](workflow_case/README.md) | current |
 | [001_simple](test_roots/001_simple/README.md) | current |
-| [more_complex_case2](more_complex_case2/README.md) | current; historical directory name |
+| [002_selection](test_roots/002_selection/README.md) | current |
 | [fresh_runner_case](fresh_runner_case/README.md) | current |
 | [nested_item_case](nested_item_case/README.md) | current |
 | [nested_publish_case](nested_publish_case/README.md) | current |
