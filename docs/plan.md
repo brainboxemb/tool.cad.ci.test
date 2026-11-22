@@ -20,32 +20,31 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
   - `005_nested_publish` — PR #151;
   - `006_dependencies` — PR #153;
   - `007_dependency_copy` — PR #161;
-- acceptance timing observability landed in PR #159.
+  - `008_active_dependents` — PR #165;
+  - `009_partial_rerun` — PR #177;
+  - `010_process` — PR #179;
+  - `011_shared_builder` — original canonical reference;
+  - `012_parallel_jobs` — PR #183;
+- acceptance timing observability landed in PR #159;
+- non-failing timing budgets landed in PR #175.
 
 ## Current work
 
 ### #142 — migrate numbered roots to declarative builders
 
-Use `test_roots/011_shared_builder` as the canonical builder-model reference.
+All existing numbered roots `001` through `012` now use the declarative
+builder boundary; `011_shared_builder` remains the canonical shared-builder
+reference.
 
-Normal executable item `ci.yml` files should contain item identity,
-`builder:`, selection/watch/dependency/process configuration, but not
-executable `steps:` / `run:`.
+Final qualification is #184: enforce the architecture on every acceptance run
+so item/repository configuration cannot drift back to executable
+`steps:` / `run:` or item-local `run.py` files.
 
-`008_active_dependents` is migrated and accepted on `dev-ci` by PR #165.
+After #184 passes, close #142 and resume #114 for the remaining historical
+top-level normal consumer cases.
 
-`009_partial_rerun` is migrated and accepted on `dev-ci` by PR #177.
-
-`010_process` is migrated and accepted on `dev-ci` by PR #179.
-
-`011_shared_builder` is already the canonical shared-builder reference.
-
-`012_parallel_jobs` is the current and final existing numbered-root migration
-under #182. Both items share one repository-owned builder while the public
-`--jobs 2` overlap contract remains unchanged.
-
-Acceptance timing is now part of the accepted baseline: PR #159 added
-per-case evidence and PR #175 added conservative non-failing soft budgets.
+Acceptance timing is part of the accepted baseline: PR #159 added per-case
+evidence and PR #175 added conservative non-failing soft budgets.
 ### #114 — normalize remaining external cases into numbered test roots
 
 #114 owns only the remaining historical top-level fixture audit/migration after
@@ -69,7 +68,7 @@ duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #142 Declarative builder migration | **now** | `001`–`011` accepted/canonical; qualify final existing root `012_parallel_jobs` under #182, then audit all item configs. |
+| #142 Declarative builder migration | **now** | `001`–`012` migrated; qualify durable architecture enforcement under #184, then close. |
 | #114 Numbered standalone test roots | **blocked by #142 for normal roots** | Resume remaining top-level fixture migration after builder migration. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
