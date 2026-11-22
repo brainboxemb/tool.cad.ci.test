@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
-"""Black-box coarse changed-item selection acceptance."""
+"""Black-box changed-item selection acceptance."""
 
 from pathlib import Path
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from tests.support import fresh_case, run_tool
+
 
 SOURCE = Path(__file__).resolve().parent
 
 
 def main() -> int:
-    repo = fresh_case(SOURCE, "more_complex_case2")
+    repo = fresh_case(SOURCE, "002_selection")
 
     cold = run_tool("run", "--repo", str(repo))
     assert "built: alpha:build" in cold
@@ -61,7 +63,7 @@ def main() -> int:
     assert "built: alpha:build" in shared
     assert "built: beta:build" in shared
 
-    print("more_complex_case2 passed")
+    print("test_roots/002_selection passed")
     return 0
 
 
