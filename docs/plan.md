@@ -6,35 +6,35 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 ## Baseline
 
 - accepted baseline: `tool.cad.ci v0.23.0`;
-- `v0.23.0` pins `lib.py.cad.ci 0.11.1`;
+- candidate under external acceptance: `tool.cad.ci v0.24.0` @
+  `18d374fad83e61b9a9b057931352ce4a2c8e2252`;
+- both pin `lib.py.cad.ci 0.11.1`;
 - config-driven external acceptance passed in PR #94;
 - case ownership/documentation cleanup passed in PR #97.
 
 ## Current work
 
-### #98 — establish permanent lane integration
+### #102 — accept tool.cad.ci v0.24.0
 
-Make this repository the real external consumer of the standard permanent-lane
-contract:
+1. repin the single normal `reusable-ci.yml` consumer path to `v0.24.0`;
+2. retain the canonical permanent-lane policy introduced by #98/#99;
+3. update release-identity assertions only;
+4. run the complete current acceptance suite;
+5. do not add root-action/same-runner or alternate execution routes;
+6. mark v0.24.0 accepted only after the complete suite is green.
 
-1. maintain permanent `main`, `dev-cad` and `dev-ci` branches;
-2. use released `reusable-ci.yml@v0.23.0` with canonical lane PR policy;
-3. keep one normal workflow route only;
-4. use released merge-policy for history-preserving lane promotion and
-   synchronization;
-5. dispatch the same `ci.yml` for complete post-merge integration validation;
-6. prove issue/feature -> lane, docs-only lane PR, lane -> main promotion and
-   main -> lane synchronization with real GitHub PRs;
-7. keep `delete_branch_on_merge=false` and merge commits enabled.
+### #98 — permanent lane integration
 
-Repository settings were verified before integration work:
-`delete_branch_on_merge=false`, `allow_merge_commit=true`.
+Continue exercising the real external permanent-lane contract on
+`main`, `dev-cad` and `dev-ci` using the released lane policy and merge
+workflow. The v0.24.0 repin must not undo that integration topology.
 
 ## Open issue assessment
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #98 Permanent lane integration | **now** | Land consumer wrappers on dev-ci, then exercise real lane PR paths. |
+| #102 Accept tool.cad.ci v0.24.0 | **now** | Merge after complete external acceptance is green. |
+| #98 Permanent lane integration | **active** | Continue real lane PR/promotion/synchronization scenarios after the release repin. |
 | #88 Align historical changelog | **later / docs-only** | No runtime impact. |
 
 ## Boundary
