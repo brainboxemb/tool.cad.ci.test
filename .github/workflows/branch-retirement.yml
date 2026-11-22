@@ -1,0 +1,36 @@
+# template: tool.cad.ci/branch-retirement
+# template-version: 1
+# tool-release: v0.27.0
+#
+# Copy this file to:
+#   .github/workflows/branch-retirement.yml
+#
+# This owner-only wrapper is intentionally separate from automatic cleanup.
+# Every requested branch must be supplied with its exact reviewed SHA in the
+# issue comment.
+
+name: Branch retirement
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+
+jobs:
+  retire:
+    if: >-
+      startsWith(github.event.comment.body, '/retire-branches') &&
+      github.actor == github.repository_owner
+    permissions:
+      contents: write
+      pull-requests: read
+      issues: write
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-branch-retirement.yml@v0.27.0
+    with:
+      command: ${{ github.event.comment.body }}
+      issue_number: ${{ github.event.issue.number }}
+      stable_ref: main
+      lane_refs_json: '["dev-cad","dev-ci"]'
+      permanent_refs_json: '["build","gh-pages"]'
