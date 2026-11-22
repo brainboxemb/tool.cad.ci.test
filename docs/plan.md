@@ -27,10 +27,23 @@ Accepted public behavior includes:
 
 ## Current work
 
-No acceptance implementation is active.
+Issue #80 — **now**: externally accept released tool.cad.ci 0.19.0 at exact
+commit `5677c41a61929b32ab2cb07087a6505f7b9347d8`.
 
-The exact released 0.18.1 / 0.11.0 pair is externally accepted. Forge and CAD
-may now adopt this pair through their own consumer plans.
+The release keeps the exact accepted lib.py.cad.ci 0.11.0 pin and adds only a
+tool-owned reusable merge/lane-policy workflow surface.
+
+Acceptance order:
+
+1. repin every released tool/workflow/action consumer to exact 0.19.0;
+2. rerun the complete existing black-box suite unchanged;
+3. validate the exact released `scripts/merge_policy.py` decision contract;
+4. validate the exact released `reusable-merge-policy.yml` is repository
+   neutral, fail-closed and does not accept an arbitrary merge method;
+5. leave the real successful GitHub merge/ref mutation to Forge #674 consumer
+   equivalence, so this repository does not leave synthetic branches/PRs behind.
+
+Do not add local merge-policy implementation here.
 
 Accepted additional behavior includes:
 
@@ -42,7 +55,9 @@ Accepted additional behavior includes:
 
 ## Open issue assessment — 2026-11-22
 
-No open acceptance issues remain after #77 is closed.
+| Issue | Status | Current interpretation |
+| --- | --- | --- |
+| #80 accept tool.cad.ci 0.19.0 merge-policy workflow | **now** | Repin exact release, run full suite, validate released helper/workflow contract; real mutating success path is subsequent Forge #674 qualification. |
 
 ## Boundary
 
