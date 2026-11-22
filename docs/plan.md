@@ -36,9 +36,13 @@ executable `steps:` / `run:`.
 
 `009_partial_rerun` is migrated and accepted on `dev-ci` by PR #177.
 
-`010_process` is the current migration under #178. The public `process`
-field remains item configuration while all three items share one
-repository-owned builder.
+`010_process` is migrated and accepted on `dev-ci` by PR #179.
+
+`011_shared_builder` is already the canonical shared-builder reference.
+
+`012_parallel_jobs` is the current and final existing numbered-root migration
+under #182. Both items share one repository-owned builder while the public
+`--jobs 2` overlap contract remains unchanged.
 
 Acceptance timing is now part of the accepted baseline: PR #159 added
 per-case evidence and PR #175 added conservative non-failing soft budgets.
@@ -65,7 +69,7 @@ duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #142 Declarative builder migration | **now** | `001`–`009` accepted; qualify `010_process` under #178. |
+| #142 Declarative builder migration | **now** | `001`–`011` accepted/canonical; qualify final existing root `012_parallel_jobs` under #182, then audit all item configs. |
 | #114 Numbered standalone test roots | **blocked by #142 for normal roots** | Resume remaining top-level fixture migration after builder migration. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |

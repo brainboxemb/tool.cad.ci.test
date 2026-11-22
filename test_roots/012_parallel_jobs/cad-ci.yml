@@ -3,3 +3,6 @@ schema: 1
 items:
   - left
   - right
+
+builders:
+  parallel: ci/builders/parallel
