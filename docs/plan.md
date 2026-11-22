@@ -24,6 +24,11 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ## Current work
 
+### #186 — qualify exact-SHA branch retirement
+
+Adopt the released `tool.cad.ci v0.27.0` governance stack on default `main`, add the canonical exact-SHA retirement wrapper, and prove the separate `/retire-branches` operation against only the remaining manually audited stale refs from #180. Re-read every target SHA immediately before issuing the owner command; newly active refs are not part of this retirement set.
+
+
 ### #180 — qualify released branch-cleanup governance
 
 Adopt `tool.cad.ci v0.26.0` on the default-branch CI/merge wrappers and add the canonical owner-only `/cleanup-branches` wrapper. After the change reaches `main`, create a disposable integrated temporary ref and prove the released workflow deletes it through a real `issue_comment` run. Then audit the same conservative command against the existing stale branch set; unique/unmerged refs must remain.
@@ -90,6 +95,7 @@ duplicate generic merge/classification logic.
 | Issue | Status | Next |
 | --- | --- | --- |
 | #180 Branch-cleanup governance acceptance | **now / live integration** | Land the v0.26.0 wrappers on default `main`, run `/cleanup-branches`, and record real ref-deletion evidence. |
+| #186 Exact-SHA branch retirement acceptance | **now / live integration** | Land v0.27.0 wrappers on default `main`, then retire only exact reviewed stale refs and record the branch audit. |
 | #142 Declarative builder migration | **now** | Qualify `008_active_dependents`, then continue existing roots in order. |
 | #156 Acceptance duration | **active measurement** | Collect timings from subsequent real acceptance runs; derive soft budgets later. |
 | #154 Live GitHub workflow scenarios | **active** | Maintain real PR/lane/merge workflow acceptance separately from test roots. |
