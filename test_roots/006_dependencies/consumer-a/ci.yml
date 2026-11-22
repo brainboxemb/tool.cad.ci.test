@@ -1,8 +1,9 @@
 id: consumer-a
-needs: [library]
-watch: [consumer-a/**]
-steps:
-  - id: build
-    inputs: [consumer-a/input.txt, consumer-a/run.py]
-    run: [python, run.py]
-    outputs: [result.txt]
+kind: synthetic
+builder: consumer
+needs:
+  - library
+
+watch:
+  item:
+    - input.txt

@@ -32,9 +32,10 @@ Migrate the already-numbered roots before adding more normal test roots.
 `002_selection` is migrated and accepted on `dev-ci` by PR #145.
 `003_fresh_runner` is migrated and accepted on `dev-ci` by PR #147.
 `004_nested_items` is migrated and accepted on `dev-ci` by PR #149.
-`005_nested_publish` is the current migration under #150; parent and child use
-one repository-owned builder while sparse ownership/preservation remains the
-black-box contract.
+`005_nested_publish` is migrated and accepted on `dev-ci` by PR #151.
+`006_dependencies` is the current migration under #152; producer, shared
+consumer and summary execution move into repository-owned builders while
+public dependency flow and step names stay unchanged.
 
 `007_dependency_copy` and `009_partial_rerun` require explicit design checks
 because their public contracts involve copy/step-selection semantics.
@@ -63,7 +64,7 @@ duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #142 Declarative builder migration | **now** | `001`–`004` complete; qualify `005_nested_publish`, then continue in order. |
+| #142 Declarative builder migration | **now** | `001`–`005` complete; qualify `006_dependencies`, then continue in order. |
 | #114 Numbered standalone test roots | **blocked by #142 for normal roots** | Resume remaining top-level fixture migration after builder migration. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |

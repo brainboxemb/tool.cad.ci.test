@@ -1,0 +1,15 @@
+schema: 1
+description: Synthetic producer builder with ordered steps
+
+steps:
+  - id: prepare
+    inputs:
+      item:
+        - input.txt
+    run: 'python "$CAD_CI_BUILDER_PATH/prepare.py"'
+    outputs:
+      - data.txt
+  - id: finish
+    run: 'python "$CAD_CI_BUILDER_PATH/finish.py"'
+    outputs:
+      - done.txt
