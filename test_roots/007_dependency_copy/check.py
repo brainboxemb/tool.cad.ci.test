@@ -8,7 +8,7 @@ from pathlib import Path
 import sys
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from tests.support import fresh_case, run_tool
@@ -25,7 +25,7 @@ def step(repo: Path, item: str) -> dict:
 
 
 def main() -> int:
-    repo = fresh_case(SOURCE, "dependency_copy_case")
+    repo = fresh_case(SOURCE, "007_dependency_copy")
 
     for name in ("consumer-a", "consumer-b"):
         scripts = list((repo / name).glob("*.py"))
@@ -68,7 +68,25 @@ def main() -> int:
         assert evidence["started_at"] is None, evidence
         assert evidence["finished_at"] is None, evidence
 
-    print("dependency_copy_case passed")
+    (repo / "batch/input.txt").write_text("two\n", encoding="utf-8")
+    changed = run_tool("run", "--repo", str(repo), "--jobs", "2")
+    assert "built: batch:build" in changed
+    assert "built: consumer-a:materialize" in changed
+    assert "built: consumer-b:materialize" in changed
+
+    for name in ("consumer-a", "consumer-b"):
+        evidence = step(repo, name)
+        assert evidence["outcome"] == "BUILT", evidence
+        assert evidence["action_type"] == "copy", evidence
+        assert evidence["action_executed"] is True, evidence
+        assert (
+            repo / "build" / name / "result.txt"
+        ).read_text(encoding="utf-8") == f"{name}:two\n"
+        assert (
+            repo / "build" / name / "generated" / "value.txt"
+        ).read_text(encoding="utf-8") == f"{name}-generated:two\n"
+
+    print("test_roots/007_dependency_copy passed")
     return 0
 
 
