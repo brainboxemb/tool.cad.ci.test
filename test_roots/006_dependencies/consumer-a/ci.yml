@@ -1,0 +1,9 @@
+id: consumer-a
+kind: synthetic
+builder: consumer
+needs:
+  - library
+
+watch:
+  item:
+    - input.txt

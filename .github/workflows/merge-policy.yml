@@ -1,3 +1,18 @@
+# template: tool.cad.ci/merge-policy
+# template-version: 3
+# tool-release: v0.28.0
+#
+# Copy this file to:
+#   .github/workflows/merge-policy.yml
+#
+# Works as-is for repositories using:
+#   stable branch: main
+#   development lanes: dev-cad, dev-ci
+#   permanent generated branches: build, gh-pages
+#
+# Only change the marked repository-policy values when this repository
+# intentionally uses different names or needs integration workflow dispatch.
+
 name: Merge policy
 
 on:
@@ -11,7 +26,8 @@ jobs:
   merge:
     if: >-
       github.event.issue.pull_request &&
-      github.event.comment.body == '/merge'
+      (github.event.comment.body == '/merge' ||
+       startsWith(github.event.comment.body, '/merge-resolved'))
     permissions:
       actions: write
       contents: write
@@ -19,11 +35,15 @@ jobs:
       issues: write
       checks: read
       statuses: read
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-merge-policy.yml@v0.23.0
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-merge-policy.yml@v0.28.0
     with:
       command: ${{ github.event.comment.body }}
       pull_request_number: ${{ github.event.issue.number }}
+
+      # Repository policy: change only when this repository differs.
       stable_ref: main
       lane_refs_json: '["dev-cad","dev-ci"]'
       permanent_refs_json: '["build","gh-pages"]'
+
+      # Repository integration workflow.
       integration_workflow: ci.yml

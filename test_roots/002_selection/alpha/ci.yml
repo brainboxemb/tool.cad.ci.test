@@ -1,0 +1,9 @@
+id: alpha
+kind: synthetic
+builder: selection
+
+watch:
+  item:
+    - input.txt
+  repo:
+    - shared.txt

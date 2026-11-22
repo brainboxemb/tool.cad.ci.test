@@ -1,0 +1,11 @@
+schema: 1
+description: Shared engine-native dependency copy builder
+
+steps:
+  - id: materialize
+    copy:
+      dependency: batch
+      source: items/{item_path}
+    outputs:
+      - result.txt
+      - generated

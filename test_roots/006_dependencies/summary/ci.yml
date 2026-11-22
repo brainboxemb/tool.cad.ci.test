@@ -1,0 +1,8 @@
+id: summary
+kind: synthetic
+builder: summary
+needs:
+  - consumer-a
+  - consumer-b
+strategy:
+  affected: direct

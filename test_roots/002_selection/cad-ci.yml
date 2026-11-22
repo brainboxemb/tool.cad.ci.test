@@ -1,0 +1,8 @@
+schema: 1
+
+items:
+  - alpha
+  - beta
+
+builders:
+  selection: ci/builders/selection

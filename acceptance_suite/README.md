@@ -13,7 +13,9 @@ stack.
 
 `run.py::CASES` is the authoritative case list.
 
-Every registered top-level case must have a local `README.md` that states:
+Every registered check belongs to one documented case root. Numbered synthetic
+consumer repositories live below `test_roots/NNN_name/`; their `check.py` sits
+in that repository root. Each case root must have a local `README.md` that states:
 
 - status;
 - purpose;
@@ -24,22 +26,42 @@ Every registered top-level case must have a local `README.md` that states:
 A new case is not valid merely because a new `check.py` exists. It must prove
 a distinct public behavior not already covered elsewhere.
 
+## Duration contract
+
+The central runner measures every registered case with a monotonic clock.
+
+Every run:
+
+- prints each case duration immediately after the case;
+- prints one slowest-first timing summary;
+- reports total measured case time;
+- writes machine-readable `case-durations.json`;
+- records duration for failed cases before raising the suite failure.
+
+Timing remains centralized in `acceptance_suite/run.py`; individual cases must
+not implement their own timing harness.
+
+The first phase is observability. Do not add flaky hard per-case budgets until
+multiple accepted GitHub runs provide a stable baseline. Existing CAD-CI command
+timeouts remain a separate execution/failure contract.
+
 ## Case status
 
 | Case | Status | Role |
 | --- | --- | --- |
 | `workflow_case` | current | Normal reusable-workflow environment/authentication boundary. |
-| `simple_case1` | current | Cold/current execution and input invalidation. |
-| `more_complex_case2` | current | Changed-item selection. |
-| `fresh_runner_case` | current | Exact base/head selection from a clean clone. |
-| `nested_item_case` | current | Nested item configuration and selection. |
-| `nested_publish_case` | current | Nested durable output ownership. |
-| `dependency_case` | current | Dependency fan-out and selected dependency execution. |
-| `dependency_copy_case` | current | Engine-owned dependency-output copy. |
-| `active_dependents_case` | current | Public direct-dependent command context. |
-| `partial_rerun_case` | current | Public partial-run selectors. |
-| `process_case` | current | Public item `process` participation semantics. |
-| `parallel_jobs_case` | current | Public bounded `--jobs` behavior. |
+| `test_roots/001_simple` | current | Smallest standalone hello/timestamp consumer repository. |
+| `test_roots/002_selection` | current | Changed-item selection across two items and one shared input. |
+| `test_roots/003_fresh_runner` | current | Exact base/head selection from a clean clone. |
+| `test_roots/004_nested_items` | current | Nested discovery, templates, path normalization and selection. |
+| `test_roots/005_nested_publish` | current | Durable parent/nested-child output ownership and sparse updates. |
+| `test_roots/006_dependencies` | current | Dependency traversal, fan-out and explicit downstream execution. |
+| `test_roots/007_dependency_copy` | current | Engine-owned dependency-output copy and invalidation. |
+| `test_roots/008_active_dependents` | current | Public direct-dependent selection context and target identity. |
+| `test_roots/009_partial_rerun` | current | Public --step/--until/--from selector semantics. |
+| `test_roots/010_process` | current | Public item-level process participation and exclusion. |
+| `test_roots/011_shared_builder` | current | Declarative repository-owned shared builder used by multiple items. |
+| `test_roots/012_parallel_jobs` | current | Public bounded --jobs concurrency using observable action intervals. |
 | `directory_output_case` | current | Directory outputs and CacheDir restore/repair. |
 | `timeout_case` | current | Timeout, override and command failure behavior. |
 | `publish_case` | current | Durable build and Pages publication contract. |

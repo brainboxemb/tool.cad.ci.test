@@ -1,0 +1,7 @@
+id: test-case-1-simple
+kind: synthetic
+builder: simple
+
+watch:
+  item:
+    - hello.md

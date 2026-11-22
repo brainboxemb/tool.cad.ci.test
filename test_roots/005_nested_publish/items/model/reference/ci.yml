@@ -1,0 +1,7 @@
+id: child
+kind: synthetic
+builder: nested-output
+
+watch:
+  item:
+    - input.txt

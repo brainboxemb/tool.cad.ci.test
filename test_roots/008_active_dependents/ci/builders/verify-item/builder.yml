@@ -1,0 +1,8 @@
+schema: 1
+description: Shared synthetic verify builder
+
+steps:
+  - id: verify
+    run: 'python "$CAD_CI_BUILDER_PATH/verify.py"'
+    outputs:
+      - result.txt

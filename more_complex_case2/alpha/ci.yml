@@ -1,7 +1,0 @@
-id: alpha
-watch: [alpha/**, shared.txt]
-steps:
-  - id: build
-    inputs: [alpha/input.txt, alpha/run.py, shared.txt]
-    run: [python, run.py]
-    outputs: [result.txt]
