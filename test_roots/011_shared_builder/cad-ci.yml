@@ -1,0 +1,7 @@
+schema: 1
+
+items:
+  - items/*
+
+builders:
+  shared: ci/builders/shared
