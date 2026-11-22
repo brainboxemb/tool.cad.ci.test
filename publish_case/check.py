@@ -54,6 +54,20 @@ def isolated_repository(
         ["git", "init", "--bare", "--quiet", str(remote)],
         check=True,
     )
+    # The normal reusable workflow intentionally checks out only the exact
+    # source commit. This local fixture accepts that shallow commit without
+    # forcing an unrelated history fetch into the consumer workflow.
+    subprocess.run(
+        [
+            "git",
+            "--git-dir",
+            str(remote),
+            "config",
+            "receive.shallowUpdate",
+            "true",
+        ],
+        check=True,
+    )
     subprocess.run(
         [
             "git",
