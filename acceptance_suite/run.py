@@ -39,7 +39,7 @@ CASES = (
     "test_roots/010_process/check.py",
     "test_roots/011_shared_builder/check.py",
     "test_roots/012_parallel_jobs/check.py",
-    "directory_output_case/check.py",
+    "test_roots/013_directory_output/check.py",
     "timeout_case/check.py",
     "publish_case/check.py",
     "merge_policy_case/check.py",
@@ -208,7 +208,7 @@ def main() -> int:
         )
 
     (output / "accepted.txt").write_text(
-        "tool.cad.ci v0.25.0 released-stack acceptance passed\n",
+        "tool.cad.ci v0.27.1 released-stack acceptance passed\n",
         encoding="utf-8",
     )
     return 0
