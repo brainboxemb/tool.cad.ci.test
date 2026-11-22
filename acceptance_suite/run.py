@@ -14,6 +14,9 @@ import traceback
 
 ROOT = Path(__file__).resolve().parents[1]
 
+from contracts import validate_test_roots
+
+
 SOFT_TOTAL_BUDGET_SECONDS = 30.0
 DEFAULT_SOFT_CASE_BUDGET_SECONDS = 3.0
 SOFT_CASE_BUDGET_SECONDS = {
@@ -89,6 +92,8 @@ def run_case(relative: str, index: int) -> None:
 
 def main() -> int:
     """Run every black-box case and record centrally managed timing evidence."""
+
+    validate_test_roots(ROOT)
 
     failures: list[str] = []
     timings: list[dict[str, object]] = []

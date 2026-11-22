@@ -26,6 +26,27 @@ in that repository root. Each case root must have a local `README.md` that state
 A new case is not valid merely because a new `check.py` exists. It must prove
 a distinct public behavior not already covered elsewhere.
 
+## Declarative test-root architecture
+
+Before any black-box case executes, `contracts.py` validates the complete
+`test_roots/` collection.
+
+The contract enforces:
+
+- contiguous three-digit root names (`001_...`, `002_...`, ...);
+- a local `README.md`, `cad-ci.yml` and `check.py` per root;
+- repository-owned builder aliases below `ci/builders/`;
+- no executable `steps:` or `run:` keys in root `cad-ci.yml` or item
+  `ci.yml`;
+- every item selects a declared builder directly or through a template;
+- no legacy item-local `run.py` outside builder directories.
+
+Builder `builder.yml` files are intentionally allowed to contain executable
+steps. That is the execution boundary being enforced.
+
+The validator runs inside the existing acceptance step. It is not a second CI
+job or alternate runner.
+
 ## Duration contract
 
 The central runner measures every registered case with a monotonic clock.
