@@ -29,6 +29,7 @@ Current accepted structure:
 - `timeout_case`
 - `publish_case`
 - `workflow_case`
+- `merge_policy_case`
 
 Each case owns a small `cad-ci.yml`, source files and `check.py`. A failure
 must clearly identify the contract that broke.
