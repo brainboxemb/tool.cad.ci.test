@@ -1,7 +1,7 @@
 id: b
-watch: [b/**]
-steps:
-  - id: build
-    inputs: [b/input.txt, b/run.py]
-    run: [python, run.py]
-    outputs: [result.txt]
+kind: synthetic
+builder: item
+
+watch:
+  item:
+    - input.txt
