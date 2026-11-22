@@ -17,6 +17,7 @@ watch:
   - active_dependents_case/**
   - partial_rerun_case/**
   - process_case/**
+  - test_roots/**
   - parallel_jobs_case/**
   - directory_output_case/**
   - timeout_case/**
@@ -39,6 +40,7 @@ steps:
       - active_dependents_case/**
       - partial_rerun_case/**
       - process_case/**
+      - test_roots/**
       - parallel_jobs_case/**
       - directory_output_case/**
       - timeout_case/**
