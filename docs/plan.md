@@ -5,10 +5,18 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ## Accepted baseline
 
-- accepted under #133 / PR #135: `tool.cad.ci v0.25.0` @
-  `92b9cbb59bf24f6b47ba1fae267f67f2becc503f`;
-- v0.25.0 pins `lib.py.cad.ci 0.12.0` @
+- current released consumer target: `tool.cad.ci v0.27.1` @
+  `716d22ce79551155b68413bd50fe3bf9d15d2254`;
+- v0.27.1 pins `lib.py.cad.ci 0.12.0` @
   `64656db8df528a5c0de799e62c0f028fd0133486`;
+- released-stack acceptance passed with all 18 cases on PR #187;
+- branch-governance live acceptance is complete:
+  - #180 / run `45070007017` proved conservative `/cleanup-branches`
+    deletion and preservation of unique/unmerged history;
+  - #186 / run `45071078228` retired the five separately reviewed
+    unique-history refs through exact `(branch, SHA)` evidence;
+- after #186 the stale historical set from the branch audit is gone; only
+  permanent refs plus independently active concurrent work remain;
 - v0.25/main + numbered dev-ci histories were reconciled by PR #140;
 - numbered standalone test roots `001` through `012` are present on
   `dev-ci`;
@@ -29,6 +37,11 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 - non-failing timing budgets landed in PR #175.
 
 ## Current work
+
+### #191 — adopt v0.27.1 and re-qualify stable-to-lane merge
+
+Adopt the released `tool.cad.ci v0.27.1` stack on default `main`. This patch fixes the `/merge` self-check indexing race reproduced by PR #190. After this PR lands, PR #190 must re-run against the new `main` head and succeed through the normal shared `/merge` synchronization path before #114 continues.
+
 
 ### #142 — migrate numbered roots to declarative builders
 
@@ -56,7 +69,7 @@ Do not mechanically migrate special workflow/governance harness cases.
 
 Continue exercising the real external permanent-lane contract on
 `main`, `dev-cad` and `dev-ci` using
-`reusable-ci.yml@v0.25.0` and the released lane/merge policy.
+`reusable-ci.yml@v0.27.1` and the released lane/merge policy.
 
 ### #106 — prove dev-cad to main promotion
 
