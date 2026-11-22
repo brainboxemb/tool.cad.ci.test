@@ -8,7 +8,6 @@ watch:
   - tests/**
   - workflow_case/**
   - test_roots/**
-  - nested_item_case/**
   - nested_publish_case/**
   - dependency_case/**
   - dependency_copy_case/**
@@ -28,7 +27,6 @@ steps:
       - tests/**
       - workflow_case/**
       - test_roots/**
-      - nested_item_case/**
       - nested_publish_case/**
       - dependency_case/**
       - dependency_copy_case/**

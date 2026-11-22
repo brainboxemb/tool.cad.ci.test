@@ -10,7 +10,7 @@ import subprocess
 import sys
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from tests.support import fresh_case, run_tool
@@ -44,7 +44,7 @@ def fresh_clone(source: Path, target: Path) -> Path:
 def main() -> int:
     """Prove child-local and parent-shared nested selection from outside."""
 
-    source = fresh_case(SOURCE, "nested_item_case")
+    source = fresh_case(SOURCE, "004_nested_items")
     subprocess.run(["git", "init", "--quiet"], cwd=source, check=True)
     subprocess.run(
         ["git", "config", "user.name", "tool.cad.ci.test"],
@@ -84,7 +84,7 @@ def main() -> int:
 
     child_runner = fresh_clone(
         source,
-        source.parent / "nested_item_case_child_clone",
+        source.parent / "004_nested_items_child_clone",
     )
     assert git(child_runner, "rev-parse", "HEAD") == child_head
 
@@ -167,7 +167,7 @@ def main() -> int:
 
     contract_runner = fresh_clone(
         source,
-        source.parent / "nested_item_case_contract_clone",
+        source.parent / "004_nested_items_contract_clone",
     )
     assert git(contract_runner, "rev-parse", "HEAD") == contract_head
 
@@ -218,7 +218,7 @@ def main() -> int:
             f"{name}:shared\ncontract-v2\n"
         )
 
-    print("nested_item_case passed")
+    print("test_roots/004_nested_items passed")
     return 0
 
 
