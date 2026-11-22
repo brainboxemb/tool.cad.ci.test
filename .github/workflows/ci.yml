@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   consumer:
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@e29d3127d5d3f9310f3cab4e27430a64a61c21cc
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@5677c41a61929b32ab2cb07087a6505f7b9347d8
     with:
       full_run: true
       jobs: 2
@@ -20,7 +20,7 @@ jobs:
 
   no_output:
     needs: consumer
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@e29d3127d5d3f9310f3cab4e27430a64a61c21cc
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@5677c41a61929b32ab2cb07087a6505f7b9347d8
     with:
       upload_build: true
       build_artifact_name: cad-ci-empty-acceptance
@@ -34,7 +34,7 @@ jobs:
     steps:
       - name: Run exact released durable same-runner action
         id: cad_ci
-        uses: brainboxemb/tool.cad.ci@e29d3127d5d3f9310f3cab4e27430a64a61c21cc
+        uses: brainboxemb/tool.cad.ci@5677c41a61929b32ab2cb07087a6505f7b9347d8
         with:
           source_sha: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           durable_scope: durable-action-acceptance
