@@ -1,10 +1,7 @@
 id: left
+kind: synthetic
+builder: parallel
 
-steps:
-  - id: build
-    inputs:
-      - left/input.txt
-      - left/run.py
-    run: [python, run.py]
-    outputs:
-      - result.txt
+watch:
+  item:
+    - input.txt

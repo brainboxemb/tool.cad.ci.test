@@ -4,7 +4,8 @@ Status: current
 
 ## Purpose
 
-Standalone consumer repository for the public bounded `--jobs` surface.
+Standalone consumer repository for the public bounded `--jobs` surface using
+one shared declarative builder.
 
 ## Public contract
 
@@ -18,11 +19,18 @@ The case proves:
 The overlap is the behavioral proof of concurrent execution. This is not a
 benchmark and does not inspect private scheduler/SCons internals.
 
-## Fixture
+## Declarative builder contract
 
-The repository has two independent items, `left` and `right`. Each action
-sleeps briefly before writing one declared output so overlap is observable in
-public evidence.
+Both `left` and `right` select the same repository-owned `parallel`
+builder and keep only item-local `input.txt` watch configuration.
+
+The builder owns the `build` step, deliberate short sleep, execution command
+and `result.txt` output. Item configs contain no executable `steps:` or
+`run:`.
+
+The sleep exists only to make overlapping public action intervals observable;
+case duration is monitored separately by the central acceptance timing
+contract.
 
 ## Failure ownership
 
