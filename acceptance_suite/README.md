@@ -26,6 +26,25 @@ in that repository root. Each case root must have a local `README.md` that state
 A new case is not valid merely because a new `check.py` exists. It must prove
 a distinct public behavior not already covered elsewhere.
 
+## Duration contract
+
+The central runner measures every registered case with a monotonic clock.
+
+Every run:
+
+- prints each case duration immediately after the case;
+- prints one slowest-first timing summary;
+- reports total measured case time;
+- writes machine-readable `case-durations.json`;
+- records duration for failed cases before raising the suite failure.
+
+Timing remains centralized in `acceptance_suite/run.py`; individual cases must
+not implement their own timing harness.
+
+The first phase is observability. Do not add flaky hard per-case budgets until
+multiple accepted GitHub runs provide a stable baseline. Existing CAD-CI command
+timeouts remain a separate execution/failure contract.
+
 ## Case status
 
 | Case | Status | Role |
