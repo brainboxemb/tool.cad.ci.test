@@ -156,10 +156,35 @@ jobs:
           PY
 
 
+  candidate_plan:
+    # Advanced plan workflow deserves a real API test, not YAML text matching.
+    permissions:
+      contents: read
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-plan.yml@e29903e108d13b28b6d283f53744ec41e8209bb1
+    with:
+      full_run: true
+
   test:
-    needs: [consumer, no_output]
+    needs: [consumer, no_output, candidate_plan]
     runs-on: ubuntu-latest
     steps:
+      - name: Verify candidate planning workflow outputs
+        env:
+          PLAN_JSON: ${{ needs.candidate_plan.outputs.plan_json }}
+          SOURCE_SHA: ${{ needs.candidate_plan.outputs.source_sha }}
+          EXPECTED_SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+
+          items = json.loads(os.environ["PLAN_JSON"])
+          if [row["id"] for row in items] != ["workflow-case"]:
+              raise SystemExit(f"unexpected candidate plan: {items}")
+          if os.environ["SOURCE_SHA"] != os.environ["EXPECTED_SOURCE_SHA"]:
+              raise SystemExit("candidate plan did not return exact caller SHA")
+          PY
+
       - name: Verify no-output reusable workflow contract
         run: |
           if [ -n "${{ needs.no_output.outputs.build_artifact_name }}" ]; then
