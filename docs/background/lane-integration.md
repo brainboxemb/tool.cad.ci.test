@@ -72,10 +72,17 @@ A docs-only probe is valid only when the changed paths are all beneath
 `docs/`; changes to workflows, root configuration or acceptance fixtures must
 run normal CAD-CI.
 
-The probe must exercise the currently accepted released workflow. Historical
-success on an older tool release is background evidence only; it does not
-qualify the current release. The current live acceptance target is
-`tool.cad.ci v0.25.0`.
+## Promotion verification
+
+A lane may contain only documentation changes and still require complete
+validation when promoted to `main`. The released classifier treats
+`dev-cad -> main` and `dev-ci -> main` as direct lane promotion and forces
+a complete run; the docs-only shortcut applies only to PRs whose base is a
+development lane.
+
+After a successful owner `/merge`, the released merge policy advances the
+long-lived lane to the resulting merge commit and dispatches complete
+integration validation on the stable branch and promoted lane.
 
 ## What this repository proves
 
