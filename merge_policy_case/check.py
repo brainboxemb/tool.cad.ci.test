@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TOOL = ROOT / "ext" / "cad-ci"
 POLICY = TOOL / "scripts" / "merge_policy.py"
 WORKFLOW = TOOL / ".github" / "workflows" / "reusable-merge-policy.yml"
-EXPECTED_TOOL = "5677c41a61929b32ab2cb07087a6505f7b9347d8"
+EXPECTED_TOOL = "d45cdcef33cf1035311bab9a88c3f99208ef3b29"
 EXPECTED_LIBRARY = "e621daf6e309bdd0e3f643a12007f1b66490696d"
 
 
@@ -31,15 +31,15 @@ def load_policy():
 
 
 def main() -> int:
-    """Fail unless released 0.19.0 exposes the intended generic contract."""
+    """Fail unless released 0.20.0 exposes the intended generic contract."""
 
     version = (TOOL / "VERSION").read_text(encoding="utf-8").strip()
-    if version != "0.19.0":
+    if version != "0.20.0":
         raise RuntimeError(f"unexpected tool release: {version}")
 
     dependency = (TOOL / "pyproject.toml").read_text(encoding="utf-8")
     if EXPECTED_LIBRARY not in dependency:
-        raise RuntimeError("tool 0.19.0 does not pin accepted library 0.11.0")
+        raise RuntimeError("tool 0.20.0 does not pin accepted library 0.11.0")
 
     policy = load_policy()
     lanes = ("cad-work", "ci-work")
@@ -55,8 +55,41 @@ def main() -> int:
         )
         if value.merge_method != "merge" or not value.direct_lane_promotion:
             raise RuntimeError(f"lane promotion policy mismatch: {head}: {value}")
+        if value.direct_lane_synchronization:
+            raise RuntimeError(f"lane promotion misclassified as synchronization: {head}: {value}")
         if value.cleanup_head:
             raise RuntimeError(f"long-lived lane became cleanup eligible: {head}")
+
+    for base in lanes:
+        value = policy.evaluate(
+            base=base,
+            head="stable",
+            stable_ref="stable",
+            lane_refs=lanes,
+            permanent_refs=permanent,
+        )
+        if value.merge_method != "merge" or not value.direct_lane_synchronization:
+            raise RuntimeError(f"stable-to-lane policy mismatch: {base}: {value}")
+        if value.direct_lane_promotion:
+            raise RuntimeError(f"lane synchronization misclassified as promotion: {base}: {value}")
+        if value.cleanup_head:
+            raise RuntimeError(f"stable ref became cleanup eligible during sync: {base}: {value}")
+        if not value.integrate_base:
+            raise RuntimeError(f"synchronized lane did not request integration: {base}: {value}")
+
+    lane_to_lane = policy.evaluate(
+        base="cad-work",
+        head="ci-work",
+        stable_ref="stable",
+        lane_refs=lanes,
+        permanent_refs=permanent,
+    )
+    if lane_to_lane.merge_method != "squash":
+        raise RuntimeError(f"lane-to-lane merge is not squash: {lane_to_lane}")
+    if lane_to_lane.direct_lane_promotion or lane_to_lane.direct_lane_synchronization:
+        raise RuntimeError(f"lane-to-lane merge became permanent-direction operation: {lane_to_lane}")
+    if lane_to_lane.cleanup_head:
+        raise RuntimeError(f"permanent lane head became cleanup eligible: {lane_to_lane}")
 
     feature = policy.evaluate(
         base="cad-work",
@@ -67,6 +100,8 @@ def main() -> int:
     )
     if feature.merge_method != "squash":
         raise RuntimeError(f"short-lived merge is not squash: {feature}")
+    if feature.direct_lane_promotion or feature.direct_lane_synchronization:
+        raise RuntimeError(f"short-lived merge became permanent-direction operation: {feature}")
     if not feature.cleanup_head:
         raise RuntimeError(f"allow-listed temporary head is not cleanup eligible: {feature}")
 
@@ -102,6 +137,9 @@ def main() -> int:
         "job.workflow_sha",
         "scripts/merge_policy.py",
         "long-lived lane recreated at merge commit",
+        "long-lived lane synchronized by merge",
+        "DIRECT_SYNC",
+        "long-lived permanent merge must originate from this repository",
         "temporary head deleted",
         "INTEGRATION_WORKFLOW",
     )
@@ -127,7 +165,7 @@ def main() -> int:
     # case proves its exact decision/safety surface without creating a synthetic
     # GitHub PR or ref. Forge #674 performs the real success-path mutation proof.
     print(
-        "released tool 0.19.0 merge-policy contract accepted; "
+        "released tool 0.20.0 merge-policy contract accepted; "
         f"tool={EXPECTED_TOOL} library={EXPECTED_LIBRARY}"
     )
     return 0
