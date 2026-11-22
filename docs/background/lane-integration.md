@@ -61,6 +61,17 @@ After merge, the policy dispatches `ci.yml`. Its `workflow_dispatch` path
 sets `full_run=true`, so post-merge integration validation is complete without
 adding another CI implementation.
 
+## Cheap-path verification
+
+A documentation-only pull request into `dev-cad` or `dev-ci` must contain a
+non-empty diff entirely below `docs/`. The released lane classifier should
+then report successful docs-only validation before Python/tool/library
+bootstrap. This repository does not duplicate that classification locally.
+
+A docs-only probe is valid only when the changed paths are all beneath
+`docs/`; changes to workflows, root configuration or acceptance fixtures must
+run normal CAD-CI.
+
 ## What this repository proves
 
 The repository provides real GitHub evidence for:
