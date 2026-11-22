@@ -1,0 +1,7 @@
+id: directory-case
+kind: synthetic
+builder: directory-output
+
+watch:
+  item:
+    - input.txt
