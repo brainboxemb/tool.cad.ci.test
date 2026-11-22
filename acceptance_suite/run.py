@@ -21,7 +21,7 @@ SOFT_TOTAL_BUDGET_SECONDS = 30.0
 DEFAULT_SOFT_CASE_BUDGET_SECONDS = 3.0
 SOFT_CASE_BUDGET_SECONDS = {
     "test_roots/014_timeout/check.py": 4.0,
-    "publish_case/check.py": 7.0,
+    "test_roots/015_publish/check.py": 7.0,
 }
 
 
@@ -41,7 +41,7 @@ CASES = (
     "test_roots/012_parallel_jobs/check.py",
     "test_roots/013_directory_output/check.py",
     "test_roots/014_timeout/check.py",
-    "publish_case/check.py",
+    "test_roots/015_publish/check.py",
     "merge_policy_case/check.py",
     "merge_policy_case/check_command.py",
 )
