@@ -1,6 +1,6 @@
 # template: tool.cad.ci/branch-retirement
 # template-version: 1
-# tool-release: v0.27.0
+# tool-release: v0.27.1
 #
 # Copy this file to:
 #   .github/workflows/branch-retirement.yml
@@ -27,7 +27,7 @@ jobs:
       contents: write
       pull-requests: read
       issues: write
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-branch-retirement.yml@v0.27.0
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-branch-retirement.yml@v0.27.1
     with:
       command: ${{ github.event.comment.body }}
       issue_number: ${{ github.event.issue.number }}
