@@ -46,10 +46,10 @@ def main() -> int:
     )
 
     manifest = read_json(main_scope / "build.json")
-    assert manifest["items"]["items/model"]["outputs"] == ["parent.txt"], manifest
-    assert manifest["items"]["items/model/reference"]["outputs"] == ["child.txt"], manifest
-    assert (main_scope / "items/model/parent.txt").read_text() == "parent-v1\n"
-    assert (main_scope / "items/model/reference/child.txt").read_text() == "child-v1\n"
+    assert manifest["items"]["items/model"]["outputs"] == ["result.txt"], manifest
+    assert manifest["items"]["items/model/reference"]["outputs"] == ["result.txt"], manifest
+    assert (main_scope / "items/model/result.txt").read_text() == "parent-v1\n"
+    assert (main_scope / "items/model/reference/result.txt").read_text() == "child-v1\n"
 
     both_overlay = out / "both-overlay"
     run_tool(
@@ -74,8 +74,8 @@ def main() -> int:
         "items/model",
         "items/model/reference",
     }, both_manifest
-    assert (both_overlay / "items/model/parent.txt").is_file()
-    assert (both_overlay / "items/model/reference/child.txt").is_file()
+    assert (both_overlay / "items/model/result.txt").is_file()
+    assert (both_overlay / "items/model/reference/result.txt").is_file()
 
     child_overlay = out / "child-overlay"
     run_tool(
@@ -94,13 +94,13 @@ def main() -> int:
         "--items",
         "child",
     )
-    assert not (child_overlay / "items/model/parent.txt").exists()
+    assert not (child_overlay / "items/model/result.txt").exists()
     assert not (child_overlay / "items/model/.cad-ci").exists()
-    assert (child_overlay / "items/model/reference/child.txt").is_file()
+    assert (child_overlay / "items/model/reference/result.txt").is_file()
     assert (child_overlay / "items/model/reference/.cad-ci/item.json").is_file()
 
     child_before = (
-        main_scope / "items/model/reference/child.txt"
+        main_scope / "items/model/reference/result.txt"
     ).read_bytes()
     child_state_before = item_state(main_scope, "items/model/reference")
 
@@ -133,9 +133,9 @@ def main() -> int:
         "--items",
         "parent",
     )
-    assert (parent_updated / "items/model/parent.txt").read_text() == "parent-v2\n"
+    assert (parent_updated / "items/model/result.txt").read_text() == "parent-v2\n"
     assert (
-        parent_updated / "items/model/reference/child.txt"
+        parent_updated / "items/model/reference/result.txt"
     ).read_bytes() == child_before
     assert item_state(
         parent_updated,
@@ -143,7 +143,7 @@ def main() -> int:
     ) == child_state_before
 
     parent_before = (
-        parent_updated / "items/model/parent.txt"
+        parent_updated / "items/model/result.txt"
     ).read_bytes()
     parent_state_before = item_state(parent_updated, "items/model")
 
@@ -177,11 +177,11 @@ def main() -> int:
         "child",
     )
     assert (
-        child_updated / "items/model/parent.txt"
+        child_updated / "items/model/result.txt"
     ).read_bytes() == parent_before
     assert item_state(child_updated, "items/model") == parent_state_before
     assert (
-        child_updated / "items/model/reference/child.txt"
+        child_updated / "items/model/reference/result.txt"
     ).read_text() == "child-v2\n"
 
     print("test_roots/005_nested_publish passed")

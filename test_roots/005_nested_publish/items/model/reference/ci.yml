@@ -1,11 +1,7 @@
 id: child
+kind: synthetic
+builder: nested-output
+
 watch:
-  - items/model/reference/input.txt
-  - items/model/reference/run.py
-steps:
-  - id: build
-    inputs:
-      - items/model/reference/input.txt
-      - items/model/reference/run.py
-    run: [python, run.py]
-    outputs: [child.txt]
+  item:
+    - input.txt
