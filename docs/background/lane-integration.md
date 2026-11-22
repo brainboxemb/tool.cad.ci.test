@@ -72,6 +72,18 @@ A docs-only probe is valid only when the changed paths are all beneath
 `docs/`; changes to workflows, root configuration or acceptance fixtures must
 run normal CAD-CI.
 
+## Promotion verification
+
+A lane may contain only documentation changes and still require complete
+validation when promoted to `main`. The released classifier treats
+`dev-cad -> main` and `dev-ci -> main` as direct lane promotion and forces
+a complete run; the docs-only shortcut applies only to PRs whose base is a
+development lane.
+
+After a successful owner `/merge`, the released merge policy advances the
+long-lived lane to the resulting merge commit and dispatches complete
+integration validation on the stable branch and promoted lane.
+
 ## What this repository proves
 
 The repository provides real GitHub evidence for:
