@@ -68,7 +68,7 @@ def main() -> int:
         "--jobs",
         "2",
     )
-    assert both.count("built: batch:build") == 1
+    assert both.count("CAD CI run: batch:build") == 1, both
     assert "built: consumer-a:verify" in both
     assert "built: consumer-b:verify" in both
     assert active(repo) == ["consumer-a", "consumer-b"]
