@@ -25,6 +25,21 @@ commands in GitHub Actions.
 The reusable workflow release tag is the consumer release identity. The loaded
 tool itself pins the exact library revision.
 
+## Permanent lanes
+
+`main`, `dev-cad` and `dev-ci` are permanent branches.
+
+- normal short-lived issue/feature PRs may target a development lane and are
+  squash-merged;
+- direct lane -> `main` promotion and `main` -> lane synchronization preserve
+  history with merge commits;
+- never rely on automatic merged-branch deletion for permanent lanes;
+- consume the released lane classifier/merge policy; do not implement local
+  branch-policy logic.
+
+Repository settings must keep merge commits enabled and
+`delete_branch_on_merge=false`.
+
 ## Black-box boundary
 
 Acceptance cases may invoke the public `cad_ci_tool` CLI through subprocesses.

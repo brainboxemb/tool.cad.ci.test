@@ -7,6 +7,18 @@
 - The called tool pins the exact released `lib.py.cad.ci` revision.
 - The acceptance repository does not clone/install a second tool copy.
 
+## Permanent lane integration
+
+- The repository owns permanent `main`, `dev-cad` and `dev-ci` branches.
+- Pull requests use the released lane policy from `reusable-ci.yml`; there is
+  no local classifier.
+- Docs-only PRs into a development lane may use the released cheap path.
+- Direct development-lane promotions to `main` run complete CAD-CI.
+- Lane promotion/synchronization preserves history with merge commits.
+- Permanent lanes must not be auto-deleted after merge.
+- The released merge-policy workflow may dispatch the same `ci.yml` after a
+  merge; manual/dispatch runs execute complete acceptance.
+
 ## Config-driven suite
 
 - Root `cad-ci.yml` is the top-level CI configuration.

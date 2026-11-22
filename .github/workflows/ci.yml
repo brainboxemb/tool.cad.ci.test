@@ -2,6 +2,8 @@ name: Acceptance
 
 on:
   pull_request:
+    branches: [main, dev-cad, dev-ci]
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
 
 permissions:
@@ -12,6 +14,9 @@ jobs:
   acceptance:
     uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.23.0
     with:
-      full_run: true
+      # Canonical permanent-lane policy from tool.cad.ci.
+      pr_policy_json: '{"stable_ref":"main","lane_refs":["dev-cad","dev-ci"],"docs_only_prefixes":["docs/"]}'
+      # A manual run has no PR base/head context, so make it explicitly complete.
+      full_run: ${{ github.event_name == 'workflow_dispatch' }}
       jobs: 2
       environment_json: '{"ACCEPTANCE_MARKER":"caller-value"}'
