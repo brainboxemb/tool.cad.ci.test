@@ -13,7 +13,9 @@ stack.
 
 `run.py::CASES` is the authoritative case list.
 
-Every registered top-level case must have a local `README.md` that states:
+Every registered check belongs to one documented case root. Numbered synthetic
+consumer repositories live below `test_roots/NNN_name/`; their `check.py` sits
+in that repository root. Each case root must have a local `README.md` that states:
 
 - status;
 - purpose;
@@ -29,7 +31,7 @@ a distinct public behavior not already covered elsewhere.
 | Case | Status | Role |
 | --- | --- | --- |
 | `workflow_case` | current | Normal reusable-workflow environment/authentication boundary. |
-| `simple_case1` | current | Cold/current execution and input invalidation. |
+| `test_roots/001_simple` | current | Smallest standalone hello/timestamp consumer repository. |
 | `more_complex_case2` | current | Changed-item selection. |
 | `fresh_runner_case` | current | Exact base/head selection from a clean clone. |
 | `nested_item_case` | current | Nested item configuration and selection. |

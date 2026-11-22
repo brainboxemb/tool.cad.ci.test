@@ -11,7 +11,7 @@ The repository is intentionally a normal consumer:
        -> root cad-ci.yml
             -> acceptance-suite
                  -> public cad_ci_tool CLI
-                 -> synthetic case repositories
+                 -> test_roots/NNN_name standalone consumer repositories
 ```
 
 There is no second checkout/install of `tool.cad.ci`, no root-action test
@@ -25,7 +25,7 @@ stack already loaded by the released reusable workflow.
 
 The cases cover distinct public behavior such as:
 
-- cold/current and changed-input execution;
+- minimal cold/current/rebuild execution;
 - changed-item selection;
 - nested configuration and output ownership;
 - dependency fan-out and dependency-output copy;
@@ -39,14 +39,20 @@ The suite may spawn the public CLI because this repository tests the released
 stack from outside. It must not import planner/SCons/build-store internals or
 reimplement their decisions.
 
-## Case index
+## Test roots
 
-The local README in each case is the maintenance contract for that case.
+Standalone synthetic consumer repositories live under `test_roots/` and use a
+three-digit stable order: `001_simple`, `002_...`, `003_...`.
+
+Each test root owns its own `cad-ci.yml`. The local README is the maintenance
+contract for that root.
+
+## Case index
 
 | Case | Status |
 | --- | --- |
 | [workflow_case](workflow_case/README.md) | current |
-| [simple_case1](simple_case1/README.md) | current |
+| [001_simple](test_roots/001_simple/README.md) | current |
 | [more_complex_case2](more_complex_case2/README.md) | current; historical directory name |
 | [fresh_runner_case](fresh_runner_case/README.md) | current |
 | [nested_item_case](nested_item_case/README.md) | current |

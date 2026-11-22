@@ -7,7 +7,7 @@ watch:
   - acceptance_suite/**
   - tests/**
   - workflow_case/**
-  - simple_case1/**
+  - test_roots/**
   - more_complex_case2/**
   - fresh_runner_case/**
   - nested_item_case/**
@@ -29,7 +29,7 @@ steps:
       - acceptance_suite/run.py
       - tests/**
       - workflow_case/**
-      - simple_case1/**
+      - test_roots/**
       - more_complex_case2/**
       - fresh_runner_case/**
       - nested_item_case/**
