@@ -1,0 +1,6 @@
+schema: 1
+items:
+  - batch
+  - consumer-a
+  - consumer-b
+  - unrelated
