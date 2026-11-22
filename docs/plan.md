@@ -34,32 +34,12 @@ executable `steps:` / `run:`.
 
 `008_active_dependents` is migrated and accepted on `dev-ci` by PR #165.
 
-`009_partial_rerun` is the next migration and requires an explicit design
-check because its public contract selects named builder steps with
-`--step` / `--until` / `--from`.
+`009_partial_rerun` is the current migration under #176. Its named public
+steps `prepare`, `build` and `verify` remain in the repository-owned
+builder so `--step` / `--until` / `--from` keep the same contract.
 
-### #156 — acceptance case duration and suite performance
-
-Per-case timing and machine-readable evidence landed in PR #159.
-
-Accepted total case-time baselines now include:
-
-- 17.341 s — post-merge dev-ci run `45068161840`;
-- 21.135 s — post-promotion main run `45068580019`;
-- 23.996 s — simultaneous post-promotion dev-ci run `45068582403`;
-- 24.294 s — PR #159 run `45067237488`;
-- 24.842 s — accepted follow-up run `45067522266`;
-- 25.444 s — lane-promotion PR run `45068453493`.
-
-Initial non-failing soft budgets are therefore:
-
-- total suite: 30 s;
-- default case: 3 s;
-- timeout case: 4 s;
-- publish case: 7 s.
-
-Warnings are observability only; no timing threshold fails acceptance.
-
+Acceptance timing is now part of the accepted baseline: PR #159 added
+per-case evidence and PR #175 added conservative non-failing soft budgets.
 ### #114 — normalize remaining external cases into numbered test roots
 
 #114 owns only the remaining historical top-level fixture audit/migration after
@@ -83,8 +63,7 @@ duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #142 Declarative builder migration | **now** | `001`–`008` accepted; design/migrate `009_partial_rerun` next. |
-| #156 Acceptance duration | **now** | Land conservative non-failing soft warnings from the accepted timing baseline. |
+| #142 Declarative builder migration | **now** | `001`–`008` accepted; qualify `009_partial_rerun` under #176. |
 | #114 Numbered standalone test roots | **blocked by #142 for normal roots** | Resume remaining top-level fixture migration after builder migration. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |

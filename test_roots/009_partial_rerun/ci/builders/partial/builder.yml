@@ -1,0 +1,16 @@
+schema: 1
+description: Ordered partial-rerun builder
+
+steps:
+  - id: prepare
+    run: 'python "$CAD_CI_BUILDER_PATH/prepare.py"'
+    outputs:
+      - prepare.txt
+  - id: build
+    run: 'python "$CAD_CI_BUILDER_PATH/build.py"'
+    outputs:
+      - build.txt
+  - id: verify
+    run: 'python "$CAD_CI_BUILDER_PATH/verify.py"'
+    outputs:
+      - verify.txt
