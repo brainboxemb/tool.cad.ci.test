@@ -40,6 +40,21 @@ public dependency flow and step names stay unchanged.
 `007_dependency_copy` and `009_partial_rerun` require explicit design checks
 because their public contracts involve copy/step-selection semantics.
 
+### #154 — formalize live GitHub workflow scenarios
+
+Separate synthetic consumer-root acceptance from live GitHub lifecycle
+acceptance. Maintain explicit real scenarios for feature PRs, docs-only PRs,
+lane promotion, stable-to-lane synchronization and owner `/merge` comments.
+
+Immediate cleanup: keep both reusable workflows pinned to `tool.cad.ci
+v0.25.0`.
+
+### #156 — track acceptance duration
+
+Measure per-case wall-clock runtime and total suite runtime, emit
+machine-readable timing evidence and establish soft budgets before any hard
+performance gate.
+
 ### #114 — normalize remaining external cases into numbered test roots
 
 Keep this separate from #142. #114 owns only the remaining historical top-level
@@ -64,7 +79,9 @@ duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #142 Declarative builder migration | **now** | `001`–`005` complete; qualify `006_dependencies`, then continue in order. |
+| #142 Declarative builder migration | **now** | Continue numbered-root builder migration independently of live workflow scenarios. |
+| #154 Live GitHub workflow scenarios | **now** | Prove this feature PR, then docs-only, promotion, sync and real `/merge`. |
+| #156 Acceptance duration | **queued** | Add per-case/total timing evidence after live workflow contract lands. |
 | #114 Numbered standalone test roots | **blocked by #142 for normal roots** | Resume remaining top-level fixture migration after builder migration. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
