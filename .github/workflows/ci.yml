@@ -165,10 +165,10 @@ jobs:
       full_run: true
 
   candidate_pr_verify_only:
-    # Tests the public PR API with real PR-head commands, but no permission
-    # to publish output. The called verify job remains contents:read.
+    # A true read-only caller must be able to use publish_build: false.
+    # No write token is granted to this reusable workflow call.
     permissions:
-      contents: write
+      contents: read
       packages: read
     uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-pr.yml@1d28991ffd3e35f85f924455b171b233c700bba7
     with:
