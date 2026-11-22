@@ -33,7 +33,7 @@ a distinct public behavior not already covered elsewhere.
 | `workflow_case` | current | Normal reusable-workflow environment/authentication boundary. |
 | `test_roots/001_simple` | current | Smallest standalone hello/timestamp consumer repository. |
 | `test_roots/002_selection` | current | Changed-item selection across two items and one shared input. |
-| `fresh_runner_case` | current | Exact base/head selection from a clean clone. |
+| `test_roots/003_fresh_runner` | current | Exact base/head selection from a clean clone. |
 | `nested_item_case` | current | Nested item configuration and selection. |
 | `nested_publish_case` | current | Nested durable output ownership. |
 | `dependency_case` | current | Dependency fan-out and selected dependency execution. |

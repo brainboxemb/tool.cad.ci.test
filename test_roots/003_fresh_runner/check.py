@@ -9,7 +9,7 @@ import subprocess
 import sys
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from tests.support import fresh_case, run_tool
@@ -30,7 +30,7 @@ def git(repo: Path, *args: str) -> str:
 def main() -> int:
     """Prove exact base/head selection without any previous SCons state."""
 
-    source = fresh_case(SOURCE, "fresh_runner_case")
+    source = fresh_case(SOURCE, "003_fresh_runner")
     subprocess.run(["git", "init", "--quiet"], cwd=source, check=True)
     subprocess.run(
         ["git", "config", "user.name", "tool.cad.ci.test"],
@@ -59,7 +59,7 @@ def main() -> int:
     )
     head = git(source, "rev-parse", "HEAD")
 
-    runner = source.parent / "fresh_runner_case_clone"
+    runner = source.parent / "003_fresh_runner_clone"
     shutil.rmtree(runner, ignore_errors=True)
     subprocess.run(
         ["git", "clone", "--quiet", str(source), str(runner)],
@@ -97,7 +97,7 @@ def main() -> int:
     assert (runner / "build/a/result.txt").read_text(encoding="utf-8") == "a-changed\n"
     assert not (runner / "build/b").exists()
 
-    print("fresh_runner_case passed")
+    print("test_roots/003_fresh_runner passed")
     return 0
 
 
