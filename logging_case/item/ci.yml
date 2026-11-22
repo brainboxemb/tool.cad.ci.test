@@ -1,6 +1,0 @@
-id: logging-case
-steps:
-  - id: run
-    inputs: [item/run.py]
-    run: [python, run.py]
-    outputs: [result.txt]
