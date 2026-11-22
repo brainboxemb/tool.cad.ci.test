@@ -19,7 +19,7 @@ CASES = (
     "test_roots/003_fresh_runner/check.py",
     "test_roots/004_nested_items/check.py",
     "test_roots/005_nested_publish/check.py",
-    "dependency_case/check.py",
+    "test_roots/006_dependencies/check.py",
     "dependency_copy_case/check.py",
     "active_dependents_case/check.py",
     "partial_rerun_case/check.py",
