@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   consumer:
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@eb64a46b243db00e8dbb4b78b6643a2a7efa3fb9
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@e29903e108d13b28b6d283f53744ec41e8209bb1
     with:
       full_run: true
       jobs: 2
@@ -20,7 +20,7 @@ jobs:
 
   no_output:
     needs: consumer
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@eb64a46b243db00e8dbb4b78b6643a2a7efa3fb9
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@e29903e108d13b28b6d283f53744ec41e8209bb1
     with:
       upload_build: true
       build_artifact_name: cad-ci-empty-acceptance
@@ -350,6 +350,19 @@ jobs:
           PY
       - name: Released merge-policy workflow
         run: python merge_policy_case/check.py
+      # Candidate tests do not mutate any real repository state.
+      # Released same-runner/durable action and dependencies.repos remain untouched.
+      - name: Checkout exact tool candidate for isolated merge contract
+        uses: actions/checkout@v4
+        with:
+          repository: brainboxemb/tool.cad.ci
+          ref: e29903e108d13b28b6d283f53744ec41e8209bb1
+          path: candidate/cad-ci
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Check candidate merge operations with fake GitHub API
+        run: python merge_policy_case/check_candidate.py
+
       - name: Install exact released tool stack
         run: python -m pip install -e ext/cad-ci
       - name: Simple item
