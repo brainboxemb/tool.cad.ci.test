@@ -4,10 +4,10 @@ Permanent black-box acceptance repository for the released generic CAD CI stack.
 
 This repository currently pins:
 
-- `tool.cad.ci` **0.15.0** at
-  `9f37be0af5c4076f676b6407857c5905e11a47d6`;
-- that tool pins `lib.py.cad.ci` **0.8.4** at
-  `4e033fd17e911b3feb92b1a34433b884ca788ab6`;
+- `tool.cad.ci` **0.18.1** at
+  `e29d3127d5d3f9310f3cab4e27430a64a61c21cc`;
+- that tool pins `lib.py.cad.ci` **0.11.0** at
+  `e621daf6e309bdd0e3f643a12007f1b66490696d`;
 
 No Forge, SolidCraft or real CAD behaviour belongs here. Each top-level case is
 a small independent consumer repository that exercises the released tool from
@@ -22,6 +22,7 @@ fresh_runner_case/
 nested_item_case/
 nested_publish_case/
 dependency_case/
+active_dependents_case/
 partial_rerun_case/
 process_case/
 directory_output_case/
@@ -51,6 +52,10 @@ child-only main updates preserve the unselected neighbor's output and evidence.
 
 `dependency_case` proves cumulative dependency output, fan-out and
 `affected: direct` summary behaviour.
+
+`active_dependents_case` proves released `selection_context: direct_dependents`
+from the outside: one selected consumer, signature invalidation for a different
+consumer set, jobs=2 fan-out, full-run context and schema-5 public evidence.
 
 `partial_rerun_case` proves the released meanings of exact `--step`,
 `--until` and `--from`, including complete-item evidence after partial runs.
@@ -115,7 +120,7 @@ green here.
 ## Same-runner action acceptance
 
 The `same_runner` job consumes
-`brainboxemb/tool.cad.ci@9f37be0af5c4076f676b6407857c5905e11a47d6` directly as a composite action.
+`brainboxemb/tool.cad.ci@e29d3127d5d3f9310f3cab4e27430a64a61c21cc` directly as a composite action.
 
 The action runs the real root `workflow_case`. The immediately following step
 does not bootstrap CAD-CI again. It verifies that:
@@ -126,5 +131,5 @@ does not bootstrap CAD-CI again. It verifies that:
 - `python -m cad_ci_tool plan` works on the same runner;
 - the action-produced build output and public evidence are still present.
 
-This is the external proof required before Forge can replace its multi-runner
-main publication path with tool.cad.ci 0.15.0.
+This same-runner proof remains part of the complete external acceptance gate
+for every exact released tool/library pair before Forge or CAD adopts it.

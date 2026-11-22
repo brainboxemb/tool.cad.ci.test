@@ -22,6 +22,7 @@ Current accepted structure:
 - `fresh_runner_case`
 - `nested_item_case`
 - `dependency_case`
+- `active_dependents_case`
 - `partial_rerun_case`
 - `process_case`
 - `directory_output_case`

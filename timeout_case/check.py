@@ -33,7 +33,7 @@ def main() -> int:
     assert timeout_state["outcome"] == "ERROR"
     assert timeout_state["timeout_seconds"] == 1
     assert timeout_state["exit_code"] is None
-    assert timeout_state["schema"] == 4
+    assert timeout_state["schema"] == 5
     assert timeout_state["action_type"] == "command"
     assert timeout_state["action_executed"] is True
     assert timeout_state["started_at"]
@@ -53,7 +53,7 @@ def main() -> int:
     override_state = step_evidence(repo, "override")
     assert override_state["status"] == "pass"
     assert override_state["timeout_seconds"] == 3
-    assert override_state["schema"] == 4
+    assert override_state["schema"] == 5
     assert override_state["action_type"] == "command"
     assert override_state["action_executed"] is True
     assert override_state["started_at"]
@@ -73,7 +73,7 @@ def main() -> int:
     assert failure_state["status"] == "fail"
     assert failure_state["outcome"] == "ERROR"
     assert failure_state["exit_code"] == 3
-    assert failure_state["schema"] == 4
+    assert failure_state["schema"] == 5
     assert failure_state["action_type"] == "command"
     assert failure_state["action_executed"] is True
     assert failure_state["started_at"]
