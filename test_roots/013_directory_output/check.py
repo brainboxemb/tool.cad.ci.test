@@ -5,16 +5,18 @@ from pathlib import Path
 import shutil
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from tests.support import fresh_case, remove_local_scons_state, run_tool
+
 
 SOURCE = Path(__file__).resolve().parent
 
 
 def main() -> int:
-    repo = fresh_case(SOURCE, "directory_output_case")
+    repo = fresh_case(SOURCE, "013_directory_output")
     generated = repo / "build/item/generated"
 
     cold = run_tool("run", "--repo", str(repo))
@@ -43,7 +45,7 @@ def main() -> int:
     assert (generated / "nested/value.txt").read_text() == "one\n"
     assert (generated / "empty").is_dir()
 
-    print("directory_output_case passed")
+    print("test_roots/013_directory_output passed")
     return 0
 
 
