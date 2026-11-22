@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TOOL = ROOT / "ext" / "cad-ci"
 POLICY = TOOL / "scripts" / "merge_policy.py"
 WORKFLOW = TOOL / ".github" / "workflows" / "reusable-merge-policy.yml"
-EXPECTED_TOOL = "b1474f6be66dc0236f2a5c2555af07a100447255"
+EXPECTED_TOOL = "76b5ba24084a09a69e6f25b34c16e869f7240a58"
 EXPECTED_LIBRARY = "fa6bf244381dde609a0b04de673d774911c52fea"
 
 
@@ -31,15 +31,15 @@ def load_policy():
 
 
 def main() -> int:
-    """Fail unless released 0.21.0 exposes the intended generic contract."""
+    """Fail unless released 0.22.0 exposes the intended generic contract."""
 
     version = (TOOL / "VERSION").read_text(encoding="utf-8").strip()
-    if version != "0.21.0":
+    if version != "0.22.0":
         raise RuntimeError(f"unexpected tool release: {version}")
 
     dependency = (TOOL / "pyproject.toml").read_text(encoding="utf-8")
     if EXPECTED_LIBRARY not in dependency:
-        raise RuntimeError("tool 0.21.0 does not pin accepted library 0.11.1")
+        raise RuntimeError("tool 0.22.0 does not pin accepted library 0.11.1")
 
     policy = load_policy()
     lanes = ("cad-work", "ci-work")
@@ -164,7 +164,7 @@ def main() -> int:
     # GitHub PR or ref. Forge #721 performs the real same-head command and
     # stable-to-lane mutation proof after this release is adopted.
     print(
-        "released tool 0.21.0 merge-policy contract accepted; "
+        "released tool 0.22.0 merge-policy contract accepted; "
         f"tool={EXPECTED_TOOL} library={EXPECTED_LIBRARY}"
     )
     return 0
