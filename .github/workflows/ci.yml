@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   consumer:
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@530a79048c6147572c454eea3e59e2f6554b4ad2
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@668a3d095d8ef91e82b1eda7a4e94720e4561eac
     with:
       full_run: true
       jobs: 2
@@ -20,7 +20,7 @@ jobs:
 
   no_output:
     needs: consumer
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@530a79048c6147572c454eea3e59e2f6554b4ad2
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@668a3d095d8ef91e82b1eda7a4e94720e4561eac
     with:
       upload_build: true
       build_artifact_name: cad-ci-empty-acceptance
@@ -160,7 +160,7 @@ jobs:
     # Advanced plan workflow deserves a real API test, not YAML text matching.
     permissions:
       contents: read
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-plan.yml@530a79048c6147572c454eea3e59e2f6554b4ad2
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-plan.yml@668a3d095d8ef91e82b1eda7a4e94720e4561eac
     with:
       full_run: true
 
@@ -174,7 +174,7 @@ jobs:
     steps:
       - name: Run exact candidate action in run-only mode
         id: cad
-        uses: brainboxemb/tool.cad.ci@530a79048c6147572c454eea3e59e2f6554b4ad2
+        uses: brainboxemb/tool.cad.ci@668a3d095d8ef91e82b1eda7a4e94720e4561eac
         with:
           source_sha: ${{ github.event.pull_request.head.sha }}
           full_run: "true"
@@ -199,7 +199,7 @@ jobs:
     permissions:
       contents: write
       packages: read
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-pr.yml@530a79048c6147572c454eea3e59e2f6554b4ad2
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-pr.yml@668a3d095d8ef91e82b1eda7a4e94720e4561eac
     with:
       full_run: true
       jobs: 2
@@ -423,7 +423,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: brainboxemb/tool.cad.ci
-          ref: 530a79048c6147572c454eea3e59e2f6554b4ad2
+          ref: 668a3d095d8ef91e82b1eda7a4e94720e4561eac
           path: candidate/cad-ci
           fetch-depth: 1
           persist-credentials: false
