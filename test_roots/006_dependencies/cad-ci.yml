@@ -1,6 +1,12 @@
 schema: 1
+
 items:
   - library
   - consumer-a
   - consumer-b
   - summary
+
+builders:
+  library: ci/builders/library
+  consumer: ci/builders/consumer
+  summary: ci/builders/summary

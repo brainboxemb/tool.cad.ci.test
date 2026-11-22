@@ -1,12 +1,7 @@
 id: library
+kind: synthetic
+builder: library
+
 watch:
-  - library/**
-steps:
-  - id: prepare
-    inputs: [library/input.txt, library/prepare.py]
-    run: [python, prepare.py]
-    outputs: [data.txt]
-  - id: finish
-    inputs: [library/finish.py]
-    run: [python, finish.py]
-    outputs: [done.txt]
+  item:
+    - input.txt
