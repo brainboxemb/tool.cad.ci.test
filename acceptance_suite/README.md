@@ -35,7 +35,7 @@ a distinct public behavior not already covered elsewhere.
 | `test_roots/002_selection` | current | Changed-item selection across two items and one shared input. |
 | `test_roots/003_fresh_runner` | current | Exact base/head selection from a clean clone. |
 | `test_roots/004_nested_items` | current | Nested discovery, templates, path normalization and selection. |
-| `nested_publish_case` | current | Nested durable output ownership. |
+| `test_roots/005_nested_publish` | current | Durable parent/nested-child output ownership and sparse updates. |
 | `dependency_case` | current | Dependency fan-out and selected dependency execution. |
 | `dependency_copy_case` | current | Engine-owned dependency-output copy. |
 | `active_dependents_case` | current | Public direct-dependent command context. |

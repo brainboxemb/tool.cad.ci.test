@@ -16,7 +16,8 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
   - `001_simple`;
   - `002_selection`;
   - `003_fresh_runner`;
-  - `004_nested_items` in #119.
+  - `004_nested_items`;
+  - `005_nested_publish` in #121.
 
 ## Current work
 
@@ -26,8 +27,9 @@ Audit each historical top-level case before migration. Retain only distinct
 public consumer contracts, remove owner-level/obsolete duplicates, and place
 retained standalone repositories below `test_roots/NNN_name/`.
 
-After `004_nested_items`, nested durable publication remains a separate next
-candidate; it must not be merged into nested discovery/selection.
+Nested durable publication remains separate from nested discovery/selection.
+After `005_nested_publish`, continue auditing the next distinct consumer use
+case rather than renaming historical directories mechanically.
 
 ### #98 — permanent lane integration
 
@@ -45,7 +47,7 @@ route or duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #119 `004_nested_items` | **now** | Land/prove the fourth standalone test root. |
+| #121 `005_nested_publish` | **now** | Land/prove the fifth standalone test root. |
 | #114 Numbered standalone test roots | **active umbrella** | Audit/migrate the next distinct consumer use case. |
 | #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record resulting lane evidence. |
 | #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
