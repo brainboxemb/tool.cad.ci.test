@@ -5,10 +5,18 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ## Accepted baseline
 
-- accepted under #133 / PR #135: `tool.cad.ci v0.25.0` @
-  `92b9cbb59bf24f6b47ba1fae267f67f2becc503f`;
-- v0.25.0 pins `lib.py.cad.ci 0.12.0` @
+- accepted under #186 / PR #187: `tool.cad.ci v0.27.0` @
+  `bf9b2dff915e257a1229b156fdd024b062293218`;
+- v0.27.0 pins `lib.py.cad.ci 0.12.0` @
   `64656db8df528a5c0de799e62c0f028fd0133486`;
+- released-stack acceptance passed with all 18 cases on PR #187;
+- branch-governance live acceptance is complete:
+  - #180 / run `45070007017` proved conservative `/cleanup-branches`
+    deletion and preservation of unique/unmerged history;
+  - #186 / run `45071078228` retired the five separately reviewed
+    unique-history refs through exact `(branch, SHA)` evidence;
+- after #186 the stale historical set from the branch audit is gone; only
+  permanent refs plus independently active concurrent work remain;
 - v0.25/main + numbered dev-ci histories were reconciled by PR #140;
 - numbered standalone test roots `001` through `012` are present on
   `dev-ci`;
@@ -23,16 +31,6 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 - acceptance timing observability landed in PR #159.
 
 ## Current work
-
-### #186 — qualify exact-SHA branch retirement
-
-Adopt the released `tool.cad.ci v0.27.0` governance stack on default `main`, add the canonical exact-SHA retirement wrapper, and prove the separate `/retire-branches` operation against only the remaining manually audited stale refs from #180. Re-read every target SHA immediately before issuing the owner command; newly active refs are not part of this retirement set.
-
-
-### #180 — qualify released branch-cleanup governance
-
-Adopt `tool.cad.ci v0.26.0` on the default-branch CI/merge wrappers and add the canonical owner-only `/cleanup-branches` wrapper. After the change reaches `main`, create a disposable integrated temporary ref and prove the released workflow deletes it through a real `issue_comment` run. Then audit the same conservative command against the existing stale branch set; unique/unmerged refs must remain.
-
 
 ### #142 — migrate numbered roots to declarative builders
 
@@ -82,7 +80,7 @@ Do not mechanically migrate special workflow/governance harness cases.
 
 Continue exercising the real external permanent-lane contract on
 `main`, `dev-cad` and `dev-ci` using
-`reusable-ci.yml@v0.25.0` and the released lane/merge policy.
+`reusable-ci.yml@v0.27.0` and the released lane/merge policy.
 
 ### #106 — prove dev-cad to main promotion
 
@@ -94,8 +92,6 @@ duplicate generic merge/classification logic.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #180 Branch-cleanup governance acceptance | **now / live integration** | Land the v0.26.0 wrappers on default `main`, run `/cleanup-branches`, and record real ref-deletion evidence. |
-| #186 Exact-SHA branch retirement acceptance | **now / live integration** | Land v0.27.0 wrappers on default `main`, then retire only exact reviewed stale refs and record the branch audit. |
 | #142 Declarative builder migration | **now** | Qualify `008_active_dependents`, then continue existing roots in order. |
 | #156 Acceptance duration | **active measurement** | Collect timings from subsequent real acceptance runs; derive soft budgets later. |
 | #154 Live GitHub workflow scenarios | **active** | Maintain real PR/lane/merge workflow acceptance separately from test roots. |
