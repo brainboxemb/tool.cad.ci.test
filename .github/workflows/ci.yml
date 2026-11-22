@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   consumer:
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@b62f9d0b169aa201a3c66c3166f364396b2d71bc
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@e29d3127d5d3f9310f3cab4e27430a64a61c21cc
     with:
       full_run: true
       jobs: 2
@@ -20,7 +20,7 @@ jobs:
 
   no_output:
     needs: consumer
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@b62f9d0b169aa201a3c66c3166f364396b2d71bc
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@e29d3127d5d3f9310f3cab4e27430a64a61c21cc
     with:
       upload_build: true
       build_artifact_name: cad-ci-empty-acceptance
@@ -34,7 +34,7 @@ jobs:
     steps:
       - name: Run exact released durable same-runner action
         id: cad_ci
-        uses: brainboxemb/tool.cad.ci@b62f9d0b169aa201a3c66c3166f364396b2d71bc
+        uses: brainboxemb/tool.cad.ci@e29d3127d5d3f9310f3cab4e27430a64a61c21cc
         with:
           source_sha: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           durable_scope: durable-action-acceptance
@@ -46,7 +46,7 @@ jobs:
       - name: Verify durable same-runner state and exact published scope
         env:
           ACTION_LIBRARY_REVISION: ${{ steps.cad_ci.outputs.library_revision }}
-          EXPECTED_LIBRARY_REVISION: 397fb04005b46de8d433cb18c091b1e73714b877
+          EXPECTED_LIBRARY_REVISION: e621daf6e309bdd0e3f643a12007f1b66490696d
           ACTION_SCOPE: ${{ steps.cad_ci.outputs.scope }}
           ACTION_BASE_SHA: ${{ steps.cad_ci.outputs.base_sha }}
           ACTION_FULL_RUN: ${{ steps.cad_ci.outputs.full_run }}
@@ -209,7 +209,7 @@ jobs:
           if not step_evidence.is_file():
               raise SystemExit(f"missing step evidence: {step_evidence}")
           step = json.loads(step_evidence.read_text())
-          if step.get("schema") != 4:
+          if step.get("schema") != 5:
               raise SystemExit(f"unexpected step evidence schema: {step}")
           for key in ("run_started_at", "run_finished_at", "started_at", "finished_at"):
               if not step.get(key):
@@ -366,6 +366,8 @@ jobs:
         run: python dependency_case/check.py
       - name: Dependency output copy
         run: python dependency_copy_case/check.py
+      - name: Active direct-dependent context
+        run: python active_dependents_case/check.py
       - name: Partial reruns
         run: python partial_rerun_case/check.py
       - name: Process selection
