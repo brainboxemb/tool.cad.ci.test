@@ -165,10 +165,11 @@ jobs:
       full_run: true
 
   candidate_pr_verify_only:
-    # A true read-only caller must be able to use publish_build: false.
-    # No write token is granted to this reusable workflow call.
+    # GitHub validates the maximum job permissions even for a skipped publish
+    # job. The caller grants write, but the candidate verify job is read-only
+    # and publish_build: false skips the privileged job completely.
     permissions:
-      contents: read
+      contents: write
       packages: read
     uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-pr.yml@1d28991ffd3e35f85f924455b171b233c700bba7
     with:
