@@ -5,9 +5,9 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ## Accepted baseline
 
-- current released consumer target: `tool.cad.ci v0.27.1` @
-  `716d22ce79551155b68413bd50fe3bf9d15d2254`;
-- v0.27.1 pins `lib.py.cad.ci 0.12.0` @
+- current released consumer target: `tool.cad.ci v0.28.0` @
+  `805304b6a950319aed7dc8a77e9c7b501bb3fb61`;
+- v0.28.0 pins `lib.py.cad.ci 0.12.0` @
   `64656db8df528a5c0de799e62c0f028fd0133486`;
 - released-stack acceptance passed with all 18 cases on PR #187;
 - branch-governance live acceptance is complete:
@@ -31,6 +31,11 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 - acceptance timing observability landed in PR #159.
 
 ## Current work
+
+### #201 — adopt v0.28.0 reviewed merge recovery
+
+Adopt the released `tool.cad.ci v0.28.0` stack on default `main`, including merge-policy template v3. After this PR lands, use conflicted permanent-lane synchronization PR #200 plus a separate green `resolve/*` review PR to live-qualify `/merge-resolved`. No conflict-resolution implementation belongs in this repository.
+
 
 ### #191 — adopt v0.27.1 and re-qualify stable-to-lane merge
 
@@ -85,7 +90,7 @@ Do not mechanically migrate special workflow/governance harness cases.
 
 Continue exercising the real external permanent-lane contract on
 `main`, `dev-cad` and `dev-ci` using
-`reusable-ci.yml@v0.27.1` and the released lane/merge policy.
+`reusable-ci.yml@v0.28.0` and the released lane/merge policy.
 
 ### #106 — prove dev-cad to main promotion
 
