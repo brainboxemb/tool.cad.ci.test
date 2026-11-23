@@ -10,70 +10,60 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 - v0.30.0 pins `lib.py.cad.ci 0.14.0` @
   `b24e9a3826dfc07e07b4f3fd9971fcb4ab5aa12d`;
 - numbered standalone test roots `001` through `016` are accepted;
-- merge governance, permanent-lane promotion/synchronization, conservative
-  cleanup, exact-SHA retirement and reviewed conflict recovery have live GitHub
-  evidence;
-- the config-driven durable workflow is accepted end to end through completed
-  issue #141.
+- config-driven durable build/Pages and permanent-branch governance are proven
+  live on the v0.30 baseline.
 
-## Durable workflow acceptance
+## Current released candidate
 
-Completed #141 proved both the synthetic consumer and real GitHub delivery
-layers.
-
-Key evidence:
-
-- PR #216 candidate run `45142398079` (#259) passed against exact v0.30.0;
-- isolated stable bootstrap run `45142533002` passed;
-- PR #216 merged to permanent `dev-ci` at
-  `34270607cc6afaa3b529a38821e9d1ef753eba65`;
-- named `dev-ci` durable run `45142741953` passed;
-- promotion PR #217 check `45142972524` passed;
-- released merge policy produced history-preserving promotion commit
-  `877bbc50e4d7073ad5e071a8571b8ac7086ea043` and advanced both
-  `main` and `dev-ci`;
-- post-promotion durable runs `45143126175` (main) and
-  `45143130328` (dev-ci) passed;
-- exact-SHA bootstrap retirement run `45143399322` passed.
-
-Reserved live acceptance output remains on:
-
-```text
-test-output/build
-test-output/gh-pages
-```
-
-Final #141 inspection proved stable `main` and named `dev-ci` build scopes,
-stable and named Pages provenance, and preservation of the named Pages subtree
-across the stable update. The repository's normal `build` and `gh-pages`
-refs were never changed by this acceptance.
-
-Detailed mutable provenance/run evidence is recorded on issue #141.
+- `tool.cad.ci v0.31.0` @
+  `27bdf67077ddd485cea95ba199069249c20c2a46`;
+- v0.31.0 keeps the exact `lib.py.cad.ci 0.14.0` pin;
+- runtime/merge/publication semantics are unchanged;
+- public workflow configuration now uses literal names such as
+  `stable_branch`, `development_branches`, `pull_request_policy` and
+  `command_environment`.
 
 ## Current work
 
-No open acceptance/runtime issue.
+### #222 — external v0.31 workflow naming acceptance
 
-Issue #218 only records this already accepted baseline in repository
-documentation; it introduces no runtime behavior.
+**Now.** Prove the released v0.31 schema through real consumer workflows.
 
-## Existing governance evidence
+Required evidence:
 
-- #180 / run `45070007017`: conservative branch cleanup;
-- #186 / run `45071078228`: reviewed exact-SHA retirement;
-- #200 / #203 / run `45075920227`: reviewed conflicted permanent sync recovery;
-- #204 and merge `1e42ddb183c6e834b07e755862a165e891ec6cd6`:
-  lane-promotion full-run proof;
-- #205/#206 and merge `a9406197e2f6cddfc0b1780b919d948ba3d7c16b`:
-  reviewed main -> dev-ci conflict recovery;
-- #207 promotion and runs `45132525063` / `45132528589`;
-- #208 main -> dev-cad synchronization and run `45132783513`.
+1. real PR validation through `reusable-ci.yml@v0.31.0` using
+   `pull_request_policy` and `command_environment`;
+2. merge #222 adoption PR to permanent `dev-ci` through
+   `reusable-merge-policy.yml@v0.31.0` with
+   `stable_branch` / `development_branches` / `permanent_branches`;
+3. post-merge `dev-ci` durable run green;
+4. owner `/cleanup-branches` succeeds safely through the renamed cleanup
+   inputs;
+5. exact-SHA retirement of a deliberately missing temporary ref succeeds
+   idempotently through the renamed retirement inputs;
+6. `dev-ci -> main` promotion through v0.31 merge policy with both durable
+   runs green;
+7. `main -> dev-cad` synchronization through v0.31 merge policy with durable
+   run green;
+8. only then record v0.31.0 as fully accepted and close #222.
+
+No new synthetic CAD behavior is required: the existing 001–016 suite is the
+regression matrix for this schema-only release.
+
+## Existing durable/governance evidence
+
+- completed #141: v0.30 durable stable/named publication on reserved
+  `test-output/*` refs;
+- #180: conservative cleanup;
+- #186: exact-SHA retirement;
+- #200/#203: reviewed conflicted permanent sync recovery;
+- #204/#207: permanent promotion proof;
+- #205/#206/#208: permanent synchronization proof.
 
 ## Boundary
 
 This repository owns external acceptance/integration evidence only. Generic
-lane classification, merge policy, builder resolution and CAD-CI behavior
-remain in the released tool/library stack.
+workflow behavior remains in the released tool/library stack.
 
-Forge/CAD may now consume the released v0.30.0 durable workflow; their own
-repository migrations remain separately reviewed consumer work.
+Forge/CAD remain on their already reviewed consumer versions until #222 proves
+the exact v0.31.0 workflow schema.
