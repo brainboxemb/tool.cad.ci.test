@@ -20,14 +20,14 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ## Candidate stack under acceptance
 
-### #256 — accept v0.36.0 central CAD release flow
+### #256 — accept v0.36.1 central CAD release flow
 
-**Now.**
+**Now. v0.36.0 reached the release gate but failed before the stale-SHA check because the workflow missed the CAD-CI runtime dependency install. v0.36.1 fixes that released bootstrap.**
 
 Candidate released stack:
 
-- `tool.cad.ci v0.36.0` @
-  `093eafb0eabf6b6617ec82dde17a76fdc718ae12`;
+- `tool.cad.ci v0.36.1` @
+  `8a9acb8ea69581728a3850c658b4c1ae2db6ff5a`;
 - exact pinned `lib.py.cad.ci v0.18.2` @
   `088644a05ff698957aef2ddc6cc5de037ddfa158`;
 - the CAD release workflow delegates the GitHub release transaction to released
@@ -36,16 +36,16 @@ Candidate released stack:
 
 Required live sequence:
 
-1. repin the consumer CI/governance wrappers to exact `v0.36.0` and add the
+1. repin the consumer CI/governance wrappers to exact `v0.36.1` and add the
    copy-ready CAD release wrapper using `test-output/build`;
 2. require the adoption PR to `dev-ci` green;
 3. merge the short-lived branch to `dev-ci` and require the named dev-ci build
    green;
 4. merge exact `dev-ci -> main` and require the main build to write
    `test-output/build/main/build.json` for the exact resulting main SHA;
-5. comment `/release v0.36.0 <older-main-sha>` and require the CAD release
+5. comment `/release v0.36.1 <older-main-sha>` and require the CAD release
    build check to fail with no tag/release;
-6. comment `/release v0.36.0 <exact-current-main-sha>` and require the build
+6. comment `/release v0.36.1 <exact-current-main-sha>` and require the build
    check plus delegated release transaction green;
 7. verify the GitHub release/tag resolves to that exact main SHA;
 8. repeat the exact successful command and require idempotent success;
@@ -58,7 +58,7 @@ Pages is not release evidence. The release scenario must not inspect
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #256 v0.36.0 central CAD release flow | **now** | Complete real issue-comment refusal, success and idempotency acceptance. |
+| #256 v0.36.1 central CAD release flow | **now** | Complete real issue-comment refusal, success and idempotency acceptance. |
 | #253 selectable acceptance roots | **later** | Replace the monolithic acceptance-suite item separately; do not mix into #256. |
 
 ## Boundary
