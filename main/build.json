@@ -3,7 +3,7 @@
     "acceptance_suite": {
       "engine": "scons",
       "engine_schema": 4,
-      "final_bundle_sha256": "f62b3f04c9abe81c80727d14da16d84c93a5c88600079a115c88e376332531a4",
+      "final_bundle_sha256": "4b9b0a5627dbd57dd30ac39bc8b2aa6f93044e2ad8a22810fcb2fdc130efdfbf",
       "final_step": "acceptance",
       "final_target_spec_digest": "0f52b6686c9cc28744d5603da7b2bf27563372062d10c6f5c2f00249f52e9a3d",
       "item_id": "acceptance-suite",
@@ -13,10 +13,10 @@
         "result.txt",
         "site"
       ],
-      "source_commit": "7fc5b28a3f72d1df6ed210fa8f48803fb619daa9"
+      "source_commit": "24a20cfcf6c74e766c59ee0640f1a724f3507632"
     }
   },
   "schema": 1,
   "scope": "main",
-  "source_commit": "7fc5b28a3f72d1df6ed210fa8f48803fb619daa9"
+  "source_commit": "24a20cfcf6c74e766c59ee0640f1a724f3507632"
 }
