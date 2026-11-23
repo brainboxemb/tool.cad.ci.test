@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "bounds_min": [-5.0, -10.0, -15.0],
+  "bounds_max": [5.0, 10.0, 15.0],
+  "bounds_tolerance_mm": 0.05,
+  "volume_mm3": 6000.0,
+  "volume_tolerance_mm3": 1.0,
+  "watertight": true,
+  "bounds_sufficient": false
+}
