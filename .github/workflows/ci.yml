@@ -17,7 +17,7 @@ jobs:
     if: github.event_name == 'pull_request'
     uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.35.0
     with:
-      item: targeted-a
+      changed_paths: '["targeted_selection_cases/a/fixture.txt","targeted_selection_cases/b/fixture.txt"]'
       pull_request_policy: '{"stable_branch":"main","development_branches":["dev-cad","dev-ci"],"docs_only_prefixes":["docs/"]}'
       jobs: 2
       command_environment: '{"ACCEPTANCE_MARKER":"caller-value"}'

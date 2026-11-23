@@ -30,10 +30,10 @@ Candidate released stack:
 
 Focused live gates on one short-lived PR to `dev-ci`:
 
-1. exact `item: targeted-a` while `targeted-b` is configured to fail if
-   accidentally selected;
-2. one `changed_paths` JSON selection containing both A and B after B is
-   switched to pass;
+1. **passed**: exact `item: targeted-a` while `targeted-b` was configured to
+   fail if accidentally selected — run `45217000064` on head `1a79d200...`;
+2. **current**: one `changed_paths` JSON selection containing both A and B
+   after B is switched to pass;
 3. record exact head/run evidence and hand the released workflow to Forge #740.
 
 This acceptance deliberately does not use the monolithic 001-019 suite as its
