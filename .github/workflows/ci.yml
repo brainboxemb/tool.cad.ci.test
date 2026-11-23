@@ -17,7 +17,7 @@ jobs:
     if: github.event_name == 'pull_request'
     uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.31.0
     with:
-      pr_policy_json: '{"stable_ref":"main","lane_refs":["dev-cad","dev-ci"],"docs_only_prefixes":["docs/"]}'
+      pull_request_policy: '{"stable_branch":"main","development_branches":["dev-cad","dev-ci"],"docs_only_prefixes":["docs/"]}'
       jobs: 2
       command_environment: '{"ACCEPTANCE_MARKER":"caller-value"}'
 
@@ -31,7 +31,7 @@ jobs:
     permissions:
       contents: write
       packages: read
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-durable.yml@v0.30.0
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-durable.yml@v0.31.0
     with:
       source_sha: ${{ github.sha }}
       source_ref: ${{ github.ref_name }}
@@ -39,4 +39,4 @@ jobs:
       build_branch: test-output/build
       pages_branch: test-output/gh-pages
       jobs: 2
-      environment_json: '{"ACCEPTANCE_MARKER":"caller-value"}'
+      command_environment: '{"ACCEPTANCE_MARKER":"caller-value"}'
