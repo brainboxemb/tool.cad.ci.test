@@ -1,0 +1,23 @@
+{
+  "items": {
+    "acceptance_suite": {
+      "engine": "scons",
+      "engine_schema": 4,
+      "final_bundle_sha256": "f11b326cabe5b66dc45f3c3fff2431004d0d36ade2a6572da9a48dc7a3293143",
+      "final_step": "acceptance",
+      "final_target_spec_digest": "0f52b6686c9cc28744d5603da7b2bf27563372062d10c6f5c2f00249f52e9a3d",
+      "item_id": "acceptance-suite",
+      "outputs": [
+        "accepted.txt",
+        "case-durations.json",
+        "result.txt",
+        "site"
+      ],
+      "source_commit": "34270607cc6afaa3b529a38821e9d1ef753eba65"
+    }
+  },
+  "name": "dev-ci",
+  "schema": 1,
+  "scope": "named",
+  "source_commit": "34270607cc6afaa3b529a38821e9d1ef753eba65"
+}

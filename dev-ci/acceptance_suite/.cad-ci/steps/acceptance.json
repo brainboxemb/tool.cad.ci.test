@@ -1,0 +1,45 @@
+{
+  "action_executed": true,
+  "action_type": "command",
+  "active_dependents": [],
+  "bundle_sha256": "f11b326cabe5b66dc45f3c3fff2431004d0d36ade2a6572da9a48dc7a3293143",
+  "duration_seconds": 22.564,
+  "engine": "scons",
+  "engine_schema": 4,
+  "error": null,
+  "exit_code": 0,
+  "finished_at": "2026-11-23T08:57:48.771Z",
+  "item": "acceptance-suite",
+  "outcome": "BUILT",
+  "output_state": "UNCHANGED",
+  "outputs": {
+    "accepted.txt": {
+      "kind": "file",
+      "mode": 420,
+      "sha256": "bc235c2a6d2589fcf59ad2470f7c9f90b97d3281c7abc83ad1622bbfd4308f3d"
+    },
+    "case-durations.json": {
+      "kind": "file",
+      "mode": 420,
+      "sha256": "30e8ffac867dcd748c15eff80515dcf8d0f06da8cf40edfbe24d4758bda56e04"
+    },
+    "result.txt": {
+      "kind": "file",
+      "mode": 420,
+      "sha256": "a326cb9e334c26a1b339d4de47d5f25d41fa44c0b47e3ca46a92896e8973864b"
+    },
+    "site": {
+      "kind": "directory",
+      "mode": 493,
+      "sha256": "4d8328a638a84e555953e50f15b13c1ba0f6b6d12a17a55f39e8231aeec1243a"
+    }
+  },
+  "run_finished_at": "2026-11-23T08:57:48.805Z",
+  "run_started_at": "2026-11-23T08:57:25.496Z",
+  "schema": 5,
+  "started_at": "2026-11-23T08:57:26.207Z",
+  "status": "pass",
+  "step": "acceptance",
+  "target_spec_digest": "0f52b6686c9cc28744d5603da7b2bf27563372062d10c6f5c2f00249f52e9a3d",
+  "timeout_seconds": 300
+}

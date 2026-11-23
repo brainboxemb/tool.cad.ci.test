@@ -1,0 +1,12 @@
+{
+  "engine": "scons",
+  "engine_schema": 4,
+  "final_bundle_sha256": "f11b326cabe5b66dc45f3c3fff2431004d0d36ade2a6572da9a48dc7a3293143",
+  "final_step": "acceptance",
+  "final_target_spec_digest": "0f52b6686c9cc28744d5603da7b2bf27563372062d10c6f5c2f00249f52e9a3d",
+  "item": "acceptance-suite",
+  "run_finished_at": "2026-11-23T08:57:48.805Z",
+  "run_started_at": "2026-11-23T08:57:25.496Z",
+  "schema": 2,
+  "status": "pass"
+}
