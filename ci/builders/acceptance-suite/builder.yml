@@ -1,0 +1,19 @@
+schema: 1
+description: Run the complete released-stack acceptance suite.
+steps:
+  - id: acceptance
+    inputs:
+      - acceptance_suite/**
+      - tests/**
+      - workflow_case/**
+      - test_roots/**
+      - directory_output_case/**
+      - timeout_case/**
+      - publish_case/**
+      - merge_policy_case/**
+      - integration_scenarios/**
+    run: [python, run.py]
+    outputs:
+      - accepted.txt
+      - case-durations.json
+      - result.txt
