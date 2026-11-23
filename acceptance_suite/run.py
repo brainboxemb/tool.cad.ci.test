@@ -208,17 +208,8 @@ def main() -> int:
             "released-stack acceptance failed:\n- " + "\n- ".join(failures)
         )
 
-    site = output / "site"
-    site.mkdir(parents=True, exist_ok=True)
-    source = os.environ.get("GITHUB_SHA", "local")
-    (site / "index.html").write_text(
-        "<!doctype html><title>tool.cad.ci.test</title>"
-        f"<p>tool.cad.ci v0.31.0 durable acceptance {source}</p>\n",
-        encoding="utf-8",
-    )
-
     (output / "accepted.txt").write_text(
-        "tool.cad.ci v0.31.0 released-stack acceptance passed\n",
+        "tool.cad.ci v0.32.0 released-stack acceptance passed\n",
         encoding="utf-8",
     )
     return 0

@@ -1,0 +1,7 @@
+schema: 1
+description: Render live durable Pages evidence after the exact build commit exists.
+steps:
+  - id: render
+    run: [python, ci/builders/acceptance-pages/build.py]
+    outputs:
+      - site

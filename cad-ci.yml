@@ -9,7 +9,11 @@ variables:
 items:
   - acceptance_suite
 
+builders:
+  acceptance-suite: ci/builders/acceptance-suite
+  acceptance-pages: ci/builders/acceptance-pages
+
 publication:
   pages:
-    item: acceptance-suite
+    builder: acceptance-pages
     output: site
