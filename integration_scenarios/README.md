@@ -17,7 +17,7 @@ state**:
 - branch creation;
 - pull-request events;
 - reusable-workflow invocation;
-- permanent-lane classification;
+- permanent-branch classification;
 - issue-comment merge commands;
 - merge commits;
 - post-merge workflow dispatch.
@@ -32,8 +32,8 @@ this repository.
 | --- | --- |
 | [001_feature_pr](001_feature_pr/README.md) | Short-lived non-doc branch -> development lane triggers full reusable CI. |
 | [002_docs_only_pr](002_docs_only_pr/README.md) | Docs-only PR -> development lane takes released cheap path. |
-| [003_lane_promotion](003_lane_promotion/README.md) | Permanent lane -> main forces full CI and history-preserving merge. |
-| [004_lane_sync](004_lane_sync/README.md) | main -> permanent lane preserves lane history and dispatches full post-merge CI. |
+| [003_lane_promotion](003_lane_promotion/README.md) | Permanent development branch -> main forces full CI and history-preserving merge. |
+| [004_lane_sync](004_lane_sync/README.md) | main -> permanent development branch preserves lane history and dispatches full post-merge CI. |
 | [005_merge_comment](005_merge_comment/README.md) | Real `/merge` issue-comment trigger invokes released merge-policy workflow. |
 | [006_durable_workflow](006_durable_workflow/README.md) | Released durable workflow publishes stable/named build + Pages to reserved `test-output/*` refs. |
 
@@ -42,7 +42,7 @@ this repository.
 `.github/workflows/ci.yml` and `.github/workflows/merge-policy.yml` must use
 the same accepted released `tool.cad.ci` version.
 
-Current fully accepted version: `v0.30.0`. Durable workflow acceptance is complete under issue #141; the reserved live generated refs are `test-output/build` and `test-output/gh-pages`.
+Current fully accepted version: `v0.31.0`. Public workflow-name acceptance is complete under issue #223; durable live publication remains isolated on `test-output/build` and `test-output/gh-pages`.
 
 ## Evidence
 
