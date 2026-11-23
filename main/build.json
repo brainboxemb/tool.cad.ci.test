@@ -3,20 +3,19 @@
     "acceptance_suite": {
       "engine": "scons",
       "engine_schema": 4,
-      "final_bundle_sha256": "4b9b0a5627dbd57dd30ac39bc8b2aa6f93044e2ad8a22810fcb2fdc130efdfbf",
+      "final_bundle_sha256": "836773cb7551080cb62ae9ddee4e720add781c5933705b2b0f40476ea3057de1",
       "final_step": "acceptance",
-      "final_target_spec_digest": "0f52b6686c9cc28744d5603da7b2bf27563372062d10c6f5c2f00249f52e9a3d",
+      "final_target_spec_digest": "226c14f2bebb920ac524a5ca20fd48ce0641bcf13a86aaede144568fb28d2a8c",
       "item_id": "acceptance-suite",
       "outputs": [
         "accepted.txt",
         "case-durations.json",
-        "result.txt",
-        "site"
+        "result.txt"
       ],
-      "source_commit": "24a20cfcf6c74e766c59ee0640f1a724f3507632"
+      "source_commit": "74c5c2ba99175d8874fef93a7f90a6e1b593fc14"
     }
   },
   "schema": 1,
   "scope": "main",
-  "source_commit": "24a20cfcf6c74e766c59ee0640f1a724f3507632"
+  "source_commit": "74c5c2ba99175d8874fef93a7f90a6e1b593fc14"
 }
