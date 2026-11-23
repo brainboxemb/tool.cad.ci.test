@@ -42,6 +42,7 @@ CASES = (
     "test_roots/013_directory_output/check.py",
     "test_roots/014_timeout/check.py",
     "test_roots/015_publish/check.py",
+    "test_roots/016_durable_workflow/check.py",
     "merge_policy_case/check.py",
     "merge_policy_case/check_command.py",
 )
@@ -207,8 +208,17 @@ def main() -> int:
             "released-stack acceptance failed:\n- " + "\n- ".join(failures)
         )
 
+    site = output / "site"
+    site.mkdir(parents=True, exist_ok=True)
+    source = os.environ.get("GITHUB_SHA", "local")
+    (site / "index.html").write_text(
+        "<!doctype html><title>tool.cad.ci.test</title>"
+        f"<p>tool.cad.ci v0.30.0 durable acceptance {source}</p>\n",
+        encoding="utf-8",
+    )
+
     (output / "accepted.txt").write_text(
-        "tool.cad.ci v0.29.0 released-stack acceptance passed\n",
+        "tool.cad.ci v0.30.0 released-stack acceptance passed\n",
         encoding="utf-8",
     )
     return 0
