@@ -5,73 +5,62 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ## Fully accepted baseline
 
-- `tool.cad.ci v0.32.0` @
-  `19e894567ac534ce90428dc61c6afa126c1d3318`;
-- v0.32.0 pins `lib.py.cad.ci 0.15.0` @
-  `24c3abb267feea9ae91f24f8fdb435cba68f089a`;
-- numbered standalone test roots `001` through `016` remain accepted;
+- `tool.cad.ci v0.33.2` @
+  `4812d87304109a68538d844e8baa5bacdbbc198d`;
+- exact pinned `lib.py.cad.ci v0.17.2` @
+  `d4e8140d988be06460326fda802e514b6b306d64`;
+- `lib.py.cad.verification v0.16.0` @
+  `c7c145b7be0c602724e8cca874ef29990baaad1e`;
+- numbered standalone roots 001 through 017 accepted;
+- #240 completed real built-in build123d/CadQuery verification acceptance plus
+  permanent dev-ci/main/dev-cad durable promotion/synchronization;
 - live durable publication remains isolated on `test-output/*`.
 
 ## Candidate stack under acceptance
 
-### #240 — externally accept v0.33 built-in builders + verification
+### #244 — accept v0.34.0 / lib 0.18.0 owner contracts
 
 **Now.**
 
 Candidate released stack:
 
-- `tool.cad.ci v0.33.2` @
-  `4812d87304109a68538d844e8baa5bacdbbc198d`;
-- exact pinned `lib.py.cad.ci v0.17.2` @
-  `d4e8140d988be06460326fda802e514b6b306d64`;
+- `tool.cad.ci v0.34.0` @
+  `b1a2cf803bddb238ee50df29603f068488e72e5d`;
+- exact pinned `lib.py.cad.ci v0.18.0` @
+  `eb291abd6bb34b585d04019d154e7756d36436f9`;
 - reusable verification engine `lib.py.cad.verification v0.16.0` @
-  `c7c145b7be0c602724e8cca874ef29990baaad1e`;
-- immutable generic runtime
-  `ghcr.io/brainboxemb/cad-reference:v0.3.4`.
+  `c7c145b7be0c602724e8cca874ef29990baaad1e`.
 
-The new `test_roots/017_builtin_verification` must prove through only the
+New `test_roots/018_builder_verification_package` must prove through only the
 released public tool surface:
 
-1. built-in build123d and CadQuery both export non-empty STL;
-2. both mesh-geometry verification reports pass;
-3. compatible verified models use one shared runtime batch;
-4. an identical second run is CURRENT and does not start that runtime batch;
-5. changing the shared verification definition affects both models and causes
-   one shared batch rebuild;
-6. all existing roots 001-016 and governance/publication acceptance remain
-   green.
+1. a repository-owned builder declares `verification_package: true`;
+2. root configuration pins the exact released verification package;
+3. the command receives an existing exact `CAD_CI_VERIFICATION_WHEEL`;
+4. consumer configuration never names the synthesized package item id;
+5. an identical rerun is CURRENT;
+6. `models/*/scpf/**` correctly selects the nested model for a changed path.
 
-Repository wrappers are repinned to exact `v0.33.2`; no local workflow,
-runtime launcher or CAD-CI implementation is added.
+Repository reusable CI and merge-policy wrappers are repinned to exact v0.34.0
+without copying generic implementation.
 
 ## Live acceptance sequence
 
-1. Open #240 adoption PR to `dev-ci` and require the released v0.33 PR
-   workflow green, including real GHCR/runtime execution.
-2. Merge the short-lived branch to `dev-ci` through released merge policy.
-3. Require the real named `dev-ci` durable run green on
-   `test-output/build` / `test-output/gh-pages`.
-4. Promote `dev-ci -> main` through the released history-preserving policy
-   and require stable durable publication green.
-5. Synchronize `main -> dev-cad` and require the named `dev-cad` durable
-   run green.
-6. Record exact mutable Actions/PR evidence, mark v0.33.2 fully accepted and
-   close #240.
-
-## Existing evidence retained
-
-- #141 / PR #216: durable workflow on reserved generated refs;
-- #223 / PRs #225-#231: v0.31 public workflow names, promotion/sync,
-  governance, exact-SHA retirement and cleanup;
-- #232 / PRs #233-#236: v0.32 post-build Pages renderer, root builder
-  structure and stable/named preservation.
+1. require the #244 adoption PR to `dev-ci` green;
+2. merge the short-lived branch through the released merge policy;
+3. require named `dev-ci` durable integration green on
+   `test-output/build` / `test-output/gh-pages`;
+4. promote exact `dev-ci -> main` through released merge policy and require
+   stable durable integration green;
+5. synchronize exact `main -> dev-cad` and require named `dev-cad` durable
+   integration green;
+6. record exact mutable Actions/PR evidence, close #244 and return to Forge
+   #740.
 
 ## Boundary
 
 This repository owns external acceptance evidence only.
 
-Minimal real build123d/CadQuery geometry is allowed only to exercise the
-released generic built-in builder/runtime boundary. Generic builder resolution,
-verification semantics, batching, provenance, selection and publication remain
-in the released owner repositories. Forge, SolidCraft and product-model
-semantics do not belong here.
+Do not add Forge/SolidCraft semantics, library imports, internal package ids,
+local verification package download logic, workflow bootstrap copies or a
+second CAD-CI graph. Generic failures return to their owner repositories.
