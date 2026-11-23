@@ -2,4 +2,4 @@ id: targeted-a
 kind: acceptance
 builder: targeted-marker
 watch:
-  - fixture.txt
+  - targeted_selection_cases/a/fixture.txt
