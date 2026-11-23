@@ -4,7 +4,7 @@ Status: current
 
 ## Purpose
 
-Prove released `tool.cad.ci v0.36.0` release behavior with real GitHub
+Prove released `tool.cad.ci v0.36.1` release behavior after v0.36.0 external acceptance exposed the missing PyYAML/SCons bootstrap with real GitHub
 issue comments and generated build state.
 
 ## Contract
@@ -26,7 +26,7 @@ It must not use `gh-pages` or `test-output/gh-pages` as release evidence.
 
 ## Method
 
-After v0.36.0 adoption reaches `main` and the main durable workflow is green:
+After v0.36.1 adoption reaches `main` and the main durable workflow is green:
 
 1. issue a real owner `/release` comment for an older main SHA;
 2. require the central CAD build check to reject it before release creation;
