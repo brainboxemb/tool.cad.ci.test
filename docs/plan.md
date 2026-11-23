@@ -81,7 +81,6 @@ evidence before Forge or CAD adopt the new workflow.
 | Issue | Status | Next |
 | --- | --- | --- |
 | #141 Durable-lane workflow acceptance | **blocked on tool.cad.ci #137** | Resume only after a released config-driven durable-lane workflow exists. |
-| #88 Align historical changelog | **later / docs-only** | No runtime impact. |
 
 ## Completed normalization
 
