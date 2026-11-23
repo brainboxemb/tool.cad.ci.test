@@ -1,5 +1,6 @@
 id: acceptance-suite
 kind: acceptance
+builder: acceptance-suite
 
 watch:
   - .github/workflows/**
@@ -13,21 +14,3 @@ watch:
   - publish_case/**
   - merge_policy_case/**
   - integration_scenarios/**
-
-steps:
-  - id: acceptance
-    inputs:
-      - acceptance_suite/**
-      - tests/**
-      - workflow_case/**
-      - test_roots/**
-      - directory_output_case/**
-      - timeout_case/**
-      - publish_case/**
-      - merge_policy_case/**
-      - integration_scenarios/**
-    run: [python, run.py]
-    outputs:
-      - accepted.txt
-      - case-durations.json
-      - result.txt
