@@ -1,0 +1,12 @@
+schema: 1
+description: Inspect the exact verification wheel exposed by CAD-CI.
+verification_package: true
+
+steps:
+  - id: inspect
+    inputs:
+      item:
+        - scpf/**
+    run: 'python "$CAD_CI_BUILDER_PATH/inspect.py"'
+    outputs:
+      - wheel.json

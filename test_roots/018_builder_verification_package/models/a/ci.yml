@@ -1,0 +1,6 @@
+id: wheel-consumer
+kind: test
+builder: wheel-consumer
+watch:
+  repo:
+    - models/*/scpf/**
