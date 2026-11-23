@@ -1,0 +1,7 @@
+schema: 1
+
+runtimes:
+  reference: ghcr.io/brainboxemb/cad-reference:v0.3.4
+
+items:
+  - models/*
