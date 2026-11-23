@@ -42,7 +42,7 @@ this repository.
 `.github/workflows/ci.yml` and `.github/workflows/merge-policy.yml` must use
 the same accepted released `tool.cad.ci` version.
 
-Current fully accepted version: `v0.31.0`. Public workflow-name acceptance is complete under issue #223; durable live publication remains isolated on `test-output/build` and `test-output/gh-pages`.
+Current fully accepted version: `v0.32.0`. Post-build Pages renderer acceptance is complete under issue #232; durable live publication remains isolated on `test-output/build` and `test-output/gh-pages`.
 
 ## Evidence
 
