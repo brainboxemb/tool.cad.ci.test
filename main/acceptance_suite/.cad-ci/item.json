@@ -1,12 +1,12 @@
 {
   "engine": "scons",
-  "engine_schema": 4,
-  "final_bundle_sha256": "cea7c28d86d3111129b3787cf37658c8b9ba8cdc63ff03938dd0857247e021c7",
+  "engine_schema": 6,
+  "final_bundle_sha256": "49601cf795050dd826a2fef6b911c136cf9fbe49db3bc3c18e33c127a0580969",
   "final_step": "acceptance",
-  "final_target_spec_digest": "226c14f2bebb920ac524a5ca20fd48ce0641bcf13a86aaede144568fb28d2a8c",
+  "final_target_spec_digest": "c8ac1c535dd31d9e5d6dc8d6efc4519c0387991f6c902f897339dad337fc4ef8",
   "item": "acceptance-suite",
-  "run_finished_at": "2026-11-23T11:12:58.323Z",
-  "run_started_at": "2026-11-23T11:12:28.323Z",
+  "run_finished_at": "2026-11-23T14:10:54.495Z",
+  "run_started_at": "2026-11-23T14:09:29.021Z",
   "schema": 2,
   "status": "pass"
 }
