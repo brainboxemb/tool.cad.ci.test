@@ -35,13 +35,14 @@ this repository.
 | [003_lane_promotion](003_lane_promotion/README.md) | Permanent lane -> main forces full CI and history-preserving merge. |
 | [004_lane_sync](004_lane_sync/README.md) | main -> permanent lane preserves lane history and dispatches full post-merge CI. |
 | [005_merge_comment](005_merge_comment/README.md) | Real `/merge` issue-comment trigger invokes released merge-policy workflow. |
+| [006_durable_workflow](006_durable_workflow/README.md) | Released durable workflow publishes stable/named build + Pages to reserved `test-output/*` refs. |
 
 ## Version contract
 
 `.github/workflows/ci.yml` and `.github/workflows/merge-policy.yml` must use
 the same accepted released `tool.cad.ci` version.
 
-Current accepted version: `v0.27.1`.
+Current fully accepted version: `v0.30.0`. Durable workflow acceptance is complete under issue #141; the reserved live generated refs are `test-output/build` and `test-output/gh-pages`.
 
 ## Evidence
 

@@ -1,0 +1,3 @@
+id: durable-site
+kind: synthetic
+builder: site
