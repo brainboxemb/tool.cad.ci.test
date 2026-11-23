@@ -1,6 +1,6 @@
 # template: tool.cad.ci/branch-retirement
-# template-version: 1
-# tool-release: v0.30.0
+# template-version: 2
+# tool-release: v0.31.0
 
 name: Branch retirement
 
@@ -20,10 +20,10 @@ jobs:
       contents: write
       pull-requests: read
       issues: write
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-branch-retirement.yml@v0.30.0
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-branch-retirement.yml@v0.31.0
     with:
       command: ${{ github.event.comment.body }}
       issue_number: ${{ github.event.issue.number }}
-      stable_ref: main
-      lane_refs_json: '["dev-cad","dev-ci"]'
-      permanent_refs_json: '["build","gh-pages","test-output/build","test-output/gh-pages"]'
+      stable_branch: main
+      development_branches: '["dev-cad","dev-ci"]'
+      permanent_branches: '["build","gh-pages","test-output/build","test-output/gh-pages"]'
