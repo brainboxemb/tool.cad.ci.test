@@ -1,19 +1,19 @@
 {
   "acceptance_marker": "repository-config",
-  "build_commit": "ef03475344005b66cbcf5d141ae84517e18977c3",
+  "build_commit": "c2d48643b89d68a0c59595d761c6b55f041b1e68",
   "build_scope": "main",
   "builder": "acceptance-pages",
   "builder_path": "/home/runner/work/tool.cad.ci.test/tool.cad.ci.test/ci/builders/acceptance-pages",
   "complete_scope": "/home/runner/work/tool.cad.ci.test/tool.cad.ci.test/.cache/cad-ci-prepared-scope",
   "manifest": {
     "acceptance_suite_final_step": "acceptance",
-    "acceptance_suite_source_commit": "0febda7eb496edd4a44f0234a2d89c81214c6e76",
+    "acceptance_suite_source_commit": "10c04d61fef2540dc3928d0af808a78e649497fe",
     "name": null,
     "schema": 1,
     "scope": "main",
-    "source_commit": "0febda7eb496edd4a44f0234a2d89c81214c6e76"
+    "source_commit": "10c04d61fef2540dc3928d0af808a78e649497fe"
   },
   "schema": 1,
   "source_ref": "main",
-  "source_sha": "0febda7eb496edd4a44f0234a2d89c81214c6e76"
+  "source_sha": "10c04d61fef2540dc3928d0af808a78e649497fe"
 }
