@@ -8,3 +8,8 @@ variables:
 
 items:
   - acceptance_suite
+
+publication:
+  pages:
+    item: acceptance-suite
+    output: site

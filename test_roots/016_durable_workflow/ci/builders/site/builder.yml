@@ -1,0 +1,8 @@
+schema: 1
+description: Synthetic static durable Pages item
+
+steps:
+  - id: build
+    run: 'python "$CAD_CI_BUILDER_PATH/build.py"'
+    outputs:
+      - site
