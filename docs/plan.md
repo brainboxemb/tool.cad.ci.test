@@ -1,7 +1,7 @@
 # Repository plan
 
 Current source of truth for unfinished work in `tool.cad.ci.test`
-(2026-11-22).
+(2026-11-23).
 
 ## Accepted baseline
 
@@ -44,32 +44,43 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
   - `015_publish` — PR #198;
 - acceptance timing observability landed in PR #159;
 - non-failing timing budgets landed in PR #175;
-- numbered-root normalization #114 is complete.
+- numbered-root normalization #114 is complete;
+- permanent-lane integration #98 is complete under released v0.28.0:
+  - conflicted `main -> dev-ci` PR #205 was recovered through reviewed
+    `/merge-resolved` using green review PR #206;
+  - resolved merge `a9406197e2f6cddfc0b1780b919d948ba3d7c16b`
+    used reviewed tree `3cad750255cd3eb75145b8dd8f580c3c53e3c62d`;
+  - dispatched dev-ci run `45132219820` passed;
+  - promotion PR #207 was classified `lane-promotion`, forced
+    `full_run=true`, and merged at
+    `5da0adb401f8b680e2a44fa1780ccf61163fba7d`;
+  - post-promotion runs `45132525063` (main) and `45132528589`
+    (dev-ci) passed;
+  - final main -> dev-cad sync PR #208 merged at
+    `8ce1b656409501a428c765bc434e15bab9b62397`;
+  - dev-cad contains current main with no file delta, and dispatched run
+    `45132783513` passed.
 
 ## Current work
 
-### #98 — permanent lane integration
+### #141 — external durable-lane workflow acceptance
 
-The `dev-cad` lane contract is fully accepted. The remaining closeout is the
-`dev-ci` path:
+This remains valid but is blocked on `brainboxemb/tool.cad.ci #137`.
 
-1. synchronize current `main -> dev-ci` while preserving both permanent
-   histories;
-2. promote exact `dev-ci -> main` with complete CAD-CI;
-3. verify the retained `dev-ci` lane advances to the stable merge commit and
-   both post-merge integration runs are green;
-4. synchronize the resulting stable `main` back into `dev-cad` so all three
-   permanent source lanes finish aligned.
+The released v0.28.0 `reusable-ci.yml` is intentionally run-only and does not
+yet expose the planned config-driven permanent-lane durable build/Pages
+publication workflow. Do not emulate that missing surface locally in this test
+repository.
 
-PR #205 is the current synchronization. It is genuinely conflicted, so use only
-the released v0.28.0 reviewed `/merge-resolved` path; do not add a local
-conflict workaround.
+When #137 reaches a released tool version, resume #141 with a numbered
+standalone synthetic consumer and real stable/named durable publication
+evidence before Forge or CAD adopt the new workflow.
 
 ## Open issue assessment
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #98 Permanent lane integration | **now / closeout** | Resolve/sync PR #205, promote `dev-ci -> main`, then align `dev-cad` to final stable. |
+| #141 Durable-lane workflow acceptance | **blocked on tool.cad.ci #137** | Resume only after a released config-driven durable-lane workflow exists. |
 | #88 Align historical changelog | **later / docs-only** | No runtime impact. |
 
 ## Completed normalization
