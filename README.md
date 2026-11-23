@@ -3,11 +3,13 @@
 Permanent external black-box acceptance repository for released
 `tool.cad.ci` + `lib.py.cad.ci`.
 
+See the [Changelog](CHANGELOG.md) for dated accepted checkpoints.
+
 The repository is intentionally a normal consumer:
 
 ```text
 .github/workflows/ci.yml
-  -> tool.cad.ci reusable-ci.yml@v0.27.1
+  -> tool.cad.ci reusable-ci.yml@v0.28.0
        -> root cad-ci.yml
             -> acceptance-suite
                  -> public cad_ci_tool CLI
@@ -108,7 +110,7 @@ the released lane policy; manual/post-merge dispatches request a complete run:
 ```yaml
 jobs:
   acceptance:
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.27.1
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.28.0
     with:
       pr_policy_json: '{"stable_ref":"main","lane_refs":["dev-cad","dev-ci"],"docs_only_prefixes":["docs/"]}'
       full_run: ${{ github.event_name == 'workflow_dispatch' }}
@@ -120,7 +122,7 @@ live GitHub contracts and [permanent lane integration](docs/background/lane-inte
 for background on the lane topology.
 
 The merge-policy workflow is pinned to the same accepted tool release as the
-CI workflow: `v0.27.1`.
+CI workflow: `v0.28.0`.
 
 Repository variables in root `cad-ci.yml` are also used to prove that
 repository configuration reaches consumer commands and overrides inherited
