@@ -1,0 +1,1 @@
+tool.cad.ci v0.30.0 released-stack acceptance passed
