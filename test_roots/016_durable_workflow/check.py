@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
 import shutil
 import sys
 
@@ -17,6 +18,35 @@ from tests.support import fresh_case, read_json, run_tool
 CASE = Path(__file__).resolve().parent
 SHA_MAIN = "1" * 40
 SHA_NAMED = "2" * 40
+
+
+def publication_site(
+    source: Path,
+    target: Path,
+    *,
+    source_commit: str,
+    build_commit: str,
+    build_scope: str,
+) -> Path:
+    """Create valid public Pages input without changing builder output."""
+
+    shutil.rmtree(target, ignore_errors=True)
+    shutil.copytree(source, target)
+    (target / "provenance.json").write_text(
+        json.dumps(
+            {
+                "schema": 1,
+                "source_commit": source_commit,
+                "build_commit": build_commit,
+                "build_scope": build_scope,
+            },
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return target
 
 
 def main() -> int:
@@ -51,11 +81,18 @@ def main() -> int:
     assert (stable / "items/site/site/index.html").is_file()
 
     pages = out / "pages"
+    stable_site = publication_site(
+        stable / "items/site/site",
+        out / "stable-site",
+        source_commit=SHA_MAIN,
+        build_commit="3" * 40,
+        build_scope="main",
+    )
     run_tool(
         "pages",
         "install-stable",
         "--site",
-        str(stable / "items/site/site"),
+        str(stable_site),
         "--pages-root",
         str(pages),
     )
@@ -81,11 +118,18 @@ def main() -> int:
     assert named_manifest["name"] == "dev-ci"
     assert named_manifest["source_commit"] == SHA_NAMED
 
+    named_site = publication_site(
+        named / "items/site/site",
+        out / "named-site",
+        source_commit=SHA_NAMED,
+        build_commit="4" * 40,
+        build_scope="dev-ci",
+    )
     run_tool(
         "pages",
         "install-named",
         "--site",
-        str(named / "items/site/site"),
+        str(named_site),
         "--pages-root",
         str(pages),
         "--name",
