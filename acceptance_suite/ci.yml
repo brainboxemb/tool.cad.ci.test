@@ -12,6 +12,7 @@ watch:
   - timeout_case/**
   - publish_case/**
   - merge_policy_case/**
+  - integration_scenarios/**
 
 steps:
   - id: acceptance
@@ -24,8 +25,10 @@ steps:
       - timeout_case/**
       - publish_case/**
       - merge_policy_case/**
+      - integration_scenarios/**
     run: [python, run.py]
     outputs:
       - accepted.txt
       - case-durations.json
       - result.txt
+      - site
