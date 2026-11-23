@@ -16,7 +16,7 @@ watch:
 steps:
   - id: acceptance
     inputs:
-      - acceptance_suite/run.py
+      - acceptance_suite/**
       - tests/**
       - workflow_case/**
       - test_roots/**

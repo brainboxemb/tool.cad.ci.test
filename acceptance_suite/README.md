@@ -26,6 +26,27 @@ in that repository root. Each case root must have a local `README.md` that state
 A new case is not valid merely because a new `check.py` exists. It must prove
 a distinct public behavior not already covered elsewhere.
 
+## Declarative test-root architecture
+
+Before any black-box case executes, `contracts.py` validates the complete
+`test_roots/` collection.
+
+The contract enforces:
+
+- contiguous three-digit root names (`001_...`, `002_...`, ...);
+- a local `README.md`, `cad-ci.yml` and `check.py` per root;
+- repository-owned builder aliases below `ci/builders/`;
+- no executable `steps:` or `run:` keys in root `cad-ci.yml` or item
+  `ci.yml`;
+- every item selects a declared builder directly or through a template;
+- no legacy item-local `run.py` outside builder directories.
+
+Builder `builder.yml` files are intentionally allowed to contain executable
+steps. That is the execution boundary being enforced.
+
+The validator runs inside the existing acceptance step. It is not a second CI
+job or alternate runner.
+
 ## Duration contract
 
 The central runner measures every registered case with a monotonic clock.
@@ -41,9 +62,25 @@ Every run:
 Timing remains centralized in `acceptance_suite/run.py`; individual cases must
 not implement their own timing harness.
 
-The first phase is observability. Do not add flaky hard per-case budgets until
-multiple accepted GitHub runs provide a stable baseline. Existing CAD-CI command
-timeouts remain a separate execution/failure contract.
+Accepted runs now provide enough baseline data for conservative soft budgets.
+
+Initial warning thresholds:
+
+| Scope | Soft budget |
+| --- | ---: |
+| Complete measured case suite | 30 s |
+| Default individual case | 3 s |
+| `test_roots/014_timeout/check.py` | 4 s |
+| `test_roots/015_publish/check.py` | 7 s |
+
+These thresholds are **warnings only**. Exceeding them is recorded in
+`case-durations.json` and printed in the log, but does not fail acceptance.
+
+The thresholds intentionally include headroom above observed accepted runs.
+Shared GitHub runners vary materially, so hard performance gates require a
+separate later decision based on sustained evidence.
+
+Existing CAD-CI command timeouts remain a separate execution/failure contract.
 
 ## Case status
 
@@ -62,9 +99,9 @@ timeouts remain a separate execution/failure contract.
 | `test_roots/010_process` | current | Public item-level process participation and exclusion. |
 | `test_roots/011_shared_builder` | current | Declarative repository-owned shared builder used by multiple items. |
 | `test_roots/012_parallel_jobs` | current | Public bounded --jobs concurrency using observable action intervals. |
-| `directory_output_case` | current | Directory outputs and CacheDir restore/repair. |
-| `timeout_case` | current | Timeout, override and command failure behavior. |
-| `publish_case` | current | Durable build and Pages publication contract. |
+| `test_roots/013_directory_output` | current | Directory outputs and CacheDir restore/repair. |
+| `test_roots/014_timeout` | current | Timeout, override and command failure behavior. |
+| `test_roots/015_publish` | current | Durable build and Pages publication contract. |
 | `merge_policy_case` | separate API | Merge governance, not CAD-CI execution; keep only while that API remains in `tool.cad.ci`. |
 
 ## Failure ownership

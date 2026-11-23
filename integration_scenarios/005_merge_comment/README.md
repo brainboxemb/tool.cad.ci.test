@@ -18,7 +18,7 @@ On a green eligible lane PR, the repository owner posts exactly:
 ## Acceptance
 
 A real `issue_comment` Actions event must invoke
-`reusable-merge-policy.yml@v0.25.0`.
+`reusable-merge-policy.yml@v0.27.1`.
 
 The released policy, not local shell/YAML logic, must:
 

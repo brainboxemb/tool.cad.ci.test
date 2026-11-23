@@ -14,6 +14,17 @@ import traceback
 
 ROOT = Path(__file__).resolve().parents[1]
 
+from contracts import validate_test_roots
+
+
+SOFT_TOTAL_BUDGET_SECONDS = 30.0
+DEFAULT_SOFT_CASE_BUDGET_SECONDS = 3.0
+SOFT_CASE_BUDGET_SECONDS = {
+    "test_roots/014_timeout/check.py": 4.0,
+    "test_roots/015_publish/check.py": 7.0,
+}
+
+
 CASES = (
     "workflow_case/check.py",
     "test_roots/001_simple/check.py",
@@ -28,9 +39,9 @@ CASES = (
     "test_roots/010_process/check.py",
     "test_roots/011_shared_builder/check.py",
     "test_roots/012_parallel_jobs/check.py",
-    "directory_output_case/check.py",
-    "timeout_case/check.py",
-    "publish_case/check.py",
+    "test_roots/013_directory_output/check.py",
+    "test_roots/014_timeout/check.py",
+    "test_roots/015_publish/check.py",
     "merge_policy_case/check.py",
     "merge_policy_case/check_command.py",
 )
@@ -82,6 +93,8 @@ def run_case(relative: str, index: int) -> None:
 def main() -> int:
     """Run every black-box case and record centrally managed timing evidence."""
 
+    validate_test_roots(ROOT)
+
     failures: list[str] = []
     timings: list[dict[str, object]] = []
 
@@ -127,13 +140,58 @@ def main() -> int:
         flush=True,
     )
 
+    budget_warnings: list[str] = []
+    for row in timings:
+        case = str(row["case"])
+        seconds = float(row["seconds"])
+        budget = SOFT_CASE_BUDGET_SECONDS.get(
+            case,
+            DEFAULT_SOFT_CASE_BUDGET_SECONDS,
+        )
+        exceeded = seconds > budget
+        row["soft_budget_seconds"] = budget
+        row["soft_budget_exceeded"] = exceeded
+        if exceeded:
+            budget_warnings.append(
+                f"{case}: {seconds:.3f}s > {budget:.3f}s"
+            )
+
+    total_budget_exceeded = total_seconds > SOFT_TOTAL_BUDGET_SECONDS
+    print("\n=== acceptance soft timing budgets ===", flush=True)
+    if total_budget_exceeded:
+        print(
+            "SOFT BUDGET WARNING: "
+            f"total {total_seconds:.3f}s > "
+            f"{SOFT_TOTAL_BUDGET_SECONDS:.3f}s",
+            flush=True,
+        )
+    for warning in budget_warnings:
+        print(f"SOFT BUDGET WARNING: {warning}", flush=True)
+    if not total_budget_exceeded and not budget_warnings:
+        print(
+            "Soft timing budgets satisfied; warnings remain non-failing.",
+            flush=True,
+        )
+
     output = Path(os.environ["CAD_CI_OUTPUT"])
     output.mkdir(parents=True, exist_ok=True)
     (output / "case-durations.json").write_text(
         json.dumps(
             {
-                "schema": 1,
+                "schema": 2,
                 "total_case_seconds": round(total_seconds, 6),
+                "soft_total_budget_seconds": SOFT_TOTAL_BUDGET_SECONDS,
+                "soft_total_budget_exceeded": total_budget_exceeded,
+                "default_soft_case_budget_seconds": (
+                    DEFAULT_SOFT_CASE_BUDGET_SECONDS
+                ),
+                "soft_case_budget_overrides_seconds": (
+                    SOFT_CASE_BUDGET_SECONDS
+                ),
+                "soft_budget_warning_count": (
+                    len(budget_warnings)
+                    + int(total_budget_exceeded)
+                ),
                 "cases": timings,
                 "slowest_first": [str(row["case"]) for row in slowest],
             },
@@ -150,7 +208,7 @@ def main() -> int:
         )
 
     (output / "accepted.txt").write_text(
-        "tool.cad.ci v0.25.0 released-stack acceptance passed\n",
+        "tool.cad.ci v0.27.1 released-stack acceptance passed\n",
         encoding="utf-8",
     )
     return 0

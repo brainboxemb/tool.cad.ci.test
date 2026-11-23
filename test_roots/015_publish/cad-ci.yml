@@ -1,0 +1,7 @@
+schema: 1
+
+items:
+  - items/*
+
+builders:
+  publish-item: ci/builders/publish-item

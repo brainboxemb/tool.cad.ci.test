@@ -1,2 +1,6 @@
 schema: 1
+
 items: [item]
+
+builders:
+  partial: ci/builders/partial

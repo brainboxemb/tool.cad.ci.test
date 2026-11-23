@@ -1,5 +1,9 @@
 schema: 1
+
 items:
   - default_active
   - explicit_active
   - disabled
+
+builders:
+  process: ci/builders/process
