@@ -3,76 +3,61 @@
 Current source of truth for unfinished work in `tool.cad.ci.test`
 (2026-11-23).
 
-## Accepted baseline
-
-- current fully accepted consumer baseline remains `tool.cad.ci v0.28.0` @
-  `805304b6a950319aed7dc8a77e9c7b501bb3fb61` until #141 completes;
-- v0.29.0 compatibility of the pre-existing black-box suite was proven on
-  PR #216, including run #255;
-- numbered standalone test roots `001` through `015` are accepted on the
-  permanent test lanes;
-- branch governance, permanent-lane promotion/synchronization, conservative
-  cleanup, exact-SHA retirement and reviewed conflict recovery already have
-  live GitHub evidence from the completed scenarios recorded below.
-
-## Current released candidate
+## Fully accepted baseline
 
 - `tool.cad.ci v0.30.0` @
   `5fcd77d5a07a68ef97cfcdb52b534f85bec1f1f2`;
 - v0.30.0 pins `lib.py.cad.ci 0.14.0` @
   `b24e9a3826dfc07e07b4f3fd9971fcb4ab5aa12d`;
-- the released durable workflow now accepts generated branch names while
-  preserving `build` and `gh-pages` defaults;
-- PR #216 uses the isolated acceptance refs
-  `test-output/build` and `test-output/gh-pages`.
+- numbered standalone test roots `001` through `016` are accepted;
+- merge governance, permanent-lane promotion/synchronization, conservative
+  cleanup, exact-SHA retirement and reviewed conflict recovery have live GitHub
+  evidence;
+- the config-driven durable workflow is accepted end to end through completed
+  issue #141.
+
+## Durable workflow acceptance
+
+Completed #141 proved both the synthetic consumer and real GitHub delivery
+layers.
+
+Key evidence:
+
+- PR #216 candidate run `45142398079` (#259) passed against exact v0.30.0;
+- isolated stable bootstrap run `45142533002` passed;
+- PR #216 merged to permanent `dev-ci` at
+  `34270607cc6afaa3b529a38821e9d1ef753eba65`;
+- named `dev-ci` durable run `45142741953` passed;
+- promotion PR #217 check `45142972524` passed;
+- released merge policy produced history-preserving promotion commit
+  `877bbc50e4d7073ad5e071a8571b8ac7086ea043` and advanced both
+  `main` and `dev-ci`;
+- post-promotion durable runs `45143126175` (main) and
+  `45143130328` (dev-ci) passed;
+- exact-SHA bootstrap retirement run `45143399322` passed.
+
+Reserved live acceptance output remains on:
+
+```text
+test-output/build
+test-output/gh-pages
+```
+
+Final #141 inspection proved stable `main` and named `dev-ci` build scopes,
+stable and named Pages provenance, and preservation of the named Pages subtree
+across the stable update. The repository's normal `build` and `gh-pages`
+refs were never changed by this acceptance.
+
+Detailed mutable provenance/run evidence is recorded on issue #141.
 
 ## Current work
 
-### #141 — external durable-lane workflow acceptance
+No open acceptance/runtime issue.
 
-**Now.** Finish the exact v0.30.0 released-stack acceptance.
+Issue #218 only records this already accepted baseline in repository
+documentation; it introduces no runtime behavior.
 
-The branch `issue/141-durable-lane-acceptance` must prove both layers:
-
-1. numbered synthetic consumer `016_durable_workflow` with one normal build
-   item, one site item and root `publication.pages` configuration;
-2. real GitHub invocation of released `reusable-durable.yml` publishing only
-   to the reserved `test-output/*` namespace.
-
-Required live topology:
-
-- bootstrap the isolated stable `main` scope before any named scope exists;
-- publish permanent `dev-ci` as a named durable build/Page scope;
-- promote `dev-ci -> main` through the released permanent-lane merge policy;
-- prove the resulting stable publication preserves the named `dev-ci` Pages
-  subtree;
-- inspect exact source/build provenance in both generated refs;
-- never use the repository's normal `build` or `gh-pages` refs for this
-  acceptance.
-
-Execution order:
-
-1. make PR #216 green against exact v0.30.0, including test root 016;
-2. create a short-lived live-scenario bootstrap source ref and run the released
-   durable workflow with `scope=main` against `test-output/*`;
-3. merge #216 to permanent `dev-ci`; require its push-triggered named durable
-   run to pass;
-4. open `dev-ci -> main` promotion PR and merge through released merge policy;
-5. require stable and retained-lane durable runs to pass;
-6. inspect `test-output/build` and `test-output/gh-pages` for exact stable
-   and named provenance/preservation;
-7. retire the bootstrap source ref after the real stable scope has replaced it;
-8. close #141 and only then unblock Forge/CAD durable-workflow migration.
-
-Do not add a local copy of the durable workflow or a test-only product input.
-
-## Open issue assessment
-
-| Issue | Status | Next |
-| --- | --- | --- |
-| #141 Durable-lane workflow acceptance | **now** | Green PR #216 on v0.30.0, then execute isolated live stable/named publication and promotion proof. |
-
-## Existing live evidence
+## Existing governance evidence
 
 - #180 / run `45070007017`: conservative branch cleanup;
 - #186 / run `45071078228`: reviewed exact-SHA retirement;
@@ -90,5 +75,5 @@ This repository owns external acceptance/integration evidence only. Generic
 lane classification, merge policy, builder resolution and CAD-CI behavior
 remain in the released tool/library stack.
 
-Do not migrate Forge/CAD to the v0.30.0 durable workflow until #141 proves the
-released public workflow end to end.
+Forge/CAD may now consume the released v0.30.0 durable workflow; their own
+repository migrations remain separately reviewed consumer work.
