@@ -1,6 +1,6 @@
 # template: tool.cad.ci/merge-policy
 # template-version: 4
-# tool-release: v0.32.0
+# tool-release: v0.33.0
 #
 # Copy this file to:
 #   .github/workflows/merge-policy.yml
@@ -27,7 +27,7 @@ jobs:
       issues: write
       checks: read
       statuses: read
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-merge-policy.yml@v0.32.0
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-merge-policy.yml@v0.33.0
     with:
       command: ${{ github.event.comment.body }}
       pull_request_number: ${{ github.event.issue.number }}
