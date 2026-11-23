@@ -107,8 +107,17 @@ black-box case while that API exists.
 
 ## Publication
 
-Generated build/Page publication acceptance must use an isolated local Git
-remote. Never write generated branches to this repository merely for testing.
+Synthetic publication cases under `test_roots/*` must use an isolated local Git
+remote. They must never write generated refs in this GitHub repository.
+
+A live GitHub integration scenario may exercise the released publication
+workflow against this repository only through an explicitly reserved generated
+ref namespace. The acceptance namespace is `test-output/*`; it may contain
+generated refs such as `test-output/build` and `test-output/gh-pages`.
+
+Never use the repository's normal `build` or `gh-pages` refs merely for
+acceptance. Reserved live-test refs must be listed as permanent/generated policy
+refs so cleanup cannot delete them accidentally.
 
 ## Development process
 
