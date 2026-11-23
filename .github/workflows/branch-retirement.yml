@@ -25,5 +25,5 @@ jobs:
       command: ${{ github.event.comment.body }}
       issue_number: ${{ github.event.issue.number }}
       stable_branch: main
-      lane_refs_json: '["dev-cad","dev-ci"]'
-      permanent_refs_json: '["build","gh-pages","test-output/build","test-output/gh-pages"]'
+      development_branches: '["dev-cad","dev-ci"]'
+      permanent_branches: '["build","gh-pages","test-output/build","test-output/gh-pages"]'

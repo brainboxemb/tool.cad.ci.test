@@ -38,21 +38,29 @@ pull_request_policy
 command_environment
 ```
 
+Current evidence:
+
+- PR #225 final black-box run #280 (`45147169700`) passed with
+  `reusable-ci.yml@v0.31.0`;
+- bootstrap merge to `dev-ci` completed at
+  `0b462f73a6921f9428a6ff268f5a9e6805e9cfa5`;
+- post-merge durable run #281 (`45147411390`) passed and published through
+  the reserved `test-output/*` refs;
+- post-merge inspection found three governance wrappers still carrying
+  `lane_refs_json` / `permanent_refs_json`; correct those to
+  `development_branches` / `permanent_branches` before promotion.
+
 Execution order:
 
-1. update the real consumer workflows to v0.31.0 and the new public names;
-2. run the complete black-box suite on PR #225;
-3. use the currently accepted v0.30 default-branch governance to merge the
-   short-lived issue branch to `dev-ci` and then promote `dev-ci -> main`;
-   GitHub loads `issue_comment` workflows from default `main`, so v0.31
-   governance cannot govern its own first installation;
-4. prove post-merge durable publication still uses only
-   `test-output/build` and `test-output/gh-pages`;
-5. after v0.31 is on default `main`, prove the released v0.31 merge-policy
-   inputs with a real `main -> dev-cad` synchronization;
-6. exercise v0.31 conservative cleanup against the accidental empty
+1. complete the remaining governance wrapper names on `dev-ci`;
+2. promote corrected `dev-ci -> main` using the currently installed v0.30
+   default-branch governance; GitHub loads `issue_comment` workflows from
+   default `main`, so v0.31 governance cannot govern its own first install;
+3. after v0.31 is on default `main`, prove released v0.31 merge-policy inputs
+   with a real `main -> dev-cad` synchronization;
+4. exercise v0.31 conservative cleanup against the accidental empty
    `issue/219-v0.31-public-workflow-names` ref;
-7. record the accepted baseline and close #223.
+5. record the accepted baseline and close #223.
 
 Do not add aliases for v0.30 public names. Exact older release tags already own
 that compatibility.
