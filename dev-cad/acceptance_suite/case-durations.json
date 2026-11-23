@@ -3,140 +3,147 @@
     {
       "case": "workflow_case/check.py",
       "outcome": "pass",
-      "seconds": 0.001076,
+      "seconds": 0.001116,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/001_simple/check.py",
       "outcome": "pass",
-      "seconds": 0.91002,
+      "seconds": 0.89756,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/002_selection/check.py",
       "outcome": "pass",
-      "seconds": 1.219992,
+      "seconds": 1.192733,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/003_fresh_runner/check.py",
       "outcome": "pass",
-      "seconds": 0.464772,
+      "seconds": 0.46253,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/004_nested_items/check.py",
       "outcome": "pass",
-      "seconds": 0.986336,
+      "seconds": 0.978273,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/005_nested_publish/check.py",
       "outcome": "pass",
-      "seconds": 1.507074,
+      "seconds": 1.494244,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/006_dependencies/check.py",
       "outcome": "pass",
-      "seconds": 2.414284,
+      "seconds": 2.371058,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/007_dependency_copy/check.py",
       "outcome": "pass",
-      "seconds": 1.00331,
+      "seconds": 0.991914,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/008_active_dependents/check.py",
       "outcome": "pass",
-      "seconds": 1.717051,
+      "seconds": 1.683278,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/009_partial_rerun/check.py",
       "outcome": "pass",
-      "seconds": 1.956499,
+      "seconds": 1.88467,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/010_process/check.py",
       "outcome": "pass",
-      "seconds": 0.663105,
+      "seconds": 0.650547,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/011_shared_builder/check.py",
       "outcome": "pass",
-      "seconds": 1.091468,
+      "seconds": 1.07163,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/012_parallel_jobs/check.py",
       "outcome": "pass",
-      "seconds": 1.821277,
+      "seconds": 1.817898,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/013_directory_output/check.py",
       "outcome": "pass",
-      "seconds": 1.441283,
+      "seconds": 1.420695,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/014_timeout/check.py",
       "outcome": "pass",
-      "seconds": 7.147932,
+      "seconds": 7.142849,
       "soft_budget_exceeded": true,
       "soft_budget_seconds": 4.0
     },
     {
       "case": "test_roots/015_publish/check.py",
       "outcome": "pass",
-      "seconds": 4.148437,
+      "seconds": 4.037499,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 7.0
     },
     {
       "case": "test_roots/016_durable_workflow/check.py",
       "outcome": "pass",
-      "seconds": 0.759948,
+      "seconds": 0.751478,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "test_roots/017_builtin_verification/check.py",
       "outcome": "pass",
-      "seconds": 50.059481,
+      "seconds": 66.494116,
       "soft_budget_exceeded": true,
       "soft_budget_seconds": 45.0
     },
     {
+      "case": "test_roots/018_builder_verification_package/check.py",
+      "outcome": "pass",
+      "seconds": 2.707617,
+      "soft_budget_exceeded": false,
+      "soft_budget_seconds": 15.0
+    },
+    {
       "case": "merge_policy_case/check.py",
       "outcome": "pass",
-      "seconds": 0.013025,
+      "seconds": 0.013033,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     },
     {
       "case": "merge_policy_case/check_command.py",
       "outcome": "pass",
-      "seconds": 1.125516,
+      "seconds": 1.109206,
       "soft_budget_exceeded": false,
       "soft_budget_seconds": 3.0
     }
@@ -147,6 +154,7 @@
     "test_roots/017_builtin_verification/check.py",
     "test_roots/014_timeout/check.py",
     "test_roots/015_publish/check.py",
+    "test_roots/018_builder_verification_package/check.py",
     "test_roots/006_dependencies/check.py",
     "test_roots/009_partial_rerun/check.py",
     "test_roots/012_parallel_jobs/check.py",
@@ -169,9 +177,10 @@
   "soft_case_budget_overrides_seconds": {
     "test_roots/014_timeout/check.py": 4.0,
     "test_roots/015_publish/check.py": 7.0,
-    "test_roots/017_builtin_verification/check.py": 45.0
+    "test_roots/017_builtin_verification/check.py": 45.0,
+    "test_roots/018_builder_verification_package/check.py": 15.0
   },
   "soft_total_budget_exceeded": true,
   "soft_total_budget_seconds": 30.0,
-  "total_case_seconds": 80.451886
+  "total_case_seconds": 99.173944
 }

@@ -3,20 +3,20 @@
     "acceptance_suite": {
       "engine": "scons",
       "engine_schema": 6,
-      "final_bundle_sha256": "2b33120c706381a25ce3be7827350dcb5e1544e2a3373be91596978f02453a8e",
+      "final_bundle_sha256": "b8932dfb2b09d298b934f8ace4ea7b42bdb42cbe0f1c3515791327ae0ff2f028",
       "final_step": "acceptance",
-      "final_target_spec_digest": "c8ac1c535dd31d9e5d6dc8d6efc4519c0387991f6c902f897339dad337fc4ef8",
+      "final_target_spec_digest": "46d702eadb62226f2ac8f379b7070a12e15dbe7052bd50af3c3110ae13dcfd8f",
       "item_id": "acceptance-suite",
       "outputs": [
         "accepted.txt",
         "case-durations.json",
         "result.txt"
       ],
-      "source_commit": "8c1aaae5322bb1595c7719eca38d3d68850c959a"
+      "source_commit": "e894a3c14a8a8bfb4d005f1c37b735817dd8f53a"
     }
   },
   "name": "dev-cad",
   "schema": 1,
   "scope": "named",
-  "source_commit": "8c1aaae5322bb1595c7719eca38d3d68850c959a"
+  "source_commit": "e894a3c14a8a8bfb4d005f1c37b735817dd8f53a"
 }
