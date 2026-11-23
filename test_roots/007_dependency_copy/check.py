@@ -38,7 +38,7 @@ def main() -> int:
 
     for name in ("consumer-a", "consumer-b"):
         evidence = step(repo, name)
-        assert evidence["schema"] == 5, evidence
+        assert evidence["schema"] == 6, evidence
         assert evidence["status"] == "pass", evidence
         assert evidence["outcome"] == "BUILT", evidence
         assert evidence["action_type"] == "copy", evidence
@@ -61,7 +61,7 @@ def main() -> int:
 
     for name in ("consumer-a", "consumer-b"):
         evidence = step(repo, name)
-        assert evidence["schema"] == 5, evidence
+        assert evidence["schema"] == 6, evidence
         assert evidence["outcome"] == "CURRENT", evidence
         assert evidence["action_type"] == "copy", evidence
         assert evidence["action_executed"] is False, evidence

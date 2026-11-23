@@ -37,7 +37,7 @@ def main() -> int:
     assert "consumer-b:verify" not in only_a
     assert active(repo) == ["consumer-a"]
     first = evidence(repo)
-    assert first["schema"] == 5
+    assert first["schema"] == 6
     assert first["active_dependents"] == ["consumer-a"]
 
     same_a = run_tool(
@@ -73,7 +73,7 @@ def main() -> int:
     assert "built: consumer-b:verify" in both
     assert active(repo) == ["consumer-a", "consumer-b"]
     both_evidence = evidence(repo)
-    assert both_evidence["schema"] == 5
+    assert both_evidence["schema"] == 6
     assert both_evidence["active_dependents"] == ["consumer-a", "consumer-b"]
 
     full = run_tool("run", "--repo", str(repo), "--jobs", "2")

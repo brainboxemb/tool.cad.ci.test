@@ -15,7 +15,7 @@ permissions:
 jobs:
   pr:
     if: github.event_name == 'pull_request'
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.32.0
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.33.2
     with:
       pull_request_policy: '{"stable_branch":"main","development_branches":["dev-cad","dev-ci"],"docs_only_prefixes":["docs/"]}'
       jobs: 2
@@ -31,7 +31,7 @@ jobs:
     permissions:
       contents: write
       packages: read
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-durable.yml@v0.32.0
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-durable.yml@v0.33.2
     with:
       source_sha: ${{ github.sha }}
       source_ref: ${{ github.ref_name }}

@@ -11,6 +11,7 @@ import yaml
 
 ROOT_NAME = re.compile(r"^(\d{3})_[a-z0-9][a-z0-9_]*$")
 FORBIDDEN_EXECUTION_KEYS = {"steps", "run"}
+BUILTIN_BUILDERS = {"build123d", "cadquery"}
 
 
 def _load_mapping(path: Path) -> dict[str, Any]:
@@ -86,8 +87,10 @@ def validate_test_roots(repo_root: Path) -> dict[str, int]:
             )
 
         builders = cad.get("builders")
-        if not isinstance(builders, dict) or not builders:
-            errors.append(f"{root.name}: cad-ci.yml must declare builders")
+        if builders is None:
+            builders = {}
+        elif not isinstance(builders, dict):
+            errors.append(f"{root.name}: cad-ci.yml builders must be a mapping")
             builders = {}
 
         for name, relative in builders.items():
@@ -141,7 +144,7 @@ def validate_test_roots(repo_root: Path) -> dict[str, int]:
                     f"{item_path.relative_to(repo_root)} must select a builder "
                     "directly or through its template"
                 )
-            elif builder not in builders:
+            elif builder not in builders and builder not in BUILTIN_BUILDERS:
                 errors.append(
                     f"{item_path.relative_to(repo_root)} selects undeclared "
                     f"builder {builder!r}"
