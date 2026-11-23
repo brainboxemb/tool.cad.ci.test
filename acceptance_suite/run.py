@@ -211,7 +211,7 @@ def main() -> int:
         )
 
     (output / "accepted.txt").write_text(
-        "tool.cad.ci v0.33.0 released-stack acceptance passed\n",
+        "tool.cad.ci v0.33.1 released-stack acceptance passed\n",
         encoding="utf-8",
     )
     return 0
