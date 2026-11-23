@@ -10,6 +10,7 @@ items:
   - acceptance_suite
 
 builders:
+  acceptance-suite: ci/builders/acceptance-suite
   acceptance-pages: ci/builders/acceptance-pages
 
 publication:
