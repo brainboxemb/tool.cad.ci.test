@@ -41,13 +41,15 @@ command_environment
 Execution order:
 
 1. update the real consumer workflows to v0.31.0 and the new public names;
-2. run the complete black-box suite on PR #223's issue branch;
-3. merge the short-lived issue branch to `dev-ci` through released v0.31
-   merge governance;
-4. prove durable `dev-ci` publication still uses only
+2. run the complete black-box suite on PR #225;
+3. use the currently accepted v0.30 default-branch governance to merge the
+   short-lived issue branch to `dev-ci` and then promote `dev-ci -> main`;
+   GitHub loads `issue_comment` workflows from default `main`, so v0.31
+   governance cannot govern its own first installation;
+4. prove post-merge durable publication still uses only
    `test-output/build` and `test-output/gh-pages`;
-5. promote `dev-ci -> main` through released v0.31 merge governance and
-   confirm the permanent-branch lifecycle;
+5. after v0.31 is on default `main`, prove the released v0.31 merge-policy
+   inputs with a real `main -> dev-cad` synchronization;
 6. exercise v0.31 conservative cleanup against the accidental empty
    `issue/219-v0.31-public-workflow-names` ref;
 7. record the accepted baseline and close #223.
