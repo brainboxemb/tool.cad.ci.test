@@ -5,86 +5,74 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ## Fully accepted baseline
 
-- `tool.cad.ci v0.31.0` @
-  `27bdf67077ddd485cea95ba199069249c20c2a46`;
-- v0.31.0 pins `lib.py.cad.ci 0.14.0` @
-  `b24e9a3826dfc07e07b4f3fd9971fcb4ab5aa12d`;
-- numbered standalone test roots `001` through `016` are accepted;
-- normal CI, durable publication, permanent-branch governance, exact-SHA
-  retirement and conservative cleanup have live GitHub evidence;
-- durable live publication remains isolated on:
+- `tool.cad.ci v0.32.0` @
+  `19e894567ac534ce90428dc61c6afa126c1d3318`;
+- v0.32.0 pins `lib.py.cad.ci 0.15.0` @
+  `24c3abb267feea9ae91f24f8fdb435cba68f089a`;
+- numbered standalone test roots `001` through `016` remain accepted;
+- the real repository root now uses repository-owned builders rather than
+  inline executable item steps:
+  - `acceptance-suite` for the normal black-box graph;
+  - `acceptance-pages` for post-build Pages rendering;
+- live durable publication remains isolated on:
   - `test-output/build`;
-  - `test-output/gh-pages`.
+  - `test-output/gh-pages`;
+- normal `build` / `gh-pages` are not acceptance targets.
+
+## v0.32 post-build Pages acceptance
+
+Completed issue #232 proves `publication.pages.builder/output` through the
+released durable workflow, not through library internals or a local workflow.
+
+Key evidence:
+
+- PR #233 black-box run #296 (`45160371055`) passed on exact v0.32.0;
+- the initial named durable run #297 correctly exposed a bug only in the
+  synthetic evidence assertion; durable build publication itself succeeded;
+- follow-up PR #234 run #299 passed after aligning the evidence check with the
+  documented durable manifest schema;
+- named `dev-ci` durable run #300 (`45161204121`) passed at source
+  `ae6eb8a6d4b43428a7c593a5f5fa09491dcb55f1`;
+- that run published build commit
+  `a0b3fc653e942d6570899eb1a645319be578d1df`, and the Pages builder received
+  that exact commit through `CAD_CI_BUILD_COMMIT`;
+- builder `context.json` and generic `provenance.json` agreed on source,
+  build commit and named scope; root repository variable
+  `ACCEPTANCE_MARKER=repository-config` overrode the caller value;
+- promotion PR #235 run #301 passed; history-preserving promotion merge
+  `74c5c2ba99175d8874fef93a7f90a6e1b593fc14` advanced both `main` and
+  `dev-ci`;
+- post-promotion durable runs #302 (main) and #303 (dev-ci) passed;
+- stable Pages root uses build commit
+  `2ab51467a1685f2337b42ff1799b6a58bbb48826`;
+- the stable Pages commit preserved the then-current `dev-ci/` subtree
+  exactly: tree `0ed0c5a7f28de34438b8ed7408f506bc2fa0cf8d` before and after the
+  stable-root replacement;
+- synchronization PR #236 run #304 passed; v0.32 merge-policy synchronized
+  `main -> dev-cad` at
+  `4d720c31958f78e9054c0f0d22e6d9fc24286aa4`;
+- named `dev-cad` durable run #305 (`45162071702`) passed and published
+  build commit `f3e75686d6a367f30f6333d803ef104445daa297` through the same
+  post-build Pages builder.
 
 ## Current work
 
-### #232 — accept v0.32.0 post-build Pages renderer
-
-**Now.** Exact `tool.cad.ci v0.32.0` is released at
-`19e894567ac534ce90428dc61c6afa126c1d3318` and pins exact
-`lib.py.cad.ci 0.15.0` @
-`24c3abb267feea9ae91f24f8fdb435cba68f089a`.
-
-The repository root must exercise the new library-owned
-`publication.pages.builder/output` contract through the real released
-`reusable-durable.yml` workflow. This is live GitHub acceptance; do not
-replace it with library imports, a local durable workflow or a synthetic CLI
-case.
-
-Required order:
-
-1. pin CI/governance wrappers to exact `v0.32.0`;
-2. switch root Pages publication from the acceptance-suite item output to one
-   repository-owned one-shot Pages builder;
-3. remove the old site output from the normal acceptance-suite item so the
-   live durable run cannot silently fall back to item/output mode;
-4. require the existing full black-box suite green on the adoption PR;
-5. merge the short-lived branch to `dev-ci` and require the real durable
-   run green;
-6. inspect reserved `test-output/build` and
-   `test-output/gh-pages/dev-ci` to prove:
-   - exact source SHA/ref;
-   - exact generated build commit;
-   - complete-scope manifest evidence;
-   - repository variable precedence;
-   - generic `provenance.json` agrees with builder-rendered context;
-7. promote `dev-ci -> main`; require stable root Pages rendered through the
-   post-build builder while preserving the named `dev-ci/` subtree;
-8. synchronize `main -> dev-cad` and require its named durable publication
-   green;
-9. record v0.32.0 as fully accepted, then unblock Forge #740.
-
-## Open issue assessment
-
-| Issue | Status | Next |
-| --- | --- | --- |
-| #232 Accept v0.32.0 post-build Pages renderer | **now** | Adopt exact release, prove live builder context and stable/named preservation. |
-
-## Publication boundary
-
-Normal `build` and `gh-pages` refs remain out of bounds for acceptance.
-Live generated output stays on:
-
-```text
-test-output/build
-test-output/gh-pages
-```
-
-The acceptance Pages builder is synthetic and repository-owned. It may read the
-CAD-CI-owned publication environment and the materialized complete scope; it
-must not import library internals, mutate generated refs, start another CAD-CI
-graph or implement Pages branch logic.
+No open acceptance/runtime issue after #232 is closed.
 
 ## Existing evidence retained
 
 - #141 / PR #216: durable workflow on reserved generated refs;
 - #223 / PRs #225-#231: v0.31 public workflow names, promotion/sync,
   governance, exact-SHA retirement and cleanup;
-- final v0.31 permanent refs are synchronized and no temporary issue branch
-  remains.
+- #232 / PRs #233-#236: v0.32 post-build Pages renderer, root builder
+  structure and stable/named preservation.
 
 ## Boundary
 
 This repository owns external acceptance evidence only. Generic builder
-resolution, post-build renderer execution, provenance and Pages publication
-remain in the released library/tool stack.
+resolution, engine builders, post-build renderer execution, provenance,
+selection and Pages publication remain in the released library/tool stack.
+
+Consumers may adopt exact v0.32.0 for the accepted post-build Pages contract.
+Generic built-in CAD engine builders remain separate future owner work in
+`lib.py.cad.ci`.
