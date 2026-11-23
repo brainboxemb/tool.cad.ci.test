@@ -7,7 +7,7 @@ The repository is intentionally a normal consumer:
 
 ```text
 .github/workflows/ci.yml
-  -> tool.cad.ci reusable-ci.yml@v0.25.0
+  -> tool.cad.ci reusable-ci.yml@v0.27.1
        -> root cad-ci.yml
             -> acceptance-suite
                  -> public cad_ci_tool CLI
@@ -83,9 +83,9 @@ contract for that root.
 | [010_process](test_roots/010_process/README.md) | current |
 | [011_shared_builder](test_roots/011_shared_builder/README.md) | current |
 | [012_parallel_jobs](test_roots/012_parallel_jobs/README.md) | current |
-| [directory_output_case](directory_output_case/README.md) | current |
-| [timeout_case](timeout_case/README.md) | current |
-| [publish_case](publish_case/README.md) | current |
+| [013_directory_output](test_roots/013_directory_output/README.md) | current |
+| [014_timeout](test_roots/014_timeout/README.md) | current |
+| [015_publish](test_roots/015_publish/README.md) | current |
 | [merge_policy_case](merge_policy_case/README.md) | separate API; temporary here |
 
 [acceptance_suite](acceptance_suite/README.md) documents how cases are
@@ -108,7 +108,7 @@ the released lane policy; manual/post-merge dispatches request a complete run:
 ```yaml
 jobs:
   acceptance:
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.25.0
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.27.1
     with:
       pr_policy_json: '{"stable_ref":"main","lane_refs":["dev-cad","dev-ci"],"docs_only_prefixes":["docs/"]}'
       full_run: ${{ github.event_name == 'workflow_dispatch' }}
@@ -120,7 +120,7 @@ live GitHub contracts and [permanent lane integration](docs/background/lane-inte
 for background on the lane topology.
 
 The merge-policy workflow is pinned to the same accepted tool release as the
-CI workflow: `v0.25.0`.
+CI workflow: `v0.27.1`.
 
 Repository variables in root `cad-ci.yml` are also used to prove that
 repository configuration reaches consumer commands and overrides inherited

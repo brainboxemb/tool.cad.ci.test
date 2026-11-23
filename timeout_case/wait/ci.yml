@@ -1,6 +1,0 @@
-id: timeout-default
-steps:
-  - id: run
-    inputs: [wait/run.py]
-    run: [python, run.py]
-    outputs: [done.txt]

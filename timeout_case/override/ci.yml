@@ -1,7 +1,0 @@
-id: timeout-override
-steps:
-  - id: run
-    inputs: [override/run.py]
-    run: [python, run.py]
-    outputs: [done.txt]
-    timeout_seconds: 3

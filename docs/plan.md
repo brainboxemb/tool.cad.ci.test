@@ -9,16 +9,22 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
   `805304b6a950319aed7dc8a77e9c7b501bb3fb61`;
 - v0.28.0 pins `lib.py.cad.ci 0.12.0` @
   `64656db8df528a5c0de799e62c0f028fd0133486`;
-- released-stack acceptance passed with all 18 cases on PR #187;
+- released-stack acceptance passed on v0.28.0 adoption PR #202;
 - branch-governance live acceptance is complete:
   - #180 / run `45070007017` proved conservative `/cleanup-branches`
     deletion and preservation of unique/unmerged history;
-  - #186 / run `45071078228` retired the five separately reviewed
-    unique-history refs through exact `(branch, SHA)` evidence;
-- after #186 the stale historical set from the branch audit is gone; only
-  permanent refs plus independently active concurrent work remain;
-- v0.25/main + numbered dev-ci histories were reconciled by PR #140;
-- numbered standalone test roots `001` through `012` are present on
+  - #186 / run `45071078228` retired separately reviewed unique-history
+    refs through exact `(branch, SHA)` evidence;
+  - #200 / #203 / run `45075920227` proved reviewed
+    `/merge-resolved` recovery for a genuinely conflicted permanent
+    `main -> dev-cad` synchronization, with exact reviewed tree/parents;
+- permanent-lane promotion proof #106 is complete:
+  - docs-only PR #107 used the cheap lane-validation path;
+  - promotion PR #204 forced full CAD-CI despite a docs-only tree delta;
+  - merge commit `1e42ddb183c6e834b07e755862a165e891ec6cd6`
+    advanced both `main` and `dev-cad`;
+  - post-merge integration runs for both refs completed successfully;
+- numbered standalone test roots `001` through `015` are present on
   `dev-ci`;
 - declarative builder migrations accepted on `dev-ci`:
   - `001_simple` — PR #143;
@@ -28,87 +34,52 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
   - `005_nested_publish` — PR #151;
   - `006_dependencies` — PR #153;
   - `007_dependency_copy` — PR #161;
-- acceptance timing observability landed in PR #159.
+  - `008_active_dependents` — PR #165;
+  - `009_partial_rerun` — PR #177;
+  - `010_process` — PR #179;
+  - `011_shared_builder` — canonical shared-builder reference;
+  - `012_parallel_jobs` — PR #183;
+  - `013_directory_output` — PR #194;
+  - `014_timeout` — PR #196;
+  - `015_publish` — PR #198;
+- acceptance timing observability landed in PR #159;
+- non-failing timing budgets landed in PR #175;
+- numbered-root normalization #114 is complete.
 
 ## Current work
 
-### #201 — adopt v0.28.0 reviewed merge recovery
-
-Adopt the released `tool.cad.ci v0.28.0` stack on default `main`, including merge-policy template v3. After this PR lands, use conflicted permanent-lane synchronization PR #200 plus a separate green `resolve/*` review PR to live-qualify `/merge-resolved`. No conflict-resolution implementation belongs in this repository.
-
-
-### #191 — adopt v0.27.1 and re-qualify stable-to-lane merge
-
-Adopt the released `tool.cad.ci v0.27.1` stack on default `main`. This patch fixes the `/merge` self-check indexing race reproduced by PR #190. After this PR lands, PR #190 must re-run against the new `main` head and succeed through the normal shared `/merge` synchronization path before #114 continues.
-
-
-### #142 — migrate numbered roots to declarative builders
-
-Use `test_roots/011_shared_builder` as the canonical builder-model reference.
-
-Normal executable item `ci.yml` files should contain item identity,
-`builder:`, selection/watch/dependency/process configuration, but not
-executable `steps:` / `run:`.
-
-`008_active_dependents` is the current migration under #164. The producer's
-`selection_context: direct_dependents` moves into a repository-owned builder,
-while consumer/unrelated verification shares one generic builder.
-
-After `008`, continue existing numbered roots in order. `009_partial_rerun`
-still requires an explicit design check because its public contract selects
-builder steps.
-
-### #156 — acceptance case duration and suite performance
-
-Per-case timing and machine-readable evidence landed in PR #159.
-
-Measured baselines:
-
-- run `45067237488`: 24.294 s across 18 cases;
-- run `45067522266`: 24.842 s across 18 cases (+2.3%).
-
-The second run moved individual cases in both directions, so the current
-difference is normal shared-runner variation rather than a regression signal.
-
-Keep #156 open while subsequent accepted runs establish enough evidence for
-soft performance budgets. Do not introduce hard thresholds yet.
-
-### #154 — formalize live GitHub workflow scenarios
-
-Keep synthetic consumer-root acceptance separate from live GitHub lifecycle
-acceptance. Maintain explicit real scenarios for feature PRs, docs-only PRs,
-lane promotion, stable-to-lane synchronization and owner `/merge` comments.
-
-### #114 — normalize remaining external cases into numbered test roots
-
-#114 owns only the remaining historical top-level fixture audit/migration after
-the existing numbered roots prove the builder architecture.
-
-Do not mechanically migrate special workflow/governance harness cases.
-
 ### #98 — permanent lane integration
 
-Continue exercising the real external permanent-lane contract on
-`main`, `dev-cad` and `dev-ci` using
-`reusable-ci.yml@v0.28.0` and the released lane/merge policy.
+The `dev-cad` lane contract is fully accepted. The remaining closeout is the
+`dev-ci` path:
 
-### #106 — prove dev-cad to main promotion
+1. synchronize current `main -> dev-ci` while preserving both permanent
+   histories;
+2. promote exact `dev-ci -> main` with complete CAD-CI;
+3. verify the retained `dev-ci` lane advances to the stable merge commit and
+   both post-merge integration runs are green;
+4. synchronize the resulting stable `main` back into `dev-cad` so all three
+   permanent source lanes finish aligned.
 
-Complete the real promotion proof after the docs-only lane change. Keep this as
-integration evidence; do not add another acceptance execution route or
-duplicate generic merge/classification logic.
+PR #205 is the current synchronization. It is genuinely conflicted, so use only
+the released v0.28.0 reviewed `/merge-resolved` path; do not add a local
+conflict workaround.
 
 ## Open issue assessment
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #142 Declarative builder migration | **now** | Qualify `008_active_dependents`, then continue existing roots in order. |
-| #156 Acceptance duration | **active measurement** | Collect timings from subsequent real acceptance runs; derive soft budgets later. |
-| #154 Live GitHub workflow scenarios | **active** | Maintain real PR/lane/merge workflow acceptance separately from test roots. |
-| #114 Numbered standalone test roots | **blocked by #142 for normal roots** | Resume remaining top-level fixture migration after builder migration. |
-| #106 dev-cad -> main promotion proof | **active integration** | Finish the real promotion scenario and record lane evidence. |
-| #98 Permanent lane integration | **active umbrella** | Continue canonical synchronization/promotion scenarios. |
+| #98 Permanent lane integration | **now / closeout** | Resolve/sync PR #205, promote `dev-ci -> main`, then align `dev-cad` to final stable. |
 | #88 Align historical changelog | **later / docs-only** | No runtime impact. |
+
+## Completed normalization
+
+Numbered-root normalization is complete under #114. All normal synthetic CAD-CI
+consumer fixtures live below `test_roots/001` through `test_roots/015` and
+are guarded by the declarative architecture validator. `workflow_case`
+remains top-level because it accepts the outer reusable-workflow boundary;
+`merge_policy_case` remains top-level as the separately identified
+merge-governance API harness.
 
 ## Boundary
 

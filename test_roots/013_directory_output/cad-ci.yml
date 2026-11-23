@@ -1,0 +1,7 @@
+schema: 1
+
+items:
+  - item
+
+builders:
+  directory-output: ci/builders/directory-output

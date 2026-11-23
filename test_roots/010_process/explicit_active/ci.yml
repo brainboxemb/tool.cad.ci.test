@@ -1,8 +1,5 @@
 id: explicit-active
+kind: synthetic
+builder: process
 process: true
 watch: [explicit_active/**]
-steps:
-  - id: build
-    inputs: [explicit_active/run.py]
-    run: [python, run.py]
-    outputs: [result.txt]

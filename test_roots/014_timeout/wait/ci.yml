@@ -1,0 +1,3 @@
+id: timeout-default
+kind: synthetic
+builder: timeout-default
