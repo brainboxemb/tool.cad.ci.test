@@ -8,10 +8,12 @@ variables:
 
 items:
   - acceptance_suite
+  - targeted_selection_cases/*
 
 builders:
   acceptance-suite: ci/builders/acceptance-suite
   acceptance-pages: ci/builders/acceptance-pages
+  targeted-marker: ci/builders/targeted-marker
 
 publication:
   pages:

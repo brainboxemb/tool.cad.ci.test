@@ -1,0 +1,5 @@
+id: targeted-b
+kind: acceptance
+builder: targeted-marker
+watch:
+  - fixture.txt
