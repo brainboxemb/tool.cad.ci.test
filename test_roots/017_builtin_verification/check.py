@@ -85,13 +85,33 @@ def main() -> int:
     assert "reference-build123d\taffected" in plan, plan
     assert "reference-cadquery\taffected" in plan, plan
 
-    changed = run_tool(
-        "run",
-        "--repo",
-        str(repo),
-        "--changed",
-        "verification/reference_geometry.json",
-    )
+    try:
+        changed = run_tool(
+            "run",
+            "--repo",
+            str(repo),
+            "--changed",
+            "verification/reference_geometry.json",
+        )
+    except AssertionError as exc:
+        evidence_path = (
+            repo
+            / "build"
+            / ".cad-ci-runtime"
+            / "reference"
+            / ".cad-ci"
+            / "steps"
+            / "build.json"
+        )
+        evidence = (
+            json.loads(evidence_path.read_text(encoding="utf-8"))
+            if evidence_path.is_file()
+            else {"missing": str(evidence_path)}
+        )
+        raise AssertionError(
+            f"{exc}\nshared runtime action evidence:\n"
+            f"{json.dumps(evidence, indent=2, sort_keys=True)}"
+        ) from exc
     assert changed.count("CAD CI built-in batch:") == 1, changed
     assert "reference-build123d=pass" in changed, changed
     assert "reference-cadquery=pass" in changed, changed
