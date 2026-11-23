@@ -15,7 +15,7 @@ from tests.support import TOOL_ROOT
 
 POLICY = TOOL_ROOT / "scripts" / "merge_policy.py"
 WORKFLOW = TOOL_ROOT / ".github" / "workflows" / "reusable-merge-policy.yml"
-EXPECTED_VERSION = "0.34.2"
+EXPECTED_VERSION = "0.36.0"
 EXPECTED_LIBRARY = "088644a05ff698957aef2ddc6cc5de037ddfa158"
 
 
