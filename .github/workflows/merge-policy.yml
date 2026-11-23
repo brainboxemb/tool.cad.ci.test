@@ -1,6 +1,6 @@
 # template: tool.cad.ci/merge-policy
-# template-version: 3
-# tool-release: v0.30.0
+# template-version: 4
+# tool-release: v0.31.0
 #
 # Copy this file to:
 #   .github/workflows/merge-policy.yml
@@ -27,11 +27,11 @@ jobs:
       issues: write
       checks: read
       statuses: read
-    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-merge-policy.yml@v0.30.0
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-merge-policy.yml@v0.31.0
     with:
       command: ${{ github.event.comment.body }}
       pull_request_number: ${{ github.event.issue.number }}
-      stable_ref: main
+      stable_branch: main
       lane_refs_json: '["dev-cad","dev-ci"]'
       permanent_refs_json: '["build","gh-pages","test-output/build","test-output/gh-pages"]'
       integration_workflow: ci.yml
