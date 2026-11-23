@@ -5,61 +5,66 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ## Fully accepted baseline
 
-- `tool.cad.ci v0.34.0` @
-  `b1a2cf803bddb238ee50df29603f068488e72e5d`;
-- exact pinned `lib.py.cad.ci v0.18.0` @
-  `eb291abd6bb34b585d04019d154e7756d36436f9`;
+- adopted repository wrappers: `tool.cad.ci v0.34.2` @
+  `37f7a82c6769279d33367144c56976da89bb1a5d`;
+- exact pinned `lib.py.cad.ci v0.18.2` @
+  `088644a05ff698957aef2ddc6cc5de037ddfa158`;
 - `lib.py.cad.verification v0.16.0` @
   `c7c145b7be0c602724e8cca874ef29990baaad1e`;
-- numbered standalone roots 001 through 018 accepted;
-- #244 completed external wildcard-prefix and repository-builder
-  verification-package acceptance across dev-ci, main and dev-cad;
-- live durable publication remains isolated on `test-output/*`.
+- #248 completed CadQuery Workplane + Assembly acceptance and permanent-branch
+  build publication;
+- #254 separately completed real v0.35.0 targeted read-only selection
+  acceptance; that focused scenario did not change the adopted repository
+  wrappers;
+- live generated output stays isolated on `test-output/*`.
 
 ## Candidate stack under acceptance
 
-### #248 — accept v0.34.2 / lib 0.18.2 CadQuery Assembly export
+### #256 — accept v0.36.0 central CAD release flow
 
 **Now.**
 
 Candidate released stack:
 
-- `tool.cad.ci v0.34.2` @
-  `37f7a82c6769279d33367144c56976da89bb1a5d`;
+- `tool.cad.ci v0.36.0` @
+  `093eafb0eabf6b6617ec82dde17a76fdc718ae12`;
 - exact pinned `lib.py.cad.ci v0.18.2` @
   `088644a05ff698957aef2ddc6cc5de037ddfa158`;
-- reusable verification engine remains
-  `lib.py.cad.verification v0.16.0` @
-  `c7c145b7be0c602724e8cca874ef29990baaad1e`.
+- the CAD release workflow delegates the GitHub release transaction to released
+  `tool.py.lib.ci v0.2.1` @
+  `58ead6897a4ac8cafef22a3c1f834491bf61568d`.
 
-The released pair must keep both existing and new CadQuery contracts green:
+Required live sequence:
 
-1. existing root 017 keeps normal CadQuery Workplane/Shape export green;
-2. new `test_roots/019_cadquery_assembly` executes a real minimal `cq.Assembly`;
-3. the public Assembly output contains a non-empty `model.stl`;
-4. the built-in batch reports the Assembly item as pass;
-5. identical reruns remain CURRENT and do not restart the shared runtime batch.
+1. repin the consumer CI/governance wrappers to exact `v0.36.0` and add the
+   copy-ready CAD release wrapper using `test-output/build`;
+2. require the adoption PR to `dev-ci` green;
+3. merge the short-lived branch to `dev-ci` and require the named dev-ci build
+   green;
+4. merge exact `dev-ci -> main` and require the main build to write
+   `test-output/build/main/build.json` for the exact resulting main SHA;
+5. comment `/release v0.36.0 <older-main-sha>` and require the CAD release
+   build check to fail with no tag/release;
+6. comment `/release v0.36.0 <exact-current-main-sha>` and require the build
+   check plus delegated release transaction green;
+7. verify the GitHub release/tag resolves to that exact main SHA;
+8. repeat the exact successful command and require idempotent success;
+9. record run IDs and SHAs on #256, then sync accepted `main -> dev-cad`.
 
-Repository reusable CI/governance wrappers are repinned to exact v0.34.2 with
-no copied generic implementation.
+Pages is not release evidence. The release scenario must not inspect
+`test-output/gh-pages` or normal `gh-pages` when deciding release readiness.
 
-## Live acceptance sequence
+## Open issue assessment
 
-1. require the #248 adoption PR to `dev-ci` green;
-2. merge the short-lived branch through the released merge policy;
-3. require named `dev-ci` durable integration green on
-   `test-output/build` / `test-output/gh-pages`;
-4. promote exact `dev-ci -> main` through released merge policy and require
-   stable durable integration green;
-5. synchronize exact `main -> dev-cad` and require named `dev-cad` durable
-   integration green;
-6. record exact mutable Actions/PR evidence, close #248 and return to Forge
-   #740.
+| Issue | Status | Next |
+| --- | --- | --- |
+| #256 v0.36.0 central CAD release flow | **now** | Complete real issue-comment refusal, success and idempotency acceptance. |
+| #253 selectable acceptance roots | **later** | Replace the monolithic acceptance-suite item separately; do not mix into #256. |
 
 ## Boundary
 
 This repository owns external acceptance evidence only.
 
-Do not add Forge/SolidCraft semantics, a local CadQuery exporter, library
-imports, workflow bootstrap copies or a second CAD-CI graph. Generic failures
-return to their owner repositories.
+Do not add Forge/SolidCraft semantics, library imports, local release parsing,
+build-record parsing, workflow bootstrap copies or a second CAD-CI graph.
+Generic failures return to their owner repositories.
