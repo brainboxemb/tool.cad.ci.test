@@ -5,8 +5,8 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ## Accepted baseline
 
-- current released consumer target: `tool.cad.ci v0.28.0` @
-  `805304b6a950319aed7dc8a77e9c7b501bb3fb61`;
+- current fully accepted consumer baseline remains `tool.cad.ci v0.28.0` @
+  `805304b6a950319aed7dc8a77e9c7b501bb3fb61` until #141 completes;
 - v0.28.0 pins `lib.py.cad.ci 0.12.0` @
   `64656db8df528a5c0de799e62c0f028fd0133486`;
 - released-stack acceptance passed on v0.28.0 adoption PR #202;
@@ -65,22 +65,37 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 ### #141 — external durable-lane workflow acceptance
 
-This remains valid but is blocked on `brainboxemb/tool.cad.ci #137`.
+**Now.** `tool.cad.ci v0.29.0` is released at exact commit
+`d134eeaa846261adfcf4bc1a296cdc29c05ca01e` and pins released
+`lib.py.cad.ci 0.13.0` @
+`8f0516a484e3eac11758b498ca181d5e39ed1efe`.
 
-The released v0.28.0 `reusable-ci.yml` is intentionally run-only and does not
-yet expose the planned config-driven permanent-lane durable build/Pages
-publication workflow. Do not emulate that missing surface locally in this test
-repository.
+The `issue/141-durable-lane-acceptance` branch adopts v0.29.0 for both
+normal reusable CI and merge governance. First prove that the complete existing
+black-box suite remains green against that exact released stack.
 
-When #137 reaches a released tool version, resume #141 with a numbered
-standalone synthetic consumer and real stable/named durable publication
-evidence before Forge or CAD adopt the new workflow.
+The remaining new acceptance requirement is a successful **real GitHub**
+`reusable-durable.yml` invocation proving stable and named durable build/Pages
+publication. Do not replace that with a direct internal helper call.
+
+Current blocker: this repository's instructions require publication acceptance
+to use an isolated local Git remote and prohibit writing generated
+`build`/`gh-pages` refs here merely for testing. The public durable workflow
+publishes to its caller repository and intentionally has no test-remote
+override. Therefore the live workflow part requires either:
+
+1. a disposable caller repository dedicated to this integration scenario; or
+2. an explicit repository-policy decision that the real acceptance repository's
+   generated refs are allowed for this consumer lifecycle.
+
+Do not add a test-only product input or a local workflow implementation to work
+around this boundary.
 
 ## Open issue assessment
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #141 Durable-lane workflow acceptance | **blocked on tool.cad.ci #137** | Resume only after a released config-driven durable-lane workflow exists. |
+| #141 Durable-lane workflow acceptance | **now / live publication environment blocked** | Prove v0.29.0 compatibility on the current PR; then run the released durable workflow from an allowed disposable caller before closing. |
 
 ## Completed normalization
 
@@ -97,5 +112,5 @@ This repository owns external acceptance/integration evidence only. Generic
 lane classification, merge policy, builder resolution and CAD-CI behavior
 remain in the released tool/library stack.
 
-Do not migrate Forge/CAD consumers to the builder model until this repository
-proves the model across its existing numbered use cases.
+Do not migrate Forge/CAD to the v0.29.0 durable workflow until #141 proves the
+released public workflow end to end.
