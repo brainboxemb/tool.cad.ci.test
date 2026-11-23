@@ -3,7 +3,7 @@
     "acceptance_suite": {
       "engine": "scons",
       "engine_schema": 4,
-      "final_bundle_sha256": "eaae7818e2e4ef9dc74aef373c34e3978aa4d01bcfc9de570bb1067e216b88c8",
+      "final_bundle_sha256": "c4671604a00b869f8d8fbe2241dda63523c92c82e1777008486a8c8519eea1ea",
       "final_step": "acceptance",
       "final_target_spec_digest": "0f52b6686c9cc28744d5603da7b2bf27563372062d10c6f5c2f00249f52e9a3d",
       "item_id": "acceptance-suite",
@@ -13,11 +13,11 @@
         "result.txt",
         "site"
       ],
-      "source_commit": "afaee0bf131145ecd3ee8a40de27ffa306da3384"
+      "source_commit": "f966e105419564bf7ad633014edfdf5f5620df00"
     }
   },
   "name": "dev-cad",
   "schema": 1,
   "scope": "named",
-  "source_commit": "afaee0bf131145ecd3ee8a40de27ffa306da3384"
+  "source_commit": "f966e105419564bf7ad633014edfdf5f5620df00"
 }
