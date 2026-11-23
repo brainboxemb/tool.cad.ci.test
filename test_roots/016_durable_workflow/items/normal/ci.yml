@@ -1,0 +1,3 @@
+id: durable-build
+kind: synthetic
+builder: normal
