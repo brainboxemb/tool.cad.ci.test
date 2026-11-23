@@ -31,4 +31,3 @@ steps:
       - accepted.txt
       - case-durations.json
       - result.txt
-      - site
