@@ -3,7 +3,7 @@
     "acceptance_suite": {
       "engine": "scons",
       "engine_schema": 4,
-      "final_bundle_sha256": "8965af95ba8c0ba58e32da16195de5fab9a3bbad0456feaaf9e9276796ebe499",
+      "final_bundle_sha256": "74a5df1a89e5ad13ea9f04af11bf282c99ada275d61d24b4d9305b589d26e819",
       "final_step": "acceptance",
       "final_target_spec_digest": "226c14f2bebb920ac524a5ca20fd48ce0641bcf13a86aaede144568fb28d2a8c",
       "item_id": "acceptance-suite",
@@ -12,11 +12,11 @@
         "case-durations.json",
         "result.txt"
       ],
-      "source_commit": "4d720c31958f78e9054c0f0d22e6d9fc24286aa4"
+      "source_commit": "949706cb8ad9f1c4a416dc336e370b0af6f8d8bb"
     }
   },
   "name": "dev-cad",
   "schema": 1,
   "scope": "named",
-  "source_commit": "4d720c31958f78e9054c0f0d22e6d9fc24286aa4"
+  "source_commit": "949706cb8ad9f1c4a416dc336e370b0af6f8d8bb"
 }
