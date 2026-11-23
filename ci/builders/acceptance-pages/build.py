@@ -42,16 +42,25 @@ def main() -> int:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if manifest.get("source_commit") != values["CAD_CI_SOURCE_SHA"]:
         raise RuntimeError("complete-scope source commit does not match renderer source")
-    if manifest.get("scope") != values["CAD_CI_BUILD_SCOPE"]:
-        raise RuntimeError("complete-scope manifest scope does not match renderer scope")
+    build_scope = values["CAD_CI_BUILD_SCOPE"]
+    if build_scope == "main":
+        if manifest.get("scope") != "main" or manifest.get("name") is not None:
+            raise RuntimeError("stable complete-scope manifest identity is invalid")
+    else:
+        if (
+            manifest.get("scope") != "named"
+            or manifest.get("name") != build_scope
+        ):
+            raise RuntimeError("named complete-scope manifest identity is invalid")
+
     rows = manifest.get("items")
-    if not isinstance(rows, list) or not rows:
+    if not isinstance(rows, dict) or not rows:
         raise RuntimeError("complete-scope manifest has no item rows")
-    acceptance = next(
-        (row for row in rows if row.get("id") == "acceptance-suite"),
-        None,
-    )
-    if acceptance is None:
+    acceptance = rows.get("acceptance_suite")
+    if (
+        not isinstance(acceptance, dict)
+        or acceptance.get("item_id") != "acceptance-suite"
+    ):
         raise RuntimeError("complete-scope manifest lacks acceptance-suite evidence")
 
     output = Path(values["CAD_CI_OUTPUT"]).resolve()
@@ -71,6 +80,7 @@ def main() -> int:
         "manifest": {
             "schema": manifest.get("schema"),
             "scope": manifest.get("scope"),
+            "name": manifest.get("name"),
             "source_commit": manifest.get("source_commit"),
             "acceptance_suite_source_commit": acceptance.get("source_commit"),
             "acceptance_suite_final_step": acceptance.get("final_step"),
