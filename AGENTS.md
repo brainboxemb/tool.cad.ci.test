@@ -5,8 +5,10 @@
 `tool.cad.ci.test` is the permanent external black-box acceptance repository
 for one released `tool.cad.ci` + `lib.py.cad.ci` stack.
 
-Keep it synthetic and domain-neutral. Do not add Forge, SolidCraft or real CAD
-behavior.
+Keep it synthetic and domain-neutral. Do not add Forge, SolidCraft or product
+CAD behavior. Minimal real CAD-engine smoke geometry is allowed only when the
+public contract under acceptance is a released generic built-in CAD builder;
+keep such fixtures trivial and engine-neutral.
 
 ## Consumer architecture
 
