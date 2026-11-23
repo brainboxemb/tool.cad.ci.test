@@ -71,8 +71,11 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 `8f0516a484e3eac11758b498ca181d5e39ed1efe`.
 
 The `issue/141-durable-lane-acceptance` branch adopts v0.29.0 for both
-normal reusable CI and merge governance. First prove that the complete existing
-black-box suite remains green against that exact released stack.
+normal reusable CI and merge governance. The complete existing black-box suite
+is green on PR #216, run `45138110532` (#254), against exact tool commit
+`d134eeaa846261adfcf4bc1a296cdc29c05ca01e` and library commit
+`8f0516a484e3eac11758b498ca181d5e39ed1efe`. All numbered roots 001-015,
+workflow boundary checks and merge-governance black-box checks pass.
 
 The remaining new acceptance requirement is a successful **real GitHub**
 `reusable-durable.yml` invocation proving stable and named durable build/Pages
@@ -95,7 +98,7 @@ around this boundary.
 
 | Issue | Status | Next |
 | --- | --- | --- |
-| #141 Durable-lane workflow acceptance | **now / live publication environment blocked** | Prove v0.29.0 compatibility on the current PR; then run the released durable workflow from an allowed disposable caller before closing. |
+| #141 Durable-lane workflow acceptance | **now / live publication environment blocked** | v0.29.0 compatibility is green in PR #216 run #254; run the released durable workflow from an allowed disposable caller before merge/close. |
 
 ## Completed normalization
 
