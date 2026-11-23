@@ -15,8 +15,8 @@ from tests.support import TOOL_ROOT
 
 POLICY = TOOL_ROOT / "scripts" / "merge_policy.py"
 WORKFLOW = TOOL_ROOT / ".github" / "workflows" / "reusable-merge-policy.yml"
-EXPECTED_VERSION = "0.33.1"
-EXPECTED_LIBRARY = "00d0a763413650339945ca2d9bcfa4265e8dff35"
+EXPECTED_VERSION = "0.33.2"
+EXPECTED_LIBRARY = "d4e8140d988be06460326fda802e514b6b306d64"
 
 
 def load_policy():
@@ -40,7 +40,7 @@ def main() -> int:
 
     dependency = (TOOL_ROOT / "pyproject.toml").read_text(encoding="utf-8")
     if EXPECTED_LIBRARY not in dependency:
-        raise RuntimeError("tool does not pin accepted library 0.17.1")
+        raise RuntimeError("tool does not pin accepted library 0.17.2")
 
     policy = load_policy()
     lanes = ("cad-work", "ci-work")
