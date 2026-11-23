@@ -23,6 +23,7 @@ SOFT_CASE_BUDGET_SECONDS = {
     "test_roots/014_timeout/check.py": 4.0,
     "test_roots/015_publish/check.py": 7.0,
     "test_roots/017_builtin_verification/check.py": 45.0,
+    "test_roots/018_builder_verification_package/check.py": 15.0,
 }
 
 
@@ -45,6 +46,7 @@ CASES = (
     "test_roots/015_publish/check.py",
     "test_roots/016_durable_workflow/check.py",
     "test_roots/017_builtin_verification/check.py",
+    "test_roots/018_builder_verification_package/check.py",
     "merge_policy_case/check.py",
     "merge_policy_case/check_command.py",
 )
@@ -211,7 +213,7 @@ def main() -> int:
         )
 
     (output / "accepted.txt").write_text(
-        "tool.cad.ci v0.33.2 released-stack acceptance passed\n",
+        "tool.cad.ci v0.34.0 released-stack acceptance passed\n",
         encoding="utf-8",
     )
     return 0

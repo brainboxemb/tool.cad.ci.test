@@ -1,0 +1,13 @@
+schema: 1
+
+verification:
+  package:
+    repository: brainboxemb/lib.py.cad.verification
+    version: "0.16.0"
+    commit: c7c145b7be0c602724e8cca874ef29990baaad1e
+
+items:
+  - models/*
+
+builders:
+  wheel-consumer: ci/builders/wheel-consumer
