@@ -1,0 +1,13 @@
+schema: 1
+
+items:
+  - items/*
+
+builders:
+  normal: ci/builders/normal
+  site: ci/builders/site
+
+publication:
+  pages:
+    item: durable-site
+    output: site
