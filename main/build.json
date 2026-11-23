@@ -3,7 +3,7 @@
     "acceptance_suite": {
       "engine": "scons",
       "engine_schema": 4,
-      "final_bundle_sha256": "836773cb7551080cb62ae9ddee4e720add781c5933705b2b0f40476ea3057de1",
+      "final_bundle_sha256": "cea7c28d86d3111129b3787cf37658c8b9ba8cdc63ff03938dd0857247e021c7",
       "final_step": "acceptance",
       "final_target_spec_digest": "226c14f2bebb920ac524a5ca20fd48ce0641bcf13a86aaede144568fb28d2a8c",
       "item_id": "acceptance-suite",
@@ -12,10 +12,10 @@
         "case-durations.json",
         "result.txt"
       ],
-      "source_commit": "74c5c2ba99175d8874fef93a7f90a6e1b593fc14"
+      "source_commit": "8f8caa11c803b040ed5754fad6cde08a012ce3a1"
     }
   },
   "schema": 1,
   "scope": "main",
-  "source_commit": "74c5c2ba99175d8874fef93a7f90a6e1b593fc14"
+  "source_commit": "8f8caa11c803b040ed5754fad6cde08a012ce3a1"
 }
