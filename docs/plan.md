@@ -33,19 +33,27 @@ Required evidence:
 
 1. real PR validation through `reusable-ci.yml@v0.31.0` using
    `pull_request_policy` and `command_environment`;
-2. merge #222 adoption PR to permanent `dev-ci` through
-   `reusable-merge-policy.yml@v0.31.0` with
-   `stable_branch` / `development_branches` / `permanent_branches`;
-3. post-merge `dev-ci` durable run green;
-4. owner `/cleanup-branches` succeeds safely through the renamed cleanup
-   inputs;
-5. exact-SHA retirement of a deliberately missing temporary ref succeeds
-   idempotently through the renamed retirement inputs;
-6. `dev-ci -> main` promotion through v0.31 merge policy with both durable
-   runs green;
-7. `main -> dev-cad` synchronization through v0.31 merge policy with durable
-   run green;
+2. bootstrap the new caller schema onto permanent `dev-ci` with a normal
+   reviewed squash merge; the default branch still loads the v0.30
+   `issue_comment` workflow at this point, so this merge is not counted as
+   v0.31 merge-policy evidence;
+3. require the post-merge `dev-ci` durable run to pass on v0.31;
+4. promote `dev-ci -> main` with a reviewed history-preserving GitHub merge
+   only to activate the v0.31 caller workflows on the default branch; this
+   bootstrap promotion is likewise not counted as v0.31 merge-policy evidence;
+5. once `main` contains the v0.31 wrappers, run owner `/cleanup-branches`
+   and exact-SHA retirement of a deliberately missing temporary ref through
+   the renamed v0.31 inputs;
+6. prove the real v0.31 merge-policy with a `main -> dev-ci`
+   synchronization, then a `dev-ci -> main` promotion using `/merge`;
+7. synchronize `main -> dev-cad` through v0.31 `/merge` and require its
+   durable run green;
 8. only then record v0.31.0 as fully accepted and close #222.
+
+The two bootstrap merges are necessary because GitHub loads
+`issue_comment` workflow definitions from the default branch. They establish
+the v0.31 caller schema on `main`; all merge-policy evidence claimed for
+v0.31 occurs only after that activation point.
 
 No new synthetic CAD behavior is required: the existing 001–016 suite is the
 regression matrix for this schema-only release.
