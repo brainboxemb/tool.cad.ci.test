@@ -20,10 +20,10 @@ Current source of truth for unfinished work in `tool.cad.ci.test`
 
 Candidate released stack:
 
-- `tool.cad.ci v0.33.0` @
-  `b496c35d672227c0b143493b6b7202ea262cc857`;
-- exact pinned `lib.py.cad.ci v0.17.0` @
-  `a68bcd9e3940b21872dea5fc210bcd9a26519ebc`;
+- `tool.cad.ci v0.33.1` @
+  `e319979fd6352ca6be2f95ff7227715f00253e96`;
+- exact pinned `lib.py.cad.ci v0.17.1` @
+  `00d0a763413650339945ca2d9bcfa4265e8dff35`;
 - reusable verification engine `lib.py.cad.verification v0.16.0` @
   `c7c145b7be0c602724e8cca874ef29990baaad1e`;
 - immutable generic runtime
@@ -41,7 +41,7 @@ released public tool surface:
 6. all existing roots 001-016 and governance/publication acceptance remain
    green.
 
-Repository wrappers are repinned to exact `v0.33.0`; no local workflow,
+Repository wrappers are repinned to exact `v0.33.1`; no local workflow,
 runtime launcher or CAD-CI implementation is added.
 
 ## Live acceptance sequence
@@ -55,7 +55,7 @@ runtime launcher or CAD-CI implementation is added.
    and require stable durable publication green.
 5. Synchronize `main -> dev-cad` and require the named `dev-cad` durable
    run green.
-6. Record exact mutable Actions/PR evidence, mark v0.33.0 fully accepted and
+6. Record exact mutable Actions/PR evidence, mark v0.33.1 fully accepted and
    close #240.
 
 ## Existing evidence retained
