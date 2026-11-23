@@ -1,0 +1,20 @@
+schema: 1
+
+verification:
+  package:
+    repository: brainboxemb/lib.py.cad.verification
+    version: "0.16.0"
+    commit: c7c145b7be0c602724e8cca874ef29990baaad1e
+
+runtimes:
+  reference: ghcr.io/brainboxemb/cad-reference:v0.3.4
+
+templates:
+  verified-reference:
+    kind: verification
+    verification:
+      adapter: mesh-geometry
+      definition: ../../verification/reference_geometry.json
+
+items:
+  - models/*
