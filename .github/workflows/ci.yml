@@ -1,4 +1,4 @@
-name: Acceptance
+name: CAD CI reference
 
 on:
   pull_request:
@@ -7,13 +7,33 @@ on:
   push:
     branches: [main, dev-cad, dev-ci]
   workflow_dispatch:
+    inputs:
+      mode:
+        description: Read-only manual run mode.
+        required: true
+        type: choice
+        options:
+          - full
+          - item
+          - changed_paths
+        default: full
+      item:
+        description: Exact CAD-CI item id when mode is item.
+        required: false
+        type: string
+        default: ""
+      changed_paths:
+        description: JSON list of repository-relative paths when mode is changed_paths.
+        required: false
+        type: string
+        default: ""
 
 permissions:
   contents: read
   packages: read
 
 jobs:
-  pr:
+  pull_request:
     if: github.event_name == 'pull_request'
     uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.36.1
     with:
@@ -21,13 +41,8 @@ jobs:
       jobs: 2
       command_environment: '{"ACCEPTANCE_MARKER":"caller-value"}'
 
-  durable:
-    if: >-
-      (github.event_name == 'push' ||
-       github.event_name == 'workflow_dispatch') &&
-      (github.ref_name == 'main' ||
-       github.ref_name == 'dev-cad' ||
-       github.ref_name == 'dev-ci')
+  branch_build:
+    if: github.event_name == 'push'
     permissions:
       contents: write
       packages: read
@@ -38,5 +53,48 @@ jobs:
       scope: ${{ github.ref_name }}
       build_branch: test-output/build
       pages_branch: test-output/gh-pages
+      jobs: 2
+      command_environment: '{"ACCEPTANCE_MARKER":"caller-value"}'
+
+  manual_input:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Validate manual selection
+        env:
+          MODE: ${{ inputs.mode }}
+          ITEM: ${{ inputs.item }}
+          CHANGED_PATHS: ${{ inputs.changed_paths }}
+        run: |
+          case "$MODE" in
+            full)
+              test -z "$ITEM"
+              test -z "$CHANGED_PATHS"
+              ;;
+            item)
+              test -n "$ITEM"
+              test -z "$CHANGED_PATHS"
+              ;;
+            changed_paths)
+              test -z "$ITEM"
+              test -n "$CHANGED_PATHS"
+              ;;
+            *)
+              echo "unsupported manual mode: $MODE" >&2
+              exit 2
+              ;;
+          esac
+
+  manual_run:
+    if: github.event_name == 'workflow_dispatch'
+    needs: manual_input
+    uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.36.1
+    with:
+      source_sha: ${{ github.sha }}
+      full_run: ${{ inputs.mode == 'full' }}
+      item: ${{ inputs.mode == 'item' && inputs.item || '' }}
+      changed_paths: ${{ inputs.mode == 'changed_paths' && inputs.changed_paths || '' }}
       jobs: 2
       command_environment: '{"ACCEPTANCE_MARKER":"caller-value"}'

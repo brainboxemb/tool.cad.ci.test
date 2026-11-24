@@ -5,69 +5,83 @@
 `tool.cad.ci.test` is the permanent external black-box acceptance repository
 for one released `tool.cad.ci` + `lib.py.cad.ci` stack.
 
+It is also the living reference consumer for the normal CAD-CI repository
+setup defined by `tool.cad.ci` Change 0001.
+
 Keep it synthetic and domain-neutral. Do not add Forge, SolidCraft or product
-CAD behavior. Minimal real CAD-engine smoke geometry is allowed only when the
-public contract under acceptance is a released generic built-in CAD builder;
-keep such fixtures trivial and engine-neutral.
+CAD behavior. Minimal real CAD-engine smoke geometry is allowed only when a
+released generic builder contract requires it.
 
 ## Consumer architecture
 
 This repository must look like a normal consumer:
 
 ```text
-one GitHub reusable workflow call
-  -> one root cad-ci.yml
-       -> configured acceptance suite
+.github/workflows/ci.yml
+  -> one released shared CAD-CI route for the triggering event
+       -> root cad-ci.yml
+            -> repository-owned builders/items
 ```
 
-Do not add a second public execution route, root composite-action path,
-plan/run workflow matrix, local bootstrap/install copy or manual list of test
-commands in GitHub Actions.
+The normal event contract is:
 
-The reusable workflow release tag is the consumer release identity. The loaded
-tool itself pins the exact library revision.
+```text
+pull request
+  -> build / test / verify
+  -> publish nothing
 
-## Permanent lanes
+push main/dev-cad/dev-ci
+  -> build / test / verify
+  -> publish complete branch build + configured Pages
+
+manual
+  -> full | item | changed_paths
+  -> build / test / verify
+  -> publish nothing
+```
+
+Do not add a second planner, publisher, root composite-action path, local
+bootstrap copy or second CAD-CI graph.
+
+The reusable workflow release tag is the consumer release identity. All normal
+routes must use the same accepted `tool.cad.ci` release.
+
+## Permanent branches
 
 `main`, `dev-cad` and `dev-ci` are permanent branches.
 
-- normal short-lived issue/feature PRs may target a development lane and are
+- short-lived issue/feature PRs may target a development branch and are
   squash-merged;
-- direct lane -> `main` promotion and `main` -> lane synchronization preserve
-  history with merge commits;
-- never rely on automatic merged-branch deletion for permanent lanes;
-- consume the released lane classifier/merge policy; do not implement local
-  branch-policy logic.
-
-Repository settings must keep merge commits enabled and
-`delete_branch_on_merge=false`.
+- direct development-branch -> `main` and `main` -> development-branch
+  synchronization preserve history with merge commits;
+- permanent branches are never auto-deleted;
+- consume released branch/merge policy; do not implement local branch-policy
+  logic.
 
 ## Live GitHub integration
 
-`test_roots/*` do not prove GitHub trigger behavior. Real branch/PR/merge
-contracts live under `integration_scenarios/*` and require actual GitHub state.
+`test_roots/*` do not prove GitHub trigger behavior. Real PR, push, manual and
+merge contracts require actual GitHub state in this repository.
 
 For live scenarios:
 
-- use real short-lived branches and PRs in this test repository;
-- use the released reusable CI and merge-policy workflows;
-- never replace the scenario with mocked event payloads or local CLI calls;
-- keep `ci.yml` and `merge-policy.yml` on the same accepted tool release;
-- record mutable evidence in GitHub PRs/issues/Actions, not in stable specs.
-
-Do not create a second workflow implementation just to test the first one.
+- use real branches, PRs and workflow dispatches;
+- use only released public CAD-CI workflows;
+- never replace a scenario with mocked event payloads or local copies of the
+  workflow implementation;
+- keep all normal CI routes on one accepted tool release;
+- record mutable evidence in GitHub issues/PRs/Actions, not stable specs.
 
 ## Black-box boundary
 
-Acceptance cases may invoke the public `cad_ci_tool` CLI through subprocesses.
-They must not import library planner, SCons, cache, build-store or publication
-internals to reproduce decisions.
+Acceptance may invoke public released CLI/workflow behavior only.
 
-`tests/support.py` may provide only small process/file helpers and the path of
-the already loaded released tool source.
+Do not import or reproduce library planner, SCons, cache, build-store or
+publication internals. Small test helpers may inspect public process/file
+results only.
 
-If acceptance finds a generic gap, return to the owning library/tool repository.
-Do not add a local workaround.
+If acceptance finds a generic gap, return to the owner repository. Do not add a
+local workaround.
 
 ## Case organization
 
@@ -80,50 +94,34 @@ test_roots/
   ...
 ```
 
-Use three-digit numeric prefixes. Every test root owns its own root
-`cad-ci.yml`; do not make the acceptance-repository root configuration stand
-in for a test root's configuration.
+Use three-digit numeric prefixes. Every root owns its own `cad-ci.yml`.
 
-Distinct synthetic repositories may remain only when they prove genuinely
-different public behavior. GitHub Actions must not enumerate them individually;
-the configured `acceptance_suite` owns that sequence.
+Distinct synthetic roots remain only when they prove genuinely different
+public behavior. GitHub Actions must not enumerate them individually.
 
-Every registered case root must have a local `README.md` with:
-
-- `Status:`;
-- purpose;
-- public contract;
-- fixture/method;
-- failure ownership.
-
-Use `Status: current` for normal external acceptance. Mark owner-level or
-temporary cases explicitly as transitional/separate API. An obsolete case must
-not remain registered in `acceptance_suite/run.py`; remove it from execution
-and then remove its fixture when no historical migration dependency remains.
+Every registered case root has a local `README.md` describing status, purpose,
+public contract, fixture/method and failure ownership.
 
 Source-text assertions that merely freeze private workflow implementation are
 not acceptance. Prefer observable public behavior.
 
-Merge governance is a separately identified public API and may keep its own
-black-box case while that API exists.
-
 ## Publication
 
-Synthetic publication cases under `test_roots/*` must use an isolated local Git
-remote. They must never write generated refs in this GitHub repository.
+Synthetic publication cases under `test_roots/*` use an isolated local Git
+remote and never mutate this repository's real generated branches.
 
-A live GitHub integration scenario may exercise the released publication
-workflow against this repository only through an explicitly reserved generated
-ref namespace. The acceptance namespace is `test-output/*`; it may contain
-generated refs such as `test-output/build` and `test-output/gh-pages`.
+Live branch-build acceptance uses only the reserved namespace:
 
-Never use the repository's normal `build` or `gh-pages` refs merely for
-acceptance. Reserved live-test refs must be listed as permanent/generated policy
-refs so cleanup cannot delete them accidentally.
+```text
+test-output/build
+test-output/gh-pages
+```
+
+Never use normal `build` or `gh-pages` refs merely for acceptance.
 
 ## Development process
 
 One logical change uses one issue, one branch and one pull request.
 
-`docs/plan.md` is the current unfinished-work source of truth. Keep mutable
-release/issue state there rather than in stable requirements/design text.
+`docs/plan.md` contains unfinished work only. Keep mutable issue/release state
+there instead of duplicating it in stable requirements/design text.

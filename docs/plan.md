@@ -1,70 +1,58 @@
 # Repository plan
 
-Current source of truth for unfinished work in `tool.cad.ci.test`
-(2026-11-23).
+This file contains unfinished work only.
 
-## Fully accepted baseline
+## Now
 
-- adopted repository wrappers: `tool.cad.ci v0.34.2` @
-  `37f7a82c6769279d33367144c56976da89bb1a5d`;
-- exact pinned `lib.py.cad.ci v0.18.2` @
-  `088644a05ff698957aef2ddc6cc5de037ddfa158`;
-- `lib.py.cad.verification v0.16.0` @
-  `c7c145b7be0c602724e8cca874ef29990baaad1e`;
-- #248 completed CadQuery Workplane + Assembly acceptance and permanent-branch
-  build publication;
-- #254 separately completed real v0.35.0 targeted read-only selection
-  acceptance; that focused scenario did not change the adopted repository
-  wrappers;
-- live generated output stays isolated on `test-output/*`.
+### #261 — Change 0001 reference consumer
 
-## Candidate stack under acceptance
+Make this repository the living normal-consumer reference defined by
+`tool.cad.ci` Change 0001.
 
-### #256 — accept v0.36.1 central CAD release flow
+Use exact released `tool.cad.ci v0.36.1` first; do not require a new tool
+release when existing public workflows already provide the needed behavior.
 
-**Now. v0.36.0 reached the release gate but failed before the stale-SHA check because the workflow missed the CAD-CI runtime dependency install. v0.36.1 fixes that released bootstrap.**
+Required behavior:
 
-Candidate released stack:
+```text
+pull request
+  -> build / test / verify
+  -> publish nothing
 
-- `tool.cad.ci v0.36.1` @
-  `8a9acb8ea69581728a3850c658b4c1ae2db6ff5a`;
-- exact pinned `lib.py.cad.ci v0.18.2` @
-  `088644a05ff698957aef2ddc6cc5de037ddfa158`;
-- the CAD release workflow delegates the GitHub release transaction to released
-  `tool.py.lib.ci v0.2.1` @
-  `58ead6897a4ac8cafef22a3c1f834491bf61568d`.
+push main/dev-cad/dev-ci
+  -> build / test / verify
+  -> publish test-output branch build + Pages
 
-Required live sequence:
+manual
+  -> full | item | changed_paths
+  -> build / test / verify
+  -> publish nothing
+```
 
-1. repin the consumer CI/governance wrappers to exact `v0.36.1` and add the
-   copy-ready CAD release wrapper using `test-output/build`;
-2. require the adoption PR to `dev-ci` green;
-3. merge the short-lived branch to `dev-ci` and require the named dev-ci build
-   green;
-4. merge exact `dev-ci -> main` and require the main build to write
-   `test-output/build/main/build.json` for the exact resulting main SHA;
-5. comment `/release v0.36.1 <older-main-sha>` and require the CAD release
-   build check to fail with no tag/release;
-6. comment `/release v0.36.1 <exact-current-main-sha>` and require the build
-   check plus delegated release transaction green;
-7. verify the GitHub release/tag resolves to that exact main SHA;
-8. repeat the exact successful command and require idempotent success;
-9. record run IDs and SHAs on #256, then sync accepted `main -> dev-cad`.
+Required live proof:
 
-Pages is not release evidence. The release scenario must not inspect
-`test-output/gh-pages` or normal `gh-pages` when deciding release readiness.
+1. PR validation on the issue branch;
+2. merge to `dev-ci` and successful branch publication;
+3. manual full read-only run;
+4. manual exact-item read-only run;
+5. manual changed-path read-only run;
+6. confirm none of the manual runs updates `test-output/build` or
+   `test-output/gh-pages`.
 
-## Open issue assessment
+After that, the same structure can be copied back into the tool consumer manual
+and adopted by Forge/product CAD.
 
-| Issue | Status | Next |
-| --- | --- | --- |
-| #256 v0.36.1 central CAD release flow | **now** | Complete real issue-comment refusal, success and idempotency acceptance. |
-| #253 selectable acceptance roots | **later** | Replace the monolithic acceptance-suite item separately; do not mix into #256. |
+## Later
+
+### #253 — selectable acceptance roots
+
+Break the monolithic acceptance-suite execution boundary into selectable
+CAD-CI items after the reference consumer route is stable.
+
+Do not mix this performance/organization change into #261.
 
 ## Boundary
 
-This repository owns external acceptance evidence only.
+This repository owns acceptance evidence, not generic CAD-CI implementation.
 
-Do not add Forge/SolidCraft semantics, library imports, local release parsing,
-build-record parsing, workflow bootstrap copies or a second CAD-CI graph.
-Generic failures return to their owner repositories.
+Generic failures return to `lib.py.cad.ci` or `tool.cad.ci`.

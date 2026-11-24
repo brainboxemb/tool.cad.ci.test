@@ -1,64 +1,80 @@
 # External CAD-CI acceptance requirements
 
+## Reference consumer
+
+`tool.cad.ci.test` is both:
+
+- external black-box acceptance for an exact released CAD-CI stack; and
+- the living normal-consumer reference from `tool.cad.ci` Change 0001.
+
+A normal repository should be able to copy/adapt the root workflow structure
+without inheriting acceptance-specific orchestration.
+
 ## Released consumer path
 
-- The repository consumes one released `tool.cad.ci` version tag.
-- GitHub Actions uses only the normal public `reusable-ci.yml` entrypoint.
-- The called tool pins the exact released `lib.py.cad.ci` revision.
-- The acceptance repository does not clone/install a second tool copy.
+- All normal routes pin one exact released `tool.cad.ci` version.
+- The released tool pins the exact `lib.py.cad.ci` revision.
+- The consumer does not clone/install another tool copy.
+- Root `cad-ci.yml` owns repository items/builders.
+- GitHub workflow YAML owns only triggers, permissions and routing to released
+  public workflows.
 
-## Permanent lane integration
+## Pull request
 
-- The repository owns permanent `main`, `dev-cad` and `dev-ci` branches.
-- Pull requests use the released lane policy from `reusable-ci.yml`; there is
-  no local classifier.
-- Docs-only PRs into a development lane may use the released cheap path.
-- Direct development-lane promotions to `main` run complete CAD-CI.
-- Lane promotion/synchronization preserves history with merge commits.
-- Permanent lanes must not be auto-deleted after merge.
-- The released merge-policy workflow may dispatch the same `ci.yml` after a
-  merge; manual/dispatch runs execute complete acceptance.
+A pull request:
+
+- tests the exact PR head;
+- uses released affected-item and branch-policy behavior;
+- builds/tests/verifies only;
+- publishes no generated build or Pages state.
+
+## Permanent branch push
+
+A push to `main`, `dev-cad` or `dev-ci`:
+
+- uses the released permanent-branch build/publication workflow;
+- publishes complete branch build output under the reserved
+  `test-output/build` acceptance branch;
+- publishes configured Pages output under `test-output/gh-pages`;
+- records exact source provenance.
+
+## Manual run
+
+`workflow_dispatch` is read-only.
+
+It exposes one explicit mode:
+
+- `full`;
+- `item`;
+- `changed_paths`.
+
+Manual execution must never enter permanent-branch publication.
 
 ## Config-driven suite
 
-- Root `cad-ci.yml` is the top-level CI configuration.
+- Root `cad-ci.yml` is the top-level CAD-CI configuration.
 - GitHub Actions does not enumerate individual acceptance cases.
-- One configured acceptance-suite step runs the black-box cases.
-- Repository variables must reach consumer commands and override inherited
-  non-secret caller values according to the released contract.
+- Repository variables reach consumer commands according to the released
+  contract.
 
 ## Black-box behavior
 
-Cases exercise public CLI/workflow behavior only. The suite covers distinct
-contracts for selection, execution, dependencies, partial runs, process
-participation, outputs/cache, failures/timeouts, parallel jobs and durable
-publication.
-
-A case must not reproduce planner, SCons, build-store or publication decisions
-in test helpers.
-
-## Workflow behavior
-
-A successful complete acceptance run proves that another repository can call
-the released high-level workflow and execute its root `cad-ci.yml` through the
-released tool/library stack.
-
-Internal workflow source layout is not an acceptance contract. Do not freeze
-private step names or helper implementation with source-text assertions.
+Cases exercise public CLI/workflow behavior only. They do not reproduce planner,
+SCons, build-store or publication decisions in test helpers.
 
 ## Publication isolation
 
-Build/Page publication cases use an isolated local Git remote and must not
-mutate this repository's real generated branches.
+Synthetic publication cases use isolated local Git remotes.
+
+Live publication acceptance uses only `test-output/*` generated refs.
 
 ## Governance API
 
-Merge-governance acceptance remains separately identified from CAD-CI
-execution. It may inspect/execute the released governance helper against a fake
-GitHub API because that API is not part of the normal CAD-CI graph.
+Merge governance is separate from CAD-CI execution. Do not mix merge-policy
+experiments into the normal PR/push/manual consumer workflow.
 
 ## Completion
 
-A candidate tool release is accepted only when the complete config-driven suite
-is green through the released reusable workflow. Consumer repositories may
-migrate only after that result.
+A released stack is accepted only when the normal reference workflow and
+required black-box cases are green. Real consumers migrate only after that
+result.
