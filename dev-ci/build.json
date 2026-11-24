@@ -3,7 +3,7 @@
     "acceptance_suite": {
       "engine": "scons",
       "engine_schema": 6,
-      "final_bundle_sha256": "0f6c8e70bdf1af2d48c7b9dc7110cb59a12ca43cf4068475ceccc7a098fd4a91",
+      "final_bundle_sha256": "ee910a7aca7e4af43a7655ad4f6b39d63873cfcb6f5b6e25feff7f5cfef238f1",
       "final_step": "acceptance",
       "final_target_spec_digest": "51f1898a52799700cc7f8630083ebfd561465afc2b381c0da08309696cd07bd4",
       "item_id": "acceptance-suite",
@@ -12,11 +12,11 @@
         "case-durations.json",
         "result.txt"
       ],
-      "source_commit": "2aab3774f29055b7d9fb07d0f97c507b60792462"
+      "source_commit": "c7986cc9a4f1affb1560a0d9a4f3c7736146a0cd"
     }
   },
   "name": "dev-ci",
   "schema": 1,
   "scope": "named",
-  "source_commit": "9558d1a2e49ddcc252b6e646f4a16c66e52d3ffa"
+  "source_commit": "c7986cc9a4f1affb1560a0d9a4f3c7736146a0cd"
 }
