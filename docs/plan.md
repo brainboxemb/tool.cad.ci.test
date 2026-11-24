@@ -4,6 +4,23 @@ This file contains unfinished work only.
 
 ## Now
 
+### #263 — distinguish merge integration from manual dispatch
+
+Live #261 acceptance proved the PR route, then exposed one event-routing gap:
+the shared merge policy dispatches `ci.yml` after a GITHUB_TOKEN merge, so
+the resulting permanent-branch integration arrives as `workflow_dispatch`
+from `github-actions[bot]`.
+
+Exact failing-routing evidence:
+
+- dev-ci commit: `1e5d7000cf69bcc11962f43b145ba700cf1555ca`;
+- integration run: `45364444766`;
+- `manual_run` selected;
+- `branch_build` skipped.
+
+Route that bot dispatch to `branch_build` while keeping human manual dispatch
+read-only. Then resume #261 live acceptance.
+
 ### #261 — Change 0001 reference consumer
 
 Make this repository the living normal-consumer reference defined by
