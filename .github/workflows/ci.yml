@@ -42,7 +42,16 @@ jobs:
       command_environment: '{"ACCEPTANCE_MARKER":"caller-value"}'
 
   branch_build:
-    if: github.event_name == 'push'
+    # Shared merge policy dispatches integration with GITHUB_TOKEN, which
+    # arrives as workflow_dispatch from github-actions[bot] because GitHub does
+    # not emit a second push workflow for that merge.
+    if: >-
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' &&
+       github.actor == 'github-actions[bot]' &&
+       (github.ref_name == 'main' ||
+        github.ref_name == 'dev-cad' ||
+        github.ref_name == 'dev-ci'))
     permissions:
       contents: write
       packages: read
@@ -57,7 +66,7 @@ jobs:
       command_environment: '{"ACCEPTANCE_MARKER":"caller-value"}'
 
   manual_input:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' && github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -88,7 +97,7 @@ jobs:
           esac
 
   manual_run:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' && github.actor != 'github-actions[bot]'
     needs: manual_input
     uses: brainboxemb/tool.cad.ci/.github/workflows/reusable-ci.yml@v0.36.1
     with:

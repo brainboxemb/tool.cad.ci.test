@@ -28,9 +28,19 @@ A pull request:
 - builds/tests/verifies only;
 - publishes no generated build or Pages state.
 
-## Permanent branch push
+## Permanent branch integration
 
-A push to `main`, `dev-cad` or `dev-ci`:
+A permanent branch build is triggered by either:
+
+- a normal push to `main`, `dev-cad` or `dev-ci`; or
+- the shared merge-policy integration dispatch on that branch.
+
+The merge-policy dispatch is created with `GITHUB_TOKEN` and therefore reaches
+the consumer as `workflow_dispatch` from `github-actions[bot]`. The consumer
+routes that bot dispatch to the same branch-build path; it is not a human
+manual run.
+
+The branch build:
 
 - uses the released permanent-branch build/publication workflow;
 - publishes complete branch build output under the reserved
@@ -40,7 +50,7 @@ A push to `main`, `dev-cad` or `dev-ci`:
 
 ## Manual run
 
-`workflow_dispatch` is read-only.
+A human `workflow_dispatch` is read-only.
 
 It exposes one explicit mode:
 
